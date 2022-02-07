@@ -8,7 +8,7 @@ export default function Login() {
             <Head>
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
-            Inicio de Sesión
+            Daniela Paiva
         </Layout>
     );
 }
