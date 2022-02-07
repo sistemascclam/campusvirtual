@@ -3,7 +3,7 @@ export const siteTitle = 'Campus Cámara'
 export const siteDescription = 'Campus Virtual 24/7. | Cámara de Comercio y Producción de Lambayeque'
 export const siteURL = 'https://www.cclam.org.pe/'
 export const siteImage = 'https://www.cclam.org.pe/images/post.png'
-export const keywords = 'campus virtual, campus, virtual, cursos, cclam,chiclayo,camara,comercio,lambayeque'
+export const keywords = 'campus virtual, campus, virtual, cursos, cclam, chiclayo, camara, comercio, lambayeque'
 
 export default function Layout({ children }) {
 
