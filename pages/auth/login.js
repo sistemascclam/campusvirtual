@@ -8,7 +8,10 @@ export default function Login() {
             <Head>
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
-            Inicio de Sesión
+            <div className="flex h-screen">
+                <div className="bg-darkblue text-white w-1/2 p-4">div 1</div>
+                <div className="bg-blue-800 text-white w-1/2 p-4">div 2</div>
+            </div>
         </Layout>
     );
 }
