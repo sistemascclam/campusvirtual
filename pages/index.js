@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      Campus Cámara / José luis 
+      Campus Camara HOME
     </Layout>
   )
 }
