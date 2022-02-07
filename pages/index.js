@@ -7,7 +7,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      Campus Cámara
+      Campus Camara HOME
     </Layout>
   )
 }
