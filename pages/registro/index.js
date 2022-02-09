@@ -24,13 +24,14 @@ export default function Login() {
             <div className="flex h-screen">
                 <div className="bg-darkblue text-white lg:w-1/2 p-4 w-full">
                     <div className='min-h-full py-12 px-4 sm:px-6 lg:px-8'>
-                        <div className='mx-auto  py-6 '>
+                        <div className='mx-auto py-6 '>
                             <img
                                 className="h-12 mx-auto "
                                 src="images/cclamlogotipo.png"
                                 alt="Logo"
                             />
                         </div>
+                        
                         <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
                         <div className="w-full max-w-xs mx-auto">
                             <div className="rounded pt-4 ">
@@ -40,7 +41,7 @@ export default function Login() {
                                     </label>
                                     <input type="text" id="username" placeholder="ejm@gmail.com" autoComplete='off' className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"/>
                                 </div>
-                                <div className="mb-6 ">
+                                {/*<div className="mb-6 ">
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Crea tu contraseña
                                     </label>
@@ -50,7 +51,20 @@ export default function Login() {
                                             {tipo=='password' ? eye:eyes_off}
                                         </button>
                                     </div>
+                                </div>*/}
+                                
+                                <div className="mb-6">
+                                    <div className='py-1'>
+                                        <span className="text-slate-300 text-sm ">Crea tu contraseña</span>
+                                    </div>
+                                    <label className="relative block">
+                                        <span className="absolute inset-y-0 right-3 flex items-center pl-2" onClick={()=>setTipo(tipo=='password' ? 'text':'password') }>
+                                            {tipo=='password' ? eye:eyes_off}
+                                        </span>
+                                        <input type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+                                    </label>
                                 </div>
+                                
                                 <div className="flex items-center justify-between">
                                     <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline" >
                                         REGISTRARSE
