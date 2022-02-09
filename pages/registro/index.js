@@ -1,7 +1,8 @@
 import Head from 'next/head'
+import Link from 'next/link'
+
 import Layout, { siteTitle } from "../../components/global/layout";
 import React, { useState } from 'react';
-
 
 export default function Login() {
     const [tipo, setTipo] = useState('password');
@@ -21,43 +22,50 @@ export default function Login() {
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
             <div className="flex h-screen">
-                <div className="bg-darkblue text-white lg:w-1/2  p-4 w-full">
-
-                    
-                    <div className='min-h-full flex items-left justify-left py-12 px-4 sm:px-6 lg:px-8'>
-
+                <div className="bg-darkblue text-white lg:w-1/2 p-4 w-full">
+                    <div className='min-h-full py-12 px-4 sm:px-6 lg:px-8'>
+                        <div className='mx-auto  py-6 '>
+                            <img
+                                className="h-12 mx-auto "
+                                src="images/cclamlogotipo.png"
+                                alt="Logo"
+                            />
+                        </div>
+                        <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
                         <div className="w-full max-w-xs mx-auto">
-                            <div className=' py-6 '>
-                                <img
-                                    className=" h-12 w-auto"
-                                    src="../../images/cclamlogotipo.png"
-                                    alt="Logo"
-                                />
-                            </div>
-
-                            <div className='text-left text-slate-100'><b>Bienvenido de nuevo</b></div>
-                            <div className="rounded  pt-4 ">
+                            <div className="rounded pt-4 ">
                                 <div className="mb-4">
                                     <label className="block text-slate-300 text-sm mb-2" >
-                                        Correo electrónico
+                                        Correo electrónico ingresado
                                     </label>
-                                    <input type="text" autoComplete='off' id="username" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"/>
+                                    <input type="text" id="username" placeholder="ejm@gmail.com" autoComplete='off' className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"/>
                                 </div>
-                                <div className="mb-6">
+                                <div className="mb-6 ">
                                     <label className="block text-slate-300 text-sm mb-2" >
-                                        Contraseña
+                                        Crea tu contraseña
                                     </label>
                                     <div className='flex '>
-                                        <input type={tipo} id="password"  placeholder="******************" className="shadow appearance-none border bg-gray-900 rounded-l-lg w-full text-sm  py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline" />
+                                        <input type={tipo}  id="password"  placeholder="******************" className="shadow appearance-none border bg-gray-900 rounded-l-lg w-full text-sm  py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"/>
                                         <button onClick={()=>setTipo(tipo=='password' ? 'text':'password') } className='border-solid border-2 h-9 border-slate-600 rounded-r-lg text-slate-400' > 
                                             {tipo=='password' ? eye:eyes_off}
                                         </button>
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <button  type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
-                                        INICIAR SESIÓN
+                                    <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline" >
+                                        REGISTRARSE
                                     </button>
+                                </div>
+                                <div className='text-center text-xs py-5'>
+                                    <span className='text-slate-400'>Al crear una cuenta estás aceptando los</span> <br/> <span className='text-gray-200 underline'>Términos de Servicio</span> <span className='text-slate-400'> y</span> <span className='text-gray-200 underline'> Privacidad</span> 
+                                </div>
+                                <div className='text-center py-6 w-5/6 mx-auto' >
+                                    <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
+                                        <span>¿Ya tienes cuenta?</span>
+                                        <Link href="/auth/login">
+                                            <a> <span className='text-sky-500 underline'>Inicia sesión aquí</span></a>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +73,7 @@ export default function Login() {
                     </div>
 
                 </div>
-                <div className="bg-darkblue text-white w-1/2 p-4 hidden lg:block ">
+                <div className="bg-darkblue text-white w-1/2 p-4 hidden lg:block">
                     {/*cuerpo de la segunda parte*/}
                 </div>
             </div>
