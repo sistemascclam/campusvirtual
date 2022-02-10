@@ -43,18 +43,7 @@ export default function Login() {
                                         Correo electrónico
                                     </label>
                                     <input type="text" autoComplete='off' id="username" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"/>
-                                </div>
-                                {/*<div className="mb-6">
-                                    <label className="block text-slate-300 text-sm mb-2" >
-                                        Contraseña
-                                    </label>
-                                    <div className='flex '>
-                                        <input type={tipo} id="password"  placeholder="******************" className="shadow appearance-none border bg-gray-900 rounded-l-lg w-full text-sm  py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline" />
-                                        <button onClick={()=>setTipo(tipo=='password' ? 'text':'password') } className='border-solid border-2 h-9 border-slate-600 rounded-r-lg text-slate-400' > 
-                                            {tipo=='password' ? eye:eyes_off}
-                                        </button>
-                                    </div>
-                                </div>*/}
+                                </div> 
                                 
                                 <div className="mb-6">
                                     <div className='py-1'>
