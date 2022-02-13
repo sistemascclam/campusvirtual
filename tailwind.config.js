@@ -17,7 +17,16 @@ module.exports = {
     extend: {
     },
   },
+  extend: {
+    backgroundImage: {
+      'footer-texture': "url('/img/footer-texture.png')",
+    },
+  },
+
   plugins: [
     require('@tailwindcss/forms'),
-  ],
+  ]
+
 }
+  
+
