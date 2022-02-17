@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 import Layout, { siteTitle } from "@global/layout";
 import WriteToCloudFirestore from 'components/cloudFirestore/Write'
@@ -25,6 +26,8 @@ const responsive = {
     items: 2
   }
 }
+
+
 
 export default function Home() {
   const { user, logout } = useUser()
