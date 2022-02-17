@@ -4,34 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.buttonlogo{
-    @apply left-20  
 
-}
-.logo{
-   @apply px-7 px-9 px-7 px-7 w-full p-3 object-cover h-10 w-10 scale-125
- }
 
- .links{
-   @apply px-4 text-white
- }
-.box {
-    @apply  p-5  text-black not-italic rounded-lg relative top-2 bg-[url('/public/images/search-icon.png')]
 
-}
 
-input.src{
- @apply px-6 px-10 px-9 px-72  text-xl rounded-full  ring-2  w-full duration-1000 border-transparent
-}
-.iconos{
-    @apply h-6 w-6 right-3/4 flex justify-between lg:justify-start items-center flex space-x-8  top-10 
-}
-.icono1 {
-    @apply h-7 w-7  right-3/4 flex justify-between lg:justify-start items-center flex space-x-8  
-}
-.icono2{
-    @apply h-7 w-7 right-3/4 flex justify-between lg:justify-start items-center flex space-x-8  
-}
-svg.icono{
-    @apply h-7 w-7 right-3/4 flex justify-between lg:justify-start items-center flex space-x-8  top-10   
-}
+
+
+
+
+
+
