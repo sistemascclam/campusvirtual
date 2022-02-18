@@ -6,6 +6,7 @@ import { useUser } from 'lib/firebase/useUser'
 import React from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Header from '@global/header';
 
 const responsive = {
   superLargeDesktop: {
@@ -27,8 +28,6 @@ const responsive = {
   }
 }
 
-
-
 export default function Home() {
   const { user, logout } = useUser()
   var star = <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -43,6 +42,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <Header />
       <div className=" h-screen bg-darkblue text-white p-10 w-full h-full">
         <div className="box-border p-4 w-full flex">
           {
