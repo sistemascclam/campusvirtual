@@ -70,11 +70,6 @@ export default function Login() {
                                         </Link>
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
 

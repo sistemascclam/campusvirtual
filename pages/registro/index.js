@@ -19,7 +19,7 @@ export default function Login() {
     return (
         <Layout home>
             <Head>
-                <title>Inicio de Sesión | {siteTitle}</title>
+                <title>Registro | {siteTitle}</title>
             </Head>
             <div className="flex h-screen">
                 <div className="bg-darkblue text-white lg:w-1/2 p-4 w-full">
