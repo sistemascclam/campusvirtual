@@ -7,7 +7,7 @@ import FirebaseAuth from 'components/auth/FirebaseAuth'
 import { useUser } from 'lib/firebase/useUser'
 
 export default function Login() {
-    const { signin } = useUser()
+    const { register, error, resetError } = useUser()
     const [tipo, setTipo] = useState('password');
     const [formData, setformData] = useState({
         email: "",
@@ -16,7 +16,7 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        signin(formData.email,formData.password)
+        register(formData.email,formData.password)
     }
 
     var eye = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -24,18 +24,18 @@ export default function Login() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
     </svg>;
 
-
     var eyes_off = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
     </svg>;
+
     return (
         <Layout home>
             <Head>
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
-            <div className="flex h-screen">
-                <div className="bg-darkblue text-white lg:w-1/2 p-4 w-full">
-                    <div className='min-h-full py-12 px-4 sm:px-6 lg:px-8'>
+            <div className="flex min-h-screen bg-darkblue">
+                <div className="text-white lg:w-1/2 p-4 w-full">
+                    <div className='py-12 px-4 sm:px-6 lg:px-8'>
                         <div className='mx-auto py-6 '>
                             <img
                                 className="h-12 mx-auto "
@@ -46,7 +46,7 @@ export default function Login() {
 
                         <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
                         <div className="w-full max-w-xs mx-auto">
-                            <form onSubmit={handleSubmit} className="rounded pt-4 ">
+                            <form onSubmit={handleSubmit} onKeyPress={resetError} className="rounded pt-4 ">
                                 <div className="mb-4">
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Correo electrónico ingresado
@@ -64,6 +64,14 @@ export default function Login() {
                                         <input onChange={(e) => setformData({ ...formData, password: e.target.value })} type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
                                     </label>
                                 </div>
+                                {
+                                    error ?
+                                    <div className='cursor-default shadow-3xl bg-gray-900 ring-1 ring-slate-300 text-slate-300 text-center text-sm py-3 rounded-md mb-4'>
+                                        {error}
+                                    </div>
+                                    :
+                                    ""
+                                }
                                 <div className="flex flex-col items-center justify-between">
                                     <button type="submit" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         REGISTRARSE
@@ -88,7 +96,7 @@ export default function Login() {
                     </div>
 
                 </div>
-                <div className="bg-darkblue text-white w-1/2 p-4 hidden lg:block">
+                <div className="text-white w-1/2 p-4 hidden lg:block">
                     {/*cuerpo de la segunda parte*/}
                 </div>
             </div>

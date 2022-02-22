@@ -1,7 +1,6 @@
 
 import Head from 'next/head'
 import Layout, { siteTitle } from "@global/layout";
-import WriteToCloudFirestore from 'components/cloudFirestore/Write'
 import { useUser } from 'lib/firebase/useUser'
 import React from 'react';
 import Carousel from "react-multi-carousel";
@@ -43,16 +42,15 @@ export default function Home() {
         <title>{siteTitle}</title>
       </Head>
       <Header />
-      <div className=" h-screen bg-darkblue text-white p-10 w-full h-full">
+      <div className="bg-darkblue text-white p-10 w-full h-full">
         <div className="box-border p-4 w-full flex">
           {
             user ?
-            <div><b>Hola, {user.name}</b></div>
+            <div><b>Hola, {user.name ?? user.email}</b></div>
             :
             <div><b>Inicia Sesión</b></div>
           }
           <button onClick={() => logout()}>Cerrar Sesion</button>
-          <WriteToCloudFirestore />
           <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-2  justify-left ">
             <div className='py-0 lg:py-6'> 
               <div className='bg-slate-900 rounded-lg'>
