@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Layout, { siteTitle } from "../../components/global/layout";
 import React, { useState } from 'react';
 
-export default function Login() {
+export default function Registro() {
     const [tipo, setTipo] = useState('password');
 
     var eye =   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

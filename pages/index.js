@@ -1,8 +1,32 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from "../components/global/layout";
-import React from 'react';
+import React, { useRef  }  from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Popover, Transition } from '../node_modules/@headlessui/react'
+
+//import { ChevronDownIcon } from '../node_modules/@heroicons/react/solid'
+//import { Fragment } from 'react'
+/*const solutions = [
+  {
+    name: 'Insights',
+    description: 'Measure actions your users take',
+    href: '##',
+    icon: IconOne,
+  },
+  {
+    name: 'Automations',
+    description: 'Create your own targeted content',
+    href: '##',
+    icon: IconTwo,
+  },
+  {
+    name: 'Reports',
+    description: 'Keep track of your growth',
+    href: '##',
+    icon: IconThree,
+  },
+]*/
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -22,7 +46,7 @@ const responsive = {
     items: 2
   }
 };
-
+ 
 export default function Home() {
   var star = <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -54,6 +78,18 @@ export default function Home() {
   var icon_13 = <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-fuchsia-700" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                 </svg>;
+
+  var check = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>;
+
+  var heart = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>;
+
+
+
+
   return (
     <Layout home>
       <Head>
@@ -61,6 +97,53 @@ export default function Home() {
       </Head>
       
       <div className="min-h-screen bg-darkblue text-white p-10 w-full ">
+
+
+
+
+       
+       
+
+    
+
+
+
+
+
+
+
+
+
+        {/*<Popover className="relative">
+            <Popover.Button>ejemplo</Popover.Button>
+            <Popover.Panel className="absolute z-10 bg-slate-50 text-black w-80 py-7 px-7 rounded">
+              <div className="grid grid-cols-1 ">
+
+                <b>Aprende Javascript Es9, HTML, CSS3 y NodeJS desde cero </b><br/>
+                <span className='text-xs text-green-600'>Actualizado <b>Julio de 2022</b></span>
+                <span className='text-xs my-3'>Nivel básico. Subtitulos</span>
+                <span className='text-sm py-3'>Aprende a programar con Javascript sin conocimiento
+                previo en el explorador web y 
+                en el servicio con NodeJS</span>
+                <div className='text-sm '>
+                  <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
+                  <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
+                  <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
+                </div>
+                <div className="flex items-center justify-between py-1">
+                    <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 rounded-lg w-48 focus:outline-none focus:shadow-outline" >
+                        Añadir a la cesta
+                    </button>
+                    <div className=' mx-auto' >
+                      <div className=' py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-600'>
+                        {heart}
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </Popover.Panel>
+        </Popover>*/}
+
         <div><b>Hola, José Luis</b></div>
         <div className="  p-4 w-full flex  justify-center ">
           <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-2 " >
@@ -135,7 +218,7 @@ export default function Home() {
         </div>
         <Carousel responsive={responsive}>
           <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
+            <div className="box-border  p-1  rounded-l-xl   " >
               <div className='mx-auto py-6 p-2'> 
 
                 <div className=' bg-slate-900  rounded-2xl  '>
@@ -154,14 +237,44 @@ export default function Home() {
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
                     </div>
-                    <div className='py-3'>
+                    <div className='py-3   ' data-bs-content="Disabled popover" >
                       S/<span className='text-base'>157.00</span>
-                    </div>
+                    </div> 
                   </div>
                 </div>
               </div>
             </div>
-          </div>  
+          </div> 
+
+          <Popover className="relative">
+            <Popover.Button>ejemplo</Popover.Button>
+            <Popover.Panel className="absolute z-10 bg-slate-50 text-black w-80 py-7 px-7 rounded">
+              <div className="grid grid-cols-1 ">
+                <b>Aprende Javascript Es9, HTML, CSS3 y NodeJS desde cero </b><br/>
+                <span className='text-xs text-green-600'>Actualizado <b>Julio de 2022</b></span>
+                <span className='text-xs my-3'>Nivel básico. Subtitulos</span>
+                <span className='text-sm py-3'>Aprende a programar con Javascript sin conocimiento
+                previo en el explorador web y 
+                en el servicio con NodeJS</span>
+                <div className='text-sm '>
+                  <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
+                  <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
+                  <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
+                </div>
+                <div className="flex items-center justify-between py-1">
+                    <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 rounded-lg w-48 focus:outline-none focus:shadow-outline" >
+                        Añadir a la cesta
+                    </button>
+                    <div className=' mx-auto' >
+                      <div className=' py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-600'>
+                        {heart}
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </Popover.Panel>
+          </Popover>
+
           <div className='  rounded-lg'>
             <div className="box-border  p-1  rounded-l-xl   ">
               <div className='mx-auto py-6 p-2'> 
