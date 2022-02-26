@@ -3,21 +3,9 @@ import Link from 'next/link'
 
 import Layout, { siteTitle } from "@global/layout"
 import React, { useState } from 'react'
-import FirebaseAuth from 'components/auth/FirebaseAuth'
-import { useUser } from 'lib/firebase/useUser'
 
 export default function Login() {
-    const { signin, error, resetError } = useUser()
     const [tipo, setTipo] = useState('password');
-    const [formData, setformData] = useState({
-        email: "",
-        password: ""
-    })
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        signin(formData.email,formData.password)
-    }
 
     var eye = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -30,7 +18,7 @@ export default function Login() {
     </svg>;
 
     return (
-        <Layout home>
+        <Layout>
             <Head>
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
@@ -47,12 +35,12 @@ export default function Login() {
                                 />
                             </div>
                             <div className='text-left text-slate-100 text-sm'><b>Bienvenido de nuevo a tu Campus CCLAM</b></div>
-                            <form onSubmit={handleSubmit} onKeyPress={resetError} className="rounded pt-4 ">
+                            <form className="rounded pt-4 ">
                                 <div className="mb-4">
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Correo electrónico
                                     </label>
-                                    <input type="text" onChange={(e) => setformData({ ...formData, email: e.target.value })} autoComplete='off' id="username" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    <input type="text" autoComplete='off' id="username" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="mb-6">
                                     <div className='py-1'>
@@ -62,23 +50,14 @@ export default function Login() {
                                         <span className="absolute inset-y-0 right-3 flex items-center pl-2" onClick={() => setTipo(tipo == 'password' ? 'text' : 'password')}>
                                             {tipo == 'password' ? eye : eyes_off}
                                         </span>
-                                        <input type={tipo} onChange={(e) => setformData({ ...formData, password: e.target.value })} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+                                        <input type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
                                     </label>
                                 </div>
-                                {
-                                    error ?
-                                    <div className='cursor-default shadow-3xl bg-gray-900 ring-1 ring-slate-300 text-slate-300 text-center text-sm py-3 rounded-md mb-4'>
-                                        {error}
-                                    </div>
-                                    :
-                                    ""
-                                }
                                 <div className="flex flex-col items-center justify-between">
                                     <button type="submit" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         INICIAR SESIÓN
                                     </button>
                                     <p className="mt-4">ó</p>
-                                    <FirebaseAuth />
                                 </div>
                                 <div className='text-center py-4 w-5/6 mx-auto' >
                                     <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
@@ -95,7 +74,6 @@ export default function Login() {
 
                 </div>
                 <div className="text-white w-1/2 p-4 hidden lg:block ">
-                    {/*cuerpo de la segunda parte*/}
                 </div>
             </div>
         </Layout>
