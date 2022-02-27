@@ -4,6 +4,7 @@ export const siteDescription = 'Campus Virtual 24/7. | Cámara de Comercio y Pro
 export const siteURL = 'https://www.cclam.org.pe/'
 export const siteImage = 'https://www.cclam.org.pe/images/post.png'
 export const keywords = 'campus virtual, campus, virtual, cursos, cclam, chiclayo, camara, comercio, lambayeque'
+import Header from '@global/header';
 
 export default function Layout({ children }) {
 
@@ -32,6 +33,7 @@ export default function Layout({ children }) {
 
       </Head>
       <main className="bg-themeWhite font-poppins relative">
+        <Header />
         {children}
       </main>
     </>

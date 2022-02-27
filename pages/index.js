@@ -4,7 +4,6 @@ import Layout, { siteTitle } from "@global/layout";
 import React from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import Header from '@global/header';
 
 const responsive = {
   superLargeDesktop: {
@@ -39,8 +38,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Header />
-      <div className="bg-darkblue text-white p-10 w-full h-full">
+      <div className="bg-white dark:bg-darkblue text-white p-10 w-full h-full transition-colors ease-in-out duration-300">
         <div className="box-border p-4 w-full flex">
           <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-2  justify-left ">
             <div className='py-0 lg:py-6'>
@@ -102,15 +100,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <div className='text-3xl font-serif font-bold font-mono'>
           Qué aprender ahora
         </div>
         <div className='text-xl  py-6 font-bold '>
           Recomendaciones para llevar un curso
         </div>
-
-
         <Carousel responsive={responsive}>
           <div className='  rounded-lg'>
             <div className="box-border  p-1  rounded-l-xl   ">

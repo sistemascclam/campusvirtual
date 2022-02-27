@@ -1,63 +1,549 @@
-import React from 'react';
+import { Fragment, useState } from 'react'
 import { signIn, signOut, useSession } from "next-auth/react"
+import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
+import { useTheme } from 'next-themes'
 
-export default function Header() {
+const navigation = {
+  categories: [
+    {
+      id: 'categorias',
+      name: 'Categorias',
+      featured: [
+        {
+          name: 'New Arrivals',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+        },
+        {
+          name: 'Basic Tees',
+          href: '#',
+          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+        },
+      ],
+      sections: [
+        {
+          id: 'clothing',
+          name: 'Clothing',
+          items: [
+            { name: 'Tops', href: '#' },
+            { name: 'Dresses', href: '#' },
+            { name: 'Pants', href: '#' },
+            { name: 'Denim', href: '#' },
+            { name: 'Sweaters', href: '#' },
+            { name: 'T-Shirts', href: '#' },
+            { name: 'Jackets', href: '#' },
+            { name: 'Activewear', href: '#' },
+            { name: 'Browse All', href: '#' },
+          ],
+        },
+        {
+          id: 'accessories',
+          name: 'Accessories',
+          items: [
+            { name: 'Watches', href: '#' },
+            { name: 'Wallets', href: '#' },
+            { name: 'Bags', href: '#' },
+            { name: 'Sunglasses', href: '#' },
+            { name: 'Hats', href: '#' },
+            { name: 'Belts', href: '#' },
+          ],
+        },
+        {
+          id: 'brands',
+          name: 'Brands',
+          items: [
+            { name: 'Full Nelson', href: '#' },
+            { name: 'My Way', href: '#' },
+            { name: 'Re-Arranged', href: '#' },
+            { name: 'Counterfeit', href: '#' },
+            { name: 'Significant Other', href: '#' },
+          ],
+        },
+        {
+          id: 'clothing2',
+          name: 'Clothing',
+          items: [
+            { name: 'Tops', href: '#' },
+            { name: 'Dresses', href: '#' },
+            { name: 'Pants', href: '#' },
+            { name: 'Denim', href: '#' },
+            { name: 'Sweaters', href: '#' },
+            { name: 'T-Shirts', href: '#' },
+            { name: 'Jackets', href: '#' },
+            { name: 'Activewear', href: '#' },
+            { name: 'Browse All', href: '#' },
+          ],
+        },
+        {
+          id: 'accessories2',
+          name: 'Accessories',
+          items: [
+            { name: 'Watches', href: '#' },
+            { name: 'Wallets', href: '#' },
+            { name: 'Bags', href: '#' },
+            { name: 'Sunglasses', href: '#' },
+            { name: 'Hats', href: '#' },
+            { name: 'Belts', href: '#' },
+          ],
+        },
+        {
+          id: 'brands2',
+          name: 'Brands',
+          items: [
+            { name: 'Full Nelson', href: '#' },
+            { name: 'My Way', href: '#' },
+            { name: 'Re-Arranged', href: '#' },
+            { name: 'Counterfeit', href: '#' },
+            { name: 'Significant Other', href: '#' },
+          ],
+        },
+      ],
+    },
+  ]
+}
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+export default function NavBar() {
   const { data: session, status } = useSession()
-
+  const { theme, setTheme } = useTheme()
+  const [open, setOpen] = useState(false)
   return (
-    <header>
-      <div className="mx-auto">
-        <nav className="bg-darkblue flex justify-center lg:justify-start items-center  ">
-          <button className="buttonlogo left-20" type='button'>
-            <div className="logo px-7 p-3 object-cover h-10 w-10 scale-125 ">
-              <img className="img" src="public/images/cclamlogotipo.png" width="100">
-              </img>
+    <>
+      <nav className={`dark:bg-darkblue bg-white py-1 transition-colors ease-in-out duration-300`}><Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="transition-opacity ease-linear duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+          <Transition.Child
+            as={Fragment}
+            enter="transition ease-in-out duration-300 transform"
+            enterFrom="-translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition ease-in-out duration-300 transform"
+            leaveFrom="translate-x-0"
+            leaveTo="-translate-x-full"
+          >
+            <div className="relative max-w-xs w-full bg-white dark:bg-darkblue shadow-xl pb-12 flex flex-col overflow-y-auto">
+              <div className="px-4 pt-3 pb-2 flex justify-between">
+                <button
+                  type="button"
+                  className="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="sr-only">Close menu</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-purple dark:text-gray-400 dark:bg-gray-700 hover:dark:text-white transition-all ease-in-out"
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                >
+                  <span className="sr-only">Dark/Light</span>
+                  {
+                    theme == 'dark' ?
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                      </svg>
+                      :
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                  }
+                </button>
+              </div>
+              {/* Links */}
+              <Tab.Group as="div" className="mt-2">
+                <div className="border-b border-gray-200">
+                  <Tab.List className="-mb-px flex px-4 space-x-8">
+                    {navigation.categories.map((category) => (
+                      <Tab
+                        key={category.name}
+                        className={({ selected }) =>
+                          classNames(
+                            selected ? 'text-indigo-600 dark:text-white border-indigo-600 dark:border-0' : 'text-gray-900  border-transparent',
+                            'flex-1 whitespace-nowrap py-3 px-1 border-b-2 text-base font-medium'
+                          )
+                        }
+                      >
+                        {category.name}
+                      </Tab>
+                    ))}
+                  </Tab.List>
+                </div>
+                <Tab.Panels as={Fragment}>
+                  {navigation.categories.map((category) => (
+                    <Tab.Panel key={category.name} className="pt-10 pb-8 px-4 space-y-10">
+                      {category.sections.map((section, sec_k) => (
+                        <div key={sec_k}>
+                          <Disclosure defaultOpen={sec_k == 0}>
+                            {({ open }) => (
+                              <>
+                                <Disclosure.Button id={`${category.id}-${section.id}-heading-mobile`} className="text-gray-800 dark:text-white font-semibold flex w-full justify-between">
+                                  <span>{section.name}</span>
+                                  {
+                                    open ?
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                      </svg>
+                                      :
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                      </svg>
+                                  }
+                                </Disclosure.Button>
+                                <Disclosure.Panel>
+                                  <ul
+                                    role="list"
+                                    aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
+                                    className="mt-6 flex flex-col space-y-6"
+                                  >
+                                    {section.items.map((item) => (
+                                      <li key={item.name} className="flow-root">
+                                        <a href={item.href} className="-m-2 p-2 block text-gray-500 hover:text-purple hover:dark:text-white">
+                                          {item.name}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </Disclosure.Panel>
+                              </>)}
+                          </Disclosure>
+                        </div>
+                      ))}
+                    </Tab.Panel>
+                  ))}
+                </Tab.Panels>
+              </Tab.Group>
+              <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+                <div className="flow-root">
+                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900 dark:text-gray-100 hover:dark:text-white">
+                    Sign in
+                  </a>
+                </div>
+                <div className="flow-root">
+                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900 dark:text-gray-100 hover:dark:text-white">
+                    Create account
+                  </a>
+                </div>
+              </div>
             </div>
-          </button>
-          <button type="button" className="buton">
-            <div className="links px-4 text-white ">
-              <ul>
-                <li>
-                  <a href="#">Categorias</a>
-                </li>
-              </ul>
+          </Transition.Child>
+        </Dialog>
+      </Transition.Root>
+        <div className="w-full mx-auto px-2 sm:px-6 lg:px-10">
+          <div className="relative flex items-center justify-between h-16">
+            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+              <button
+                type="button"
+                className="dark:bg-darkblue p-2 rounded-full text-gray-700 dark:text-white hover:bg-purple hover:text-white hover:dark:bg-purple lg:hidden transition-all ease-in-out duration-300"
+                onClick={() => setOpen(true)}
+              >
+                <span className="sr-only">Abrir menu responsive</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+              </button>
             </div>
-          </button>
-          <div className="box p-5  text-black not-italic rounded-lg relative top-2 bg-[url('/public/images/search-icon.png')] " >
-            <input type="text" name='search' placeholder='Buscar en campus CCLAM' className="src text-xl rounded-full  ring-2 px-72 duration-1000 border-transparent"
-              autoComplete='off'>
-            </input>
-          </div>
-          <div className="iconos text-white h-6 w-6 right-3/4 justify-between lg:justify-start items-center flex space-x-8  top-10 ">
-            <button type="button" className="button" >
-              <svg xmlns="http://www.w3.org/2000/svg" className="icono h-7 w-7 right-3/4 justify-between lg:justify-start items-center flex space-x-8  top-10 " viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-              </svg>
-            </button>
-            <button type="button" className="button ">
-              <svg xmlns="http://www.w3.org/2000/svg" className="icono1 h-7 w-7  right-3/4 flex justify-between lg:justify-start items-center space-x-8  " viewBox="0 0 20 20" fill="currentColor">
-                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-              </svg>
-            </button>
-            <button type="button" className="button ">
-              <svg xmlns="http://www.w3.org/2000/svg" className="icono2 h-7 w-7 right-3/4 flex justify-between lg:justify-start items-center space-x-8 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </button>
-          </div>
-          {
-            session ?
-              <button type="button" onClick={() => signOut()} className="text absolute top-7 right-10 text-white bg-purple bg-center bg-cover rounded-full h-9 w-9 font-bold">
-                {session.user?.email?.substring(0, 1).toLocaleUpperCase()}
+            <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+              <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
+                <img
+                  className="block lg:hidden h-10 w-auto"
+                  src="/images/cclamlogotipo.png"
+                  alt="Logo"
+                />
+                <img
+                  className="hidden lg:block h-10 w-auto"
+                  src="/images/cclamlogotipo.png"
+                  alt="Logo"
+                />
+              </div>
+              <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
+                <div className="h-full flex space-x-8">
+                  {navigation.categories.map((category, sec_cat) => (
+                    <Popover key={sec_cat} className="flex">
+                      {({ open }) => (
+                        <>
+                          <div className="relative flex">
+                            <Popover.Button
+                              className={classNames(
+                                open
+                                  ? 'border-indigo-600 text-indigo-600'
+                                  : 'border-transparent ',
+                                'text-gray-700 dark:text-gray-300 hover:text-purple hover:dark:text-white relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px '
+                              )}
+                            >
+                              {category.name}
+                            </Popover.Button>
+                          </div>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            <Popover.Panel className="absolute z-50 top-full inset-x-0 text-sm text-gray-300">
+                              <div className="absolute inset-0 top-1/2 bg-purple dark:bg-darkblue shadow" aria-hidden="true" />
+                              <div className="relative bg-purple dark:bg-slate-900 rounded-md">
+                                <div className="max-w-7xl mx-auto px-8 py-10">
+                                  <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
+                                    {category.sections.map((section, sec_k) => (
+                                      <div key={sec_k}>
+                                        <p id={`${section.name}-heading`} className="font-medium text-white ">
+                                          {section.name}
+                                        </p>
+                                        <ul
+                                          role="list"
+                                          aria-labelledby={`${section.name}-heading`}
+                                          className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                        >
+                                          {section.items.map((item) => (
+                                            <li key={item.name} className="flex">
+                                              <a href={item.href} className="hover:text-white">
+                                                {item.name}
+                                              </a>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </Popover.Panel>
+                          </Transition>
+                        </>
+                      )}
+                    </Popover>
+                  ))}
+                </div>
+              </Popover.Group>
+              {/* <div className="hidden sm:block sm:ml-6 my-auto">
+                <div className="flex space-x-4">
+                  <button
+                    className={'text-gray-700 dark:text-gray-300 hover:text-purple hover:dark:text-white px-3 py-2 rounded-md text-sm'}
+                  >
+                    Categorias
+                  </button>
+                </div>
+              </div> */}
+              <div className="hidden sm:flex w-full justify-center ml-3">
+                <label className="relative block mx-auto w-8/12 my-auto group">
+                  <span className="sr-only">Buscar</span>
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-300 " viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                    </svg>
+                  </span>
+                  <input type="text"
+                    placeholder={"Buscar en campus CCLAM"}
+                    className="bg-white rounded-full pl-12 w-full mx-auto py-2 border-1 border-gray-300 text-sm focus:ring-0 focus:border-purple text-gray-700" />
+                </label>
+              </div>
+            </div>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <OpcionesAuth />
+              <button
+                type="button"
+                className="hidden sm:block ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-purple dark:text-gray-400 dark:bg-gray-900 hover:dark:text-white transition-all ease-in-out"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              >
+                <span className="sr-only">Dark/Light</span>
+                {
+                  theme == 'dark' ?
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    :
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                }
               </button>
-              :
-              <button type="button" onClick={() => signIn()} className="text absolute top-7 right-10 text-white bg-purple bg-center bg-cover rounded-full h-9 w-9 font-bold">
-                Sign in
-              </button>
-          }
-        </nav>
-      </div>
-    </header>
+              {/* Profile dropdown */}
+              <OpcionesUsuarioAuth />
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
   )
 }
 
+const OpcionesAuth = () => {
+  const { data: session } = useSession()
+  return (<>
+    {
+      session ?
+        <OpcionesSiAuth />
+        :
+        <OpcionesNoAuth />
+    }
+  </>)
+}
+
+const OpcionesSiAuth = () => <>
+  <button
+    type="button"
+    title="Carrito de compras"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+  >
+    <span className="sr-only">Ver mi progreso</span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path d="M12 14l9-5-9-5-9 5 9 5z" />
+      <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    title="Carrito de compras"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+  >
+    <span className="sr-only">Ver carrito de compra</span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    title="Lista de deseos"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+  >
+    <span className="sr-only">Ver lista de deseos</span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  </button>
+</>
+
+const OpcionesNoAuth = () => <>
+  <button
+    type="button"
+    title="Carrito de compras"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+  >
+    <span className="sr-only">Ver carrito de compra</span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    title="Lista de deseos"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+  >
+    <span className="sr-only">Ver lista de deseos</span>
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  </button>
+</>
+
+const OpcionesUsuarioAuth = () => {
+  const { data: session } = useSession()
+  return (<>
+    {
+      session ?
+        <OpcionesUsuarioSiAuth />
+        :
+        <OpcionesUsuarioNoAuth />
+    }
+  </>)
+}
+
+const OpcionesUsuarioSiAuth = () => {
+  return (
+    <Menu as="div" className="ml-3 relative">
+      <div>
+        <Menu.Button className="bg-purple flex text-sm rounded-full hover:bg-violet-600">
+          <span className="sr-only">Abrir menu de usuario</span>
+          <img
+            className="h-8 w-8 rounded-full"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+          {/* session.user?.email?.substring(0, 1).toLocaleUpperCase() */}
+        </Menu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className={`text-center origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+          <Menu.Item>
+            {({ active }) => (
+              <a
+                href="#"
+                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+              >
+                Cerrar sesión
+              </a>
+            )}
+          </Menu.Item>
+        </Menu.Items>
+      </Transition>
+    </Menu>
+  )
+}
+
+const OpcionesUsuarioNoAuth = () => {
+  return (
+    <Menu as="div" className="ml-3 relative">
+      {({ open }) => (
+        <>
+      <div>
+        <Menu.Button className="bg-purple p-1 flex text-sm rounded-full hover:bg-violet-600">
+          <span className="sr-only">Abrir menu de usuario</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+          </svg>
+        </Menu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        show={!open}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className={`text-center origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+          <div className=" px-6 my-4">
+            <p className="text-gray-600 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
+            <div className="flex text-gray-800 text-sm justify-between text-center mt-3">
+              <button className="bg-purple text-white px-4 py-2 rounded-xl">Regístrate</button>
+              <button className="text-purple bg-purple-light bg-opacity-30 px-4 py-1 rounded-xl">Inicia Sesión</button>
+            </div>
+          </div>
+        </Menu.Items>
+      </Transition>
+      </>
+      )}
+    </Menu>
+  )
+}
