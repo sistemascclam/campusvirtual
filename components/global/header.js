@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react'
+import Link from 'next/link'
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useTheme } from 'next-themes'
@@ -532,12 +533,14 @@ const OpcionesUsuarioNoAuth = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className={`text-center origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+        <Menu.Items className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
           <div className=" px-6 my-4">
             <p className="text-gray-600 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
             <div className="flex text-gray-800 text-sm justify-between text-center mt-3">
-              <button className="bg-purple text-white px-4 py-2 rounded-xl">Regístrate</button>
-              <button className="text-purple bg-purple-light bg-opacity-30 px-4 py-1 rounded-xl">Inicia Sesión</button>
+              <Link to="/registro">
+              <a className="bg-purple text-white px-4 py-2 text-xs rounded-3xl">Regístrate</a>
+              </Link>
+              <button className="text-purple bg-purple-light bg-opacity-30 px-4 py-1 text-xs rounded-3xl">Inicia Sesión</button>
             </div>
           </div>
         </Menu.Items>
