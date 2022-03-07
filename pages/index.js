@@ -1,7 +1,7 @@
 
 import Head from 'next/head'
 import Layout, { siteTitle } from "@global/layout";
-import React from 'react';
+import React, { useRef } from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 //import { Popover, Transition } from '../node_modules/@headlessui/react'
