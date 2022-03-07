@@ -54,7 +54,7 @@ export default function Login() {
                                     </label>
                                 </div>
                                 <div className="flex flex-col items-center justify-between">
-                                    <button type="submit" className="bg-violet-700 hover:bg-purple text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                    <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         INICIAR SESIÓN
                                     </button>
                                     <p className="mt-4">ó</p>

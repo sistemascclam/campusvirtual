@@ -1,28 +1,16 @@
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
-import { signIn, signOut, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
 
 const navigation = {
   categories: [
     {
       id: 'categorias',
       name: 'Categorias',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
-        },
-        {
-          name: 'Basic Tees',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-        },
-      ],
       sections: [
         {
           id: 'clothing',
@@ -110,9 +98,15 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  const { data: session, status } = useSession()
   const { theme, setTheme } = useTheme()
   const [open, setOpen] = useState(false)
+
+  const closeMenu = () => {
+    setOpen(!open)
+  }
+
+  const { data } = useSWR('/api/public/navigation', (...args) => fetch(...args).then(res => res.json()))
+
   return (
     <>
       <nav className={`dark:bg-darkblue bg-white py-1 transition-colors ease-in-out duration-300`}><Transition.Root show={open} as={Fragment}>
@@ -142,7 +136,7 @@ export default function NavBar() {
                 <button
                   type="button"
                   className="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMenu}
                 >
                   <span className="sr-only">Close menu</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -151,7 +145,7 @@ export default function NavBar() {
                 </button>
                 <button
                   type="button"
-                  className="ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-purple dark:text-gray-400 dark:bg-gray-700 hover:dark:text-white transition-all ease-in-out"
+                  className="ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-blue-600 dark:text-gray-400 dark:bg-gray-700 hover:dark:text-white transition-all ease-in-out"
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 >
                   <span className="sr-only">Dark/Light</span>
@@ -171,75 +165,74 @@ export default function NavBar() {
               <Tab.Group as="div" className="mt-2">
                 <div className="border-b border-gray-200">
                   <Tab.List className="-mb-px flex px-4 space-x-8">
-                    {navigation.categories.map((category) => (
-                      <Tab
-                        key={category.name}
-                        className={({ selected }) =>
-                          classNames(
-                            selected ? 'text-indigo-600 dark:text-white border-indigo-600 dark:border-0' : 'text-gray-900  border-transparent',
-                            'flex-1 whitespace-nowrap py-3 px-1 border-b-2 text-base font-medium'
-                          )
-                        }
-                      >
-                        {category.name}
-                      </Tab>
-                    ))}
+                    <Tab
+                      className={({ selected }) =>
+                        classNames(
+                          selected ? 'text-blue-600 dark:text-white border-blue-600 dark:border-0' : 'text-gray-900  border-transparent',
+                          'flex-1 whitespace-nowrap py-3 px-1 border-b-2 text-base font-medium'
+                        )
+                      }
+                    >
+                      Categorías
+                    </Tab>
                   </Tab.List>
                 </div>
                 <Tab.Panels as={Fragment}>
-                  {navigation.categories.map((category) => (
-                    <Tab.Panel key={category.name} className="pt-10 pb-8 px-4 space-y-10">
-                      {category.sections.map((section, sec_k) => (
-                        <div key={sec_k}>
-                          <Disclosure defaultOpen={sec_k == 0}>
-                            {({ open }) => (
-                              <>
-                                <Disclosure.Button id={`${category.id}-${section.id}-heading-mobile`} className="text-gray-800 dark:text-white font-semibold flex w-full justify-between">
-                                  <span>{section.name}</span>
-                                  {
-                                    open ?
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                      </svg>
-                                      :
-                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                                      </svg>
-                                  }
-                                </Disclosure.Button>
-                                <Disclosure.Panel>
-                                  <ul
-                                    role="list"
-                                    aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                                    className="mt-6 flex flex-col space-y-6"
-                                  >
-                                    {section.items.map((item) => (
-                                      <li key={item.name} className="flow-root">
-                                        <a href={item.href} className="-m-2 p-2 block text-gray-500 hover:text-purple hover:dark:text-white">
-                                          {item.name}
-                                        </a>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </Disclosure.Panel>
-                              </>)}
-                          </Disclosure>
-                        </div>
-                      ))}
-                    </Tab.Panel>
-                  ))}
+                  <Tab.Panel className="pt-10 pb-8 px-4 space-y-10">
+                    {data?.map((category, sec_k) => (
+                      <div key={sec_k}>
+                        <Disclosure defaultOpen={sec_k == 0}>
+                          {({ open }) => (
+                            <>
+                              <Disclosure.Button id={`${category.id}-heading-mobile`} className="text-gray-800 dark:text-white font-semibold flex w-full justify-between">
+                                <span>{category.name}</span>
+                                {
+                                  open ?
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                    :
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                }
+                              </Disclosure.Button>
+                              <Disclosure.Panel>
+                                <ul
+                                  role="list"
+                                  aria-labelledby={`${category.id}-${category.id}-heading-mobile`}
+                                  className="mt-6 flex flex-col space-y-6"
+                                >
+                                  {category.sections.map((section) => (
+                                    <li key={section.name} className="flow-root">
+                                      <a href={section.keyword} className="-m-2 p-2 block text-gray-500 hover:text-blue-600 hover:dark:text-white">
+                                        {section.name}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </Disclosure.Panel>
+                            </>)}
+                        </Disclosure>
+                      </div>
+                    ))}
+                  </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 <div className="flow-root">
-                  <a href="#" className="-m-2 p-2 block font-medium text-gray-900 dark:text-gray-100 hover:dark:text-white">
-                    Sign in
-                  </a>
+                  <Link href="/inicio-sesion">
+                    <a href="#" className="-m-2 p-2 block font-medium text-gray-900 dark:text-gray-100 hover:dark:text-white">
+                      Ingresar
+                    </a>
+                  </Link>
                 </div>
                 <div className="flow-root">
+                  <Link href="/registro">
                   <a href="#" className="-m-2 p-2 block font-medium text-gray-900 dark:text-gray-100 hover:dark:text-white">
-                    Create account
+                    Crear cuenta
                   </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -251,7 +244,7 @@ export default function NavBar() {
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
               <button
                 type="button"
-                className="dark:bg-darkblue p-2 rounded-full text-gray-700 dark:text-white hover:bg-purple hover:text-white hover:dark:bg-purple lg:hidden transition-all ease-in-out duration-300"
+                className="dark:bg-darkblue p-2 rounded-full text-gray-700 dark:text-white hover:bg-blue-600 hover:text-white hover:dark:bg-blue-600 lg:hidden transition-all ease-in-out duration-300"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Abrir menu responsive</span>
@@ -262,84 +255,93 @@ export default function NavBar() {
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
-                <img
-                  className="block lg:hidden h-10 w-auto"
-                  src="/images/cclamlogotipo.png"
-                  alt="Logo"
-                />
-                <img
-                  className="hidden lg:block h-10 w-auto"
-                  src="/images/cclamlogotipo.png"
-                  alt="Logo"
-                />
+                <Link href={"/"}>
+                  <a>
+                    <img
+                      className="block lg:hidden h-10 w-auto"
+                      src="/images/cclamlogotipo.png"
+                      alt="Logo"
+                    />
+                  </a>
+                </Link>
+                <Link href={"/"}>
+                  <a>
+                    <img
+                      className="hidden lg:block h-10 w-auto"
+                      src="/images/cclamlogotipo.png"
+                      alt="Logo"
+                    />
+                  </a>
+                </Link>
               </div>
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="h-full flex space-x-8">
-                  {navigation.categories.map((category, sec_cat) => (
-                    <Popover key={sec_cat} className="flex">
-                      {({ open }) => (
-                        <>
-                          <div className="relative flex">
-                            <Popover.Button
-                              className={classNames(
-                                open
-                                  ? 'border-indigo-600 text-indigo-600'
-                                  : 'border-transparent ',
-                                'text-gray-700 dark:text-gray-300 hover:text-purple hover:dark:text-white relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px '
-                              )}
-                            >
-                              {category.name}
-                            </Popover.Button>
-                          </div>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
+                  <Popover className="flex">
+                    {({ open }) => (
+                      <>
+                        <div className="relative flex">
+                          <Popover.Button
+                            className={classNames(
+                              open
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent',
+                              'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:dark:border-blue-600 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
+                            )}
                           >
-                            <Popover.Panel className="absolute z-50 top-full inset-x-0 text-sm text-gray-300">
-                              <div className="absolute inset-0 top-1/2 bg-purple dark:bg-darkblue shadow" aria-hidden="true" />
-                              <div className="relative bg-purple dark:bg-slate-900 rounded-md">
-                                <div className="max-w-7xl mx-auto px-8 py-10">
-                                  <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
-                                    {category.sections.map((section, sec_k) => (
-                                      <div key={sec_k}>
-                                        <p id={`${section.name}-heading`} className="font-medium text-white ">
-                                          {section.name}
-                                        </p>
-                                        <ul
-                                          role="list"
-                                          aria-labelledby={`${section.name}-heading`}
-                                          className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                        >
-                                          {section.items.map((item) => (
-                                            <li key={item.name} className="flex">
-                                              <a href={item.href} className="hover:text-white">
-                                                {item.name}
-                                              </a>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    ))}
-                                  </div>
+                            Categorías
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          </Popover.Button>
+                        </div>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-200"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="transition ease-in duration-150"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Popover.Panel className="absolute z-50 top-full inset-x-0 text-sm text-gray-300 mt-3">
+                            <div className="absolute inset-0 top-1/2 bg-blue-600 dark:bg-darkblue shadow" aria-hidden="true" />
+                            <div className="relative bg-blue-600 dark:bg-slate-800 rounded-md">
+                              <div className="max-w-7xl mx-auto px-8 py-14">
+                                <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
+                                  {data?.map((category, sec_k) => (
+                                    <div key={sec_k}>
+                                      <p id={`${category.name}-heading`} className="font-medium text-white cursor-default">
+                                        {category.name}
+                                      </p>
+                                      <ul
+                                        role="list"
+                                        aria-labelledby={`${category.name}-heading`}
+                                        className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                      >
+                                        {category.sections.map((item) => (
+                                          <li key={item.name} className="flex">
+                                            <a href={item.keyword} className="hover:text-blue-600">
+                                              {item.name}
+                                            </a>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
-                            </Popover.Panel>
-                          </Transition>
-                        </>
-                      )}
-                    </Popover>
-                  ))}
+                            </div>
+                          </Popover.Panel>
+                        </Transition>
+                      </>
+                    )}
+                  </Popover>
                 </div>
               </Popover.Group>
               {/* <div className="hidden sm:block sm:ml-6 my-auto">
                 <div className="flex space-x-4">
                   <button
-                    className={'text-gray-700 dark:text-gray-300 hover:text-purple hover:dark:text-white px-3 py-2 rounded-md text-sm'}
+                    className={'text-gray-700 dark:text-gray-300 hover:text-blue-600 hover:dark:text-white px-3 py-2 rounded-md text-sm'}
                   >
                     Categorias
                   </button>
@@ -349,21 +351,21 @@ export default function NavBar() {
                 <label className="relative block mx-auto w-8/12 my-auto group">
                   <span className="sr-only">Buscar</span>
                   <span className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-300 " viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                     </svg>
                   </span>
                   <input type="text"
                     placeholder={"Buscar en campus CCLAM"}
-                    className="bg-white rounded-full pl-12 w-full mx-auto py-2 border-1 border-gray-300 text-sm focus:ring-0 focus:border-purple text-gray-700" />
+                    className="bg-white bg-opacity-95 rounded-full pl-12 w-full mx-auto py-2 border-1 border-gray-300 text-sm focus:ring-0 focus:border-blue-600 text-gray-700" />
                 </label>
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <OpcionesAuth />
-              <button
+              {/* <button
                 type="button"
-                className="hidden sm:block ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-purple dark:text-gray-400 dark:bg-gray-900 hover:dark:text-white transition-all ease-in-out"
+                className="hidden sm:block ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-blue-600 dark:text-gray-400 dark:bg-gray-900 hover:dark:text-white transition-all ease-in-out"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               >
                 <span className="sr-only">Dark/Light</span>
@@ -377,9 +379,9 @@ export default function NavBar() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 }
-              </button>
+              </button> */}
               {/* Profile dropdown */}
-              <OpcionesUsuarioAuth />
+              <OpcionesUsuarioAuth closeMenu={closeMenu} />
             </div>
           </div>
         </div>
@@ -404,7 +406,7 @@ const OpcionesSiAuth = () => <>
   <button
     type="button"
     title="Carrito de compras"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-blue-600 hover:dark:text-white"
   >
     <span className="sr-only">Ver mi progreso</span>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -416,7 +418,7 @@ const OpcionesSiAuth = () => <>
   <button
     type="button"
     title="Carrito de compras"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-blue-600 hover:dark:text-white"
   >
     <span className="sr-only">Ver carrito de compra</span>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -426,7 +428,7 @@ const OpcionesSiAuth = () => <>
   <button
     type="button"
     title="Lista de deseos"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-blue-600 hover:dark:text-white"
   >
     <span className="sr-only">Ver lista de deseos</span>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -439,7 +441,7 @@ const OpcionesNoAuth = () => <>
   <button
     type="button"
     title="Carrito de compras"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-blue-600 hover:dark:text-white"
   >
     <span className="sr-only">Ver carrito de compra</span>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -449,7 +451,7 @@ const OpcionesNoAuth = () => <>
   <button
     type="button"
     title="Lista de deseos"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-purple hover:dark:text-white"
+    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 dark:text-gray-400 hover:text-blue-600 hover:dark:text-white"
   >
     <span className="sr-only">Ver lista de deseos</span>
     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -458,30 +460,30 @@ const OpcionesNoAuth = () => <>
   </button>
 </>
 
-const OpcionesUsuarioAuth = () => {
+const OpcionesUsuarioAuth = ({ closeMenu }) => {
   const { data: session } = useSession()
   return (<>
     {
       session ?
         <OpcionesUsuarioSiAuth />
         :
-        <OpcionesUsuarioNoAuth />
+        <OpcionesUsuarioNoAuth closeMenu={closeMenu} />
     }
   </>)
 }
 
 const OpcionesUsuarioSiAuth = () => {
+  const { data: session } = useSession()
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
-        <Menu.Button className="bg-purple flex text-sm rounded-full hover:bg-violet-600">
+        <Menu.Button className="bg-blue-600 flex text-sm rounded-full hover:bg-violet-600">
           <span className="sr-only">Abrir menu de usuario</span>
-          <img
-            className="h-8 w-8 rounded-full"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-          {/* session.user?.email?.substring(0, 1).toLocaleUpperCase() */}
+          <span className='w-8 h-8 flex justify-center items-center'>
+          {
+          session.user?.email?.substring(0, 1).toLocaleUpperCase()
+          }
+          </span>
         </Menu.Button>
       </div>
       <Transition
@@ -510,42 +512,68 @@ const OpcionesUsuarioSiAuth = () => {
   )
 }
 
-const OpcionesUsuarioNoAuth = () => {
+const OpcionesUsuarioNoAuth = ({ closeMenu }) => {
+  const router = useRouter()
+
+  const handlLogin = (e) => {
+    e.preventDefault()
+    closeMenu()
+    // router.push("/inicio-sesion")
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    closeMenu()
+    // router.push("/registro")
+  }
+
   return (
     <Menu as="div" className="ml-3 relative">
       {({ open }) => (
         <>
-      <div>
-        <Menu.Button className="bg-purple p-1 flex text-sm rounded-full hover:bg-violet-600">
-          <span className="sr-only">Abrir menu de usuario</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-          </svg>
-        </Menu.Button>
-      </div>
-      <Transition
-        as={Fragment}
-        show={!open}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
-          <div className=" px-6 my-4">
-            <p className="text-gray-600 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
-            <div className="flex text-gray-800 text-sm justify-between text-center mt-3">
-              <Link to="/registro">
-              <a className="bg-purple text-white px-4 py-2 text-xs rounded-3xl">Regístrate</a>
-              </Link>
-              <button className="text-purple bg-purple-light bg-opacity-30 px-4 py-1 text-xs rounded-3xl">Inicia Sesión</button>
-            </div>
+          <div>
+            <Menu.Button className="bg-blue-600 p-1 flex text-sm rounded-full hover:bg-blue-700">
+              <span className="sr-only">Abrir menu de usuario</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              </svg>
+            </Menu.Button>
           </div>
-        </Menu.Items>
-      </Transition>
-      </>
+          <Transition
+            as={Fragment}
+            show={open}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items static className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+              <div className=" px-6 my-4">
+                <p className="text-gray-600 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
+                <div className="flex text-gray-800 text-sm justify-between text-center mt-3">
+                  <Menu.Item>
+                    <Link
+                      href="/registro">
+                      <a className="bg-blue-600 text-white px-4 py-2 text-xs rounded-3xl">
+                        Regístrate
+                      </a>
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Link
+                      href="/inicio-sesion">
+                      <a className="text-blue-600 bg-blue-300 bg-opacity-30 px-4 py-2 text-xs rounded-3xl">
+                        Inicia Sesión
+                      </a>
+                    </Link>
+                  </Menu.Item>
+                </div>
+              </div>
+            </Menu.Items>
+          </Transition>
+        </>
       )}
     </Menu>
   )
