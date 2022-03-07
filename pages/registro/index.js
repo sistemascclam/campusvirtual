@@ -65,7 +65,7 @@ export default function Registro() {
                                 <div className='text-center py-6 w-5/6 mx-auto' >
                                     <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
                                         <span>¿Ya tienes cuenta?</span>
-                                        <Link href="/auth/login">
+                                        <Link href="/inicio-sesion">
                                             <a> <span className='text-sky-500 underline'>Inicia sesión aquí</span></a>
                                         </Link>
                                     </div>
