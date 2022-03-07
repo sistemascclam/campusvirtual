@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
-import { useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/router'
@@ -477,7 +477,7 @@ const OpcionesUsuarioSiAuth = () => {
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
-        <Menu.Button className="bg-blue-600 flex text-sm rounded-full hover:bg-violet-600">
+        <Menu.Button className="bg-blue-600 flex text-sm rounded-full hover:bg-blue-700">
           <span className="sr-only">Abrir menu de usuario</span>
           <span className='w-8 h-8 flex justify-center items-center'>
           {
@@ -498,12 +498,12 @@ const OpcionesUsuarioSiAuth = () => {
         <Menu.Items className={`text-center origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
           <Menu.Item>
             {({ active }) => (
-              <a
-                href="#"
+              <button
+                onClick={() => signOut()} 
                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
               >
                 Cerrar sesión
-              </a>
+              </button>
             )}
           </Menu.Item>
         </Menu.Items>

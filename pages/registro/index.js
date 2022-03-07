@@ -28,7 +28,7 @@ export default function Login() {
             password: event.target.password.value,
             callbackUrl: `${window.location.origin}`,
         });
-
+        console.log(res);
         if (res?.error) {
             setError(res.error);
         } else {
