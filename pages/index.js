@@ -4,31 +4,10 @@ import Layout, { siteTitle } from "@global/layout";
 import React from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Popover, Transition } from '../node_modules/@headlessui/react'
+//import { Popover, Transition } from '../node_modules/@headlessui/react'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 
-//import { ChevronDownIcon } from '../node_modules/@heroicons/react/solid'
-//import { Fragment } from 'react'
-/*const solutions = [
-  {
-    name: 'Insights',
-    description: 'Measure actions your users take',
-    href: '##',
-    icon: IconOne,
-  },
-  {
-    name: 'Automations',
-    description: 'Create your own targeted content',
-    href: '##',
-    icon: IconTwo,
-  },
-  {
-    name: 'Reports',
-    description: 'Keep track of your growth',
-    href: '##',
-    icon: IconThree,
-  },
-]*/
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -90,63 +69,18 @@ export default function Home() {
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
   </svg>;
 
+//<Button color="lightBlue" ref={buttonRef} ripple="light" onMouseOver={MouseOut} onMouseOut={MouseOut}>
 
-
+const buttonRef = useRef();
 
   return (
+    
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-
       <div className="min-h-screen bg-darkblue text-white p-10 w-full ">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        {/*<Popover className="relative">
-            <Popover.Button>ejemplo</Popover.Button>
-            <Popover.Panel className="absolute z-10 bg-slate-50 text-black w-80 py-7 px-7 rounded">
-              <div className="grid grid-cols-1 ">
-
-                <b>Aprende Javascript Es9, HTML, CSS3 y NodeJS desde cero </b><br/>
-                <span className='text-xs text-green-600'>Actualizado <b>Julio de 2022</b></span>
-                <span className='text-xs my-3'>Nivel básico. Subtitulos</span>
-                <span className='text-sm py-3'>Aprende a programar con Javascript sin conocimiento
-                previo en el explorador web y 
-                en el servicio con NodeJS</span>
-                <div className='text-sm '>
-                  <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                  <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                  <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
-                </div>
-                <div className="flex items-center justify-between py-1">
-                    <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 rounded-lg w-48 focus:outline-none focus:shadow-outline" >
-                        Añadir a la cesta
-                    </button>
-                    <div className=' mx-auto' >
-                      <div className=' py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-600'>
-                        {heart}
-                      </div>
-                    </div>
-                </div>
-              </div>
-            </Popover.Panel>
-        </Popover>*/}
-        {
+      {
           session ?
             <div>
               <b>Hola, {" "}
@@ -226,9 +160,188 @@ export default function Home() {
         <div className='text-xl  py-6 font-bold '>
           Recomendaciones para llevar un curso
         </div>
-        <Carousel responsive={responsive}>
+
+        <Carousel responsive={responsive} className="  ">
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                    <a>
+                    <div  className='bg-slate-900 px-0 '>
+                      <img
+                          className=' rounded-2xl '
+                          src="../images/ejemplo1.JPG"
+                          alt="Logo"
+                      /> 
+                    </div>
+                    <div className='py-2 px-3'>
+                      <div>
+                        <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9, HTML,
+                        CSS3 y NodeJS desde cero es otra descripción para lsdkfjsldf </span>
+                        <span className='text-xs text-slate-400 leading-5 '>Nicolas Schumman</span>
+                      </div>
+                      <div className='flex'>
+                        <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                      </div>
+                      <div className='py-3'>
+                        S/<span className='text-base'>157.00</span>
+                      </div>
+                    </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/ejemplo2.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg  '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'>  
+                <div className=' bg-slate-900  rounded-2xl  '> 
+                <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/ejemplo3.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg  '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/ejemplo1.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg  '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'>
+
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <div className='bg-slate-900 px-0 '>
+                    <img
+                      className=' rounded-2xl '
+                      src="../images/ejemplo2.JPG"
+                      alt="Logo"
+                    />
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg  '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'>  
+                <div className=' bg-slate-900  rounded-2xl  '> 
+                <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                      className=' rounded-2xl '
+                      src="../images/ejemplo3.JPG"
+                      alt="Logo"
+                    />
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   " >
+            <div className="box-border  p-1  rounded-l-xl   ">
               <div className='mx-auto py-6 p-2'>
 
                 <div className=' bg-slate-900  rounded-2xl  '>
@@ -240,14 +353,14 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
-                    <div className='py-3   ' data-bs-content="Disabled popover" >
+                    <div className='py-3'>
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
@@ -255,36 +368,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <Popover className="relative">
-            <Popover.Button>ejemplo</Popover.Button>
-            <Popover.Panel className="absolute z-10 bg-slate-50 text-black w-80 py-7 px-7 rounded">
-              <div className="grid grid-cols-1 ">
-                <b>Aprende Javascript Es9, HTML, CSS3 y NodeJS desde cero </b><br />
-                <span className='text-xs text-green-600'>Actualizado <b>Julio de 2022</b></span>
-                <span className='text-xs my-3'>Nivel básico. Subtitulos</span>
-                <span className='text-sm py-3'>Aprende a programar con Javascript sin conocimiento
-                  previo en el explorador web y
-                  en el servicio con NodeJS</span>
-                <div className='text-sm '>
-                  <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                  <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                  <div className='py-1'>{check} CSS grid, la grilla de CSS</div>
-                </div>
-                <div className="flex items-center justify-between py-1">
-                  <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 rounded-lg w-48 focus:outline-none focus:shadow-outline" >
-                    Añadir a la cesta
-                  </button>
-                  <div className=' mx-auto' >
-                    <div className=' py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-600'>
-                      {heart}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Popover.Panel>
-          </Popover>
-
           <div className='  rounded-lg'>
             <div className="box-border  p-1  rounded-l-xl   ">
               <div className='mx-auto py-6 p-2'>
@@ -298,10 +381,10 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs'>Aprende Javascript ES9, HTML,
+                    CSS3 y NodeJS desde cero</span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -340,188 +423,19 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo1.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo2.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo3.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo1.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo2.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='  rounded-lg'>
-            <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
-                <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
-                    <img
-                      className=' rounded-2xl '
-                      src="../images/ejemplo3.JPG"
-                      alt="Logo"
-                    />
-                  </div>
-                  <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
-                    <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
-                    </div>
-                    <div className='py-3'>
-                      S/<span className='text-base'>157.00</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          </div> 
         </Carousel>
-        <div className='py-8'></div>
         <div className='text-xl  py-6 font-bold'>
           Porque viste "<span className='text-cyan-400'>Introducción a juegos en 3D en web</span>"
         </div>
         <Carousel responsive={responsive}>
-          <div className='  rounded-lg'>
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -529,27 +443,57 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9 Aprende Javascript ES9, HTML, Aprende Javascript ES9, HTML,   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
                     </div>
                     <div className='py-3'>
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -557,10 +501,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -568,16 +510,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -585,10 +530,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9 Aprende Javascript ES9, HTML, Aprende Javascript ES9, HTML,   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -596,16 +539,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -613,10 +559,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -624,16 +568,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -641,10 +588,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -652,16 +597,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -669,10 +617,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -680,16 +626,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -697,10 +646,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -708,16 +655,19 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
                       className=' rounded-2xl '
                       src="../images/Captura.JPG"
@@ -725,10 +675,8 @@ export default function Home() {
                     />
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
                       <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
                     </div>
@@ -736,41 +684,161 @@ export default function Home() {
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='  rounded-lg'>
+          </div> 
+          <div className='  rounded-lg '>
             <div className="box-border  p-1  rounded-l-xl   ">
-              <div className='mx-auto py-6 p-2'>
-
+              <div className='mx-auto py-6 p-2'> 
                 <div className=' bg-slate-900  rounded-2xl  '>
-                  <div className='bg-slate-900 px-0 '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
                     <img
-                      className=' rounded-2xl '
-                      src="../images/Captura.JPG"
-                      alt="Logo"
-                    />
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
                   </div>
                   <div className='py-2 px-3'>
-                    <span className='text-xs'>Aprende Javascript ES9, HTML,<br />
-                      CSS3 y NodeJS desde cero</span>
-                    <br /><span className='text-xs text-slate-400'>Nicolas Schumman</span>
-                    <br />
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
                     <div className='flex'>
-                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
                     </div>
                     <div className='py-3'>
                       S/<span className='text-base'>157.00</span>
                     </div>
                   </div>
+                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div className='  rounded-lg '>
+            <div className="box-border  p-1  rounded-l-xl   ">
+              <div className='mx-auto py-6 p-2'> 
+                <div className=' bg-slate-900  rounded-2xl  '>
+                  <Link href="/curso">
+                  <a>
+                  <div  className='bg-slate-900 px-0 '>
+                    <img
+                        className=' rounded-2xl '
+                          src="../images/Captura.JPG"
+                        alt="Logo"
+                    /> 
+                  </div>
+                  <div className='py-2 px-3'>
+                    <span className='text-xs line-clamp-2 leading-5 h-10'>Aprende Javascript ES9   </span>
+                    <span className='text-xs text-slate-400'>Nicolas Schumman</span>
+                    <div className='flex'>
+                      <span className='text-xs flex text-amber-400'> 4.6 {star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-xs text-slate-400'>(3.7)</span> 
+                    </div>
+                    <div className='py-3'>
+                      S/<span className='text-base'>157.00</span>
+                    </div>
+                  </div>
+                  </a>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>  
         </Carousel>
       </div>
+
     </Layout>
+    
   )
 }

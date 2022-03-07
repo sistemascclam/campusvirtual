@@ -43,17 +43,17 @@ export default function Curso(){
                 <title>{siteTitle}</title>
             </Head>
 
-                <div className="  min-h-screen bg-darkblue text-white p-10 w-full ">
+                <div className="  min-h-screen bg-darkblue text-white p-10 w-full px-14">
                     <div className='lg:flex xl:flex'>
                         <div className="bg-darkblue text-white lg:w-1/2  p-4 w-full">
                             <div className='  rounded-lg'>
                                 <div className="box-border  p-1  rounded-l-xl   ">
-                                    <div className='mx-auto py-6 p-2'> 
+                                    <div className='mx-auto py-5'> 
                                         <div className=' bg-slate-900  rounded-2xl  '>
                                             <div  className='bg-slate-900 px-0 '>
                                                 <img
                                                     className=' rounded-2xl w-full'
-                                                    src="../images/ejemplo2.JPG"
+                                                    src="../images/captura2.jpg"
                                                     alt="Logo"
                                                 /> 
                                             </div>
@@ -65,7 +65,7 @@ export default function Curso(){
                         <div className="bg-darkblue text-white lg:w-1/2  p-4 w-full">
                             <div className='py-2 px-3 '>
                                 <div className='flex py-2'>
-                                    <span className='  flex text-amber-400'>{star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-sm text-slate-400'>(3.7)</span> 
+                                    <span className='  flex text-amber-400'>{star_full} {star_full} {star_full} {star_full} {star} </span> <span className='text-sm text-slate-400 my-auto px-2'>(3.7)</span> 
                                 </div>
                                 <span className='text-3xl font-semibold'>Aprende Javascript ES9, HTML, 
                                 CSS3 y NodeJS desde cero</span>
@@ -75,15 +75,24 @@ export default function Curso(){
                                 en el servicio con NodeJS
                                 </span> 
                                 <div className="flex items-center justify-between py-5">
-                                    <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 rounded-lg w-3/4 focus:outline-none focus:shadow-outline" >
-                                        Añadir a la cesta
-                                    </button>
-                                    <div className='w-1/6' >
-                                        <div className=' py-2 px-7 text-xs rounded-lg border-solid border-2 border-slate-600 '>
+                                    <div className='w-full'>
+                                        <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" >
+                                            Añadir a la cesta
+                                        </button>
+                                    </div>
+                                    <div className='w-1/6  px-1 ' >
+                                        <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' >
+                                            <span class="block   mx-auto text-center   w-fit">
+                                                {heart}
+                                            </span>
+                                        </div>
+                                        
+                                        
+                                        {/*<div className=' py-2 px-7 text-xs rounded-lg border-solid border-2 border-slate-600 '>
                                             <div className='w-full justify-center'>
                                                 {heart}
                                             </div>
-                                        </div> 
+                                        </div>*/} 
                                     </div>
                                 </div>
                                 <div className='block py-3 px-2  text-center rounded-lg  border-solid border-2 border-slate-600'>
@@ -127,32 +136,41 @@ export default function Curso(){
                         <span className='text-xl font-semibold' >Calificaciones de estudiantes</span> 
                         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2 my-2 text-xs" >
                             <div className='py-0 lg:py-6'> 
-                                <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-3 my-2 text-xs" >
-                                    <div className='py-0 lg:py-6 text-center'> 
-                                        <div className='text-5xl font-bold'>4.6</div>
-                                        <div className='  flex text-amber-400 w-full justify-center'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </div>  
-                                        <div className='py-2'>Valoración del curso</div>
+                                <div className="flex  gap-3 my-2 text-xs" >
+                                    <div className='py-0 lg:py-6 '>
+                                        <div className='items-start'> 
+                                        <div className='text-center'>
+                                            <div className='text-5xl font-bold'>4.6</div>
+                                            <div className='  flex text-amber-400 w-full justify-center'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </div>  
+                                            <div className='py-2'>Valoración del curso</div>
+                                        </div>
+                                        </div>
                                     </div>
-                                    <div className='py-0 lg:py-6'> 
-                                        <div className='py-2'>
-                                            <div className="w-full bg-gray-200 h-1 ">
-                                                <div className="bg-blue-600 h-1 w-4/5 "  ></div>
-                                            </div> 
+                                    <div className='py-0 lg:py-6 w-1/3'> 
+                                        <div className='py-1'>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div class="bg-blue-600 h-2.5 rounded-full w-4/5" ></div>
+                                            </div>
                                         </div>
-                                        <div className='py-2'>
-                                            <div className="w-full bg-gray-200 h-1 ">
-                                                <div className="bg-blue-600 h-1 w-1/3 "  ></div>
-                                            </div> 
+                                        <div className='py-1'>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/3" ></div>
+                                            </div>
                                         </div>
-                                        <div className='py-2'>
-                                            <div className="w-full bg-gray-200 h-1 ">
-                                                <div className="bg-blue-600 h-1 w-1/5 "  ></div>
-                                            </div> 
+                                        <div className='py-1'>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/4" ></div>
+                                            </div>
                                         </div>
-                                        <div className='py-2'>
-                                            <div className="w-full bg-gray-200 h-1 ">
-                                                <div className="bg-blue-600 h-1 w-1/6 "  ></div>
-                                            </div> 
+                                        <div className='py-1'>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div class="bg-blue-600 h-2.5 rounded-full  w-1/5" ></div>
+                                            </div>
+                                        </div>
+                                        <div className='py-1'>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/6" ></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className='py-0 lg:py-6'>  
@@ -324,7 +342,6 @@ export default function Curso(){
                                         </div> 
                                     </div>
                                 </div> 
-
                             </div>
                         </div>
                     </div>
