@@ -6,7 +6,7 @@ import Layout, { siteTitle } from "@global/layout"
 import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 
-export default function Login() {
+export default function Login({ csrfToken }) {
     const router = useRouter();
     const [error, setError] = useState(null);
     const [tipo, setTipo] = useState('password');
@@ -22,19 +22,17 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await signIn('credentials', {
+        const res = await signIn('email', {
             redirect: false,
             email: event.target.email.value,
-            password: event.target.password.value,
             callbackUrl: `${window.location.origin}`,
         });
-        console.log(res);
         if (res?.error) {
             setError(res.error);
         } else {
             setError(null);
         }
-        if (res.url) router.push(res.url);
+        if (res?.url) router.push(res.url);
     }
 
     return (
@@ -52,35 +50,28 @@ export default function Login() {
                                 alt="Logo"
                             />
                         </div>
-
                         <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
                         <div className="w-full max-w-xs mx-auto">
                             <div className="text-red-400 text-md text-center rounded p-2">
                                 {error}
                             </div>
                             <form onSubmit={handleSubmit}>
+                                <input
+                                    name="csrfToken"
+                                    type="hidden"
+                                    defaultValue={csrfToken}
+                                />
                                 <div className="mb-4">
                                     <label className="block text-slate-300 text-sm mb-2" >
-                                        Correo electrónico ingresado
+                                        Correo electrónico
                                     </label>
                                     <input type="email" id="email" name="email" placeholder="ejm@gmail.com" autoComplete='off' required className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
-                                <div className="mb-6">
-                                    <div className='py-1'>
-                                        <span className="text-slate-300 text-sm ">Crea tu contraseña</span>
-                                    </div>
-                                    <label className="relative block">
-                                        <span className="absolute inset-y-0 right-3 flex items-center pl-2" onClick={() => setTipo(tipo == 'password' ? 'text' : 'password')}>
-                                            {tipo == 'password' ? eye : eyes_off}
-                                        </span>
-                                        <input type={tipo} placeholder="******************" name="password" id="password" required className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
-                                    </label>
+                                <div className="flex flex-col items-center justify-between">
+                                    <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                        REGISTRARSE
+                                    </button>
                                 </div>
-                            <div className="flex flex-col items-center justify-between">
-                                <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
-                                    REGISTRARSE
-                                </button>
-                            </div>
                             </form>
                             <div className='text-center text-xs py-5'>
                                 <span className='text-slate-400'>Al crear una cuenta estás aceptando los</span> <br /> <span className='text-gray-200 underline'>Términos de Servicio</span> <span className='text-slate-400'> y</span> <span className='text-gray-200 underline'> Privacidad</span>

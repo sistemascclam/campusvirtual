@@ -3,19 +3,55 @@ import Link from 'next/link'
 
 import Layout, { siteTitle } from "@global/layout"
 import React, { useState } from 'react'
+import { signIn, getCsrfToken } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
-export default function Login() {
+export default function Login({ csrfToken }) {
+    const router = useRouter();
     const [tipo, setTipo] = useState('password');
+    const [error, setError] = useState(null);
 
     var eye = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
     </svg>;
 
-
     var eyes_off = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
     </svg>;
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const res = await signIn('credentials', {
+            redirect: false,
+            email: event.target.email.value,
+            password: event.target.password.value,
+            callbackUrl: `${window.location.origin}`,
+        });
+        console.log(res);
+        if (res?.error) {
+            setError(res.error);
+        } else {
+            setError(null);
+        }
+        if (res?.url) router.push(res.url);
+    }
+
+    const handleLoginWGoogle = async (event) => {
+        event.preventDefault();
+        const res = await signIn('google', {
+            redirect: false,
+            callbackUrl: `${window.location.origin}`,
+        });
+        if (res?.error) {
+            setError(res.error);
+        } else {
+            setError(null);
+        }
+        if (res?.url) {
+            router.push(res.url);
+        }
+    }
 
     return (
         <Layout>
@@ -35,12 +71,20 @@ export default function Login() {
                                 />
                             </div>
                             <div className='text-left text-slate-100 text-sm'><b>Bienvenido de nuevo a tu Campus CCLAM</b></div>
-                            <form className="rounded pt-4 ">
+                            <div className="text-red-400 text-md text-center rounded p-2">
+                                {error}
+                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    name="csrfToken"
+                                    type="hidden"
+                                    defaultValue={csrfToken}
+                                />
                                 <div className="mb-4">
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Correo electrónico
                                     </label>
-                                    <input type="text" autoComplete='off' id="username" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    <input type="text" autoComplete='off' id="email" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="mb-6">
                                     <div className='py-1'>
@@ -57,7 +101,10 @@ export default function Login() {
                                     <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         INICIAR SESIÓN
                                     </button>
-                                    <p className="mt-4">ó</p>
+                                    <p className="my-4">ó</p>
+                                    <button onClick={handleLoginWGoogle} className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                        Inicia con google
+                                    </button>
                                 </div>
                                 <div className='text-center py-4 w-5/6 mx-auto' >
                                     <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
@@ -78,4 +125,12 @@ export default function Login() {
             </div>
         </Layout>
     );
+}
+
+export async function getServerSideProps(context) {
+    return {
+        props: {
+            csrfToken: await getCsrfToken(context),
+        },
+    };
 }
