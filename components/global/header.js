@@ -256,18 +256,18 @@ export default function NavBar() {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
-                  <a>
+                  <a className='block lg:hidden '>
                     <img
-                      className="block lg:hidden h-10 w-auto"
+                      className="h-10 w-auto"
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                     />
                   </a>
                 </Link>
                 <Link href={"/"}>
-                  <a className='bg-white rounded-full w-12 h-12 flex items-center justify-center'>
+                  <a className='hidden lg:flex bg-white rounded-full w-12 h-12  items-center justify-center'>
                     <img
-                      className="hidden lg:block h-7 w-auto"
+                      className="h-7 w-auto"
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                     />
