@@ -38,7 +38,7 @@ export default function Login({ csrfToken }) {
     return (
         <Layout>
             <Head>
-                <title>Inicio de Sesión | {siteTitle}</title>
+                <title>Registro | {siteTitle}</title>
             </Head>
             <div className="flex min-h-screen bg-darkblue">
                 <div className="text-white lg:w-1/2 p-4 w-full">
