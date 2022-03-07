@@ -109,7 +109,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className={`dark:bg-darkblue bg-white py-1 transition-colors ease-in-out duration-300`}><Transition.Root show={open} as={Fragment}>
+      <nav className={`dark:bg-slate-900 bg-white py-1 transition-colors ease-in-out duration-300 fixed inset-x-0 z-50 shadow-xl`}><Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -265,9 +265,9 @@ export default function NavBar() {
                   </a>
                 </Link>
                 <Link href={"/"}>
-                  <a>
+                  <a className='bg-white rounded-full w-12 h-12 flex items-center justify-center'>
                     <img
-                      className="hidden lg:block h-10 w-auto"
+                      className="hidden lg:block h-7 w-auto"
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                     />
@@ -363,7 +363,7 @@ export default function NavBar() {
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <OpcionesAuth />
-              {/* <button
+              <button
                 type="button"
                 className="hidden sm:block ml-2 p-2 rounded-xl text-gray-500 bg-gray-200 hover:text-blue-600 dark:text-gray-400 dark:bg-gray-900 hover:dark:text-white transition-all ease-in-out"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -379,7 +379,7 @@ export default function NavBar() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 }
-              </button> */}
+              </button>
               {/* Profile dropdown */}
               <OpcionesUsuarioAuth closeMenu={closeMenu} />
             </div>

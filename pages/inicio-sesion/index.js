@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import Layout, { siteTitle } from "@global/layout"
+import Layout, { siteTitle } from "@global/layoutwoheader"
 import React, { useState } from 'react'
 import { signIn, getCsrfToken } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -64,11 +64,15 @@ export default function Login({ csrfToken }) {
 
                         <div className="w-full max-w-xs mx-auto">
                             <div className='mx-auto py-6 '>
-                                <img
-                                    className=" h-12 mx-auto "
-                                    src="../../images/cclamlogotipo.png"
-                                    alt="Logo"
-                                />
+                                <Link href={"/"}>
+                                    <a>
+                                        <img
+                                            className="h-12 mx-auto "
+                                            src="images/cclamlogotipo.png"
+                                            alt="Logo"
+                                        />
+                                    </a>
+                                </Link>
                             </div>
                             <div className='text-left text-slate-100 text-sm'><b>Bienvenido de nuevo a tu Campus CCLAM</b></div>
                             <div className="text-red-400 text-md text-center rounded p-2">

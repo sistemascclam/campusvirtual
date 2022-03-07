@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import { signIn, getCsrfToken } from 'next-auth/react';
-import Layout, { siteTitle } from "@global/layout"
+import Layout, { siteTitle } from "@global/layoutwoheader"
 import React, { useState } from 'react'
 import { useRouter } from 'next/router';
 
@@ -44,11 +44,15 @@ export default function Login({ csrfToken }) {
                 <div className="text-white lg:w-1/2 p-4 w-full">
                     <div className='py-12 px-4 sm:px-6 lg:px-8'>
                         <div className='mx-auto py-6 '>
-                            <img
-                                className="h-12 mx-auto "
-                                src="images/cclamlogotipo.png"
-                                alt="Logo"
-                            />
+                            <Link href={"/"}>
+                                <a>
+                                    <img
+                                        className="h-12 mx-auto "
+                                        src="images/cclamlogotipo.png"
+                                        alt="Logo"
+                                    />
+                                </a>
+                            </Link>
                         </div>
                         <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
                         <div className="w-full max-w-xs mx-auto">
