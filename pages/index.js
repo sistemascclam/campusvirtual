@@ -83,7 +83,7 @@ const buttonRef = useRef();
       {
           session ?
             <div>
-              <b>Hola, {" "}
+              <b>Hola, {" "} 
                 {
                   session.user?.name
                 }

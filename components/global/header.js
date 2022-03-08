@@ -109,7 +109,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className={`dark:bg-slate-900 bg-white py-1 transition-colors ease-in-out duration-300 fixed inset-x-0 z-50 shadow-xl`}><Transition.Root show={open} as={Fragment}>
+      <nav className={`dark:bg-slate-900 bg-white py-1 transition-colors ease-in-out duration-300  inset-x-0 z-50 shadow-xl`}><Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -256,7 +256,7 @@ export default function NavBar() {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
-                  <a>
+                  <a className='bg-white rounded-full '>
                     <img
                       className="block lg:hidden h-10 w-auto"
                       src="/images/cclamlogotipo.png"
