@@ -73,3 +73,11 @@ generator client {
     active        Boolean @default(true)
     category      Category[] @relation(references: [id])
   }
+
+
+
+
+
+
+
+  
