@@ -30,7 +30,7 @@ export default NextAuth({
         // (i.e., the request IP address)
         const res = await fetch("http://localhost:3000/api/login", {
           method: 'POST',
-          body: JSON.stringify(credentials),
+          body: JSON.stringify(credentials), 
           headers: { "Content-Type": "application/json" }
         })
         const user = await res.json()
@@ -51,6 +51,9 @@ export default NextAuth({
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD
+        },
+        tls: {
+          rejectUnauthorized : false
         }
       },
       from: process.env.EMAIL_FROM,
