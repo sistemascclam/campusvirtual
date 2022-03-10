@@ -89,7 +89,7 @@ export default function Home() {
             <div className='p-10'>
               <b>Hola, {" "}
                 {
-                  session.user?.name
+                  session.user?.email
                 }
               </b>
             </div> : ""
