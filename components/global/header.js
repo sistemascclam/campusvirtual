@@ -234,9 +234,9 @@ export default function NavBar() {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
-                  <a className='block lg:hidden '>
+                  <a className='bg-white rounded-full '>
                     <img
-                      className="h-10 w-auto"
+                      className="block lg:hidden h-10 w-auto"
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                     />

@@ -72,4 +72,27 @@ generator client {
     description   String?
     active        Boolean @default(true)
     category      Category[] @relation(references: [id])
+    curso      Curso[] @relation(references: [id])
+  }
+
+// NUEVAS TABLAS
+  model Curso {
+    id            Int    @id @default(autoincrement())
+    title         String
+    description   String?
+    name          String
+    valuation     Float?
+    image         String?
+    price         Float?
+    registration_date   DateTime
+    active        Boolean @default(true)
+    section      Section[] @relation(references: [id])
+    cursoKeyword CursoKeyword[] @relation(references: [id])
+    ruta          String? @unique
+  }
+
+  model CursoKeyword {
+    id            Int    @id @default(autoincrement()) 
+    name          String?
+    curso Curso[] @relation(references: [id])
   }
