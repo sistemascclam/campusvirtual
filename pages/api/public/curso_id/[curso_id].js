@@ -3,9 +3,10 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export default async function handle(req, res) {
-  const curso = await prisma.curso.findMany({
+    const  {curso_id}  = req.query
+    const curso = await prisma.curso.findUnique({
     where: {
-      active: true,
+      id: parseInt(curso_id),
     }, 
     select: {
       id: true,
@@ -18,5 +19,8 @@ export default async function handle(req, res) {
       registration_date: true,
     } 
   })
+  //res.json(curso)
   res.json(curso)
+
+  //res.end(req.query)
 }
