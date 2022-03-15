@@ -1,9 +1,8 @@
 module.exports = {
-  darkMode: 'class',
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      'poppins': ['Poppins'],
+      'poppins': ['Nunito'],
     },
     extend: {
       colors:{
@@ -11,6 +10,10 @@ module.exports = {
         purple:'#702CDD',
         "purple-light":'#a67ee8',
         celeste:'#009BDA',
+        footer:'#000217'
+      },
+      zIndex:{
+        '2000': '2000',
       }
     },
   },
