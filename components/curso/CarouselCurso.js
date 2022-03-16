@@ -20,7 +20,7 @@ const responsive = {
     },
     mobile: {
         breakpoint: { max: 464, min: 0 },
-        items: 2
+        items: 1
     }
 };
 
@@ -38,8 +38,8 @@ export default function CarouselCurso({ arrayC }) {
                 <Carousel responsive={responsive} >
                     {arrayC?.map((Curso, sec_k) => (
                         <div className='  rounded-lg ' key={sec_k}>
-                            <div className="box-border  p-1  rounded-l-xl   ">
-                                <div className='mx-auto py-6 p-2'>
+                            <div className="box-border rounded-l-xl   ">
+                                <div className='mx-auto py-6 lg:pr-6'>
                                     <div className=' bg-slate-800 rounded-2xl shadow-xl'>
                                         <Link href={"/curso/" + Curso.id}>
                                             <a>

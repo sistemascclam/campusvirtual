@@ -158,44 +158,37 @@ export default function NavBar() {
                         </svg>
                       </button>
                     </label>
-                    {data?.map((category, sec_k) => (
-                      <div key={sec_k}>
-                        <Disclosure defaultOpen={sec_k == 0}>
-                          {({ open }) => (
-                            <>
-                              <Disclosure.Button id={`${category.id}-heading-mobile`} className="text-white font-semibold flex w-full justify-between">
-                                <span>{category.name}</span>
-                                {
-                                  open ?
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
-                                    :
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                                    </svg>
-                                }
-                              </Disclosure.Button>
-                              <Disclosure.Panel>
-                                <ul
-                                  role="list"
-                                  aria-labelledby={`${category.id}-${category.id}-heading-mobile`}
-                                  className="mt-6 flex flex-col space-y-6"
-                                >
-                                  {category.sections.map((section) => (
-                                    <li key={section.name} className="flow-root">
-                                      <a href={section.keyword} className="-m-2 p-2 block text-white">
-                                        {section.name}
-                                      </a>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </Disclosure.Panel>
-                            </>)}
-                        </Disclosure>
-                      </div>
-                    ))}
+                    <div>
+                      <Disclosure defaultOpen={true}>
+                        <span className='text-gray-400 text-sm'>Especialidades</span>
+                            <Disclosure.Panel>
+                              <ul
+                                role="list"
+                                aria-labelledby={`especialidades-heading-mobile`}
+                                className="mt-6 flex flex-col space-y-6"
+                              >
+                                {data?.map((category, sec_k) => (
+                                  <li key={category.name} className="flow-root">
+                                    <a href={`#${category.slug}`} className="-m-2 p-2 block text-white">
+                                      {category.name}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </Disclosure.Panel>
+                      </Disclosure>
+                    </div>
                   </div>
+                </div>
+                <div className="py-6 px-4 space-y-6">
+                  <button className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white ">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                    </svg>
+                    <span>
+                      Lives
+                    </span>
+                  </button>
                 </div>
                 <div className="border-t border-1 border-slate-800 py-6 px-4 space-y-6">
                   <div className="flow-root">
@@ -519,10 +512,10 @@ const OpcionesUsuarioNoAuth = ({ closeMenu }) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items static className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+            <Menu.Items static className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md py-1 bg-slate-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none`}>
               <div className=" px-6 my-4">
-                <p className="text-gray-600 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
-                <div className="flex text-gray-800 text-sm justify-between text-center mt-3">
+                <p className="text-gray-200 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
+                <div className="flex text-gray-200 text-sm justify-between text-center mt-3">
                   <Menu.Item>
                     <Link
                       href="/registro">
@@ -534,7 +527,7 @@ const OpcionesUsuarioNoAuth = ({ closeMenu }) => {
                   <Menu.Item>
                     <Link
                       href="/inicio-sesion">
-                      <a className="text-blue-600 bg-blue-300 bg-opacity-30 px-4 py-2 text-xs rounded-3xl">
+                      <a className="text-blue-600 bg-gray-200 font-medium px-4 py-2 text-xs rounded-3xl">
                         Inicia Sesión
                       </a>
                     </Link>
