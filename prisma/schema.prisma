@@ -89,6 +89,7 @@ generator client {
     section      Section[] @relation(references: [id])
     cursoKeyword CursoKeyword[] @relation(references: [id])
     ruta          String? @unique
+    texto         String?
   }
 
   model CursoKeyword {

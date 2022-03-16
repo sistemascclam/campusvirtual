@@ -16,6 +16,8 @@ export default async function handle(req, res) {
       image: true,
       price: true,
       registration_date: true,
+      ruta: true,
+      texto: true,
     } 
   })
   res.json(curso)
