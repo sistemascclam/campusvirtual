@@ -98,7 +98,7 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  const { theme, setTheme } = useTheme()
+  const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
 
   const closeMenu = () => {
@@ -148,15 +148,15 @@ export default function NavBar() {
                 <div className="mt-2">
                   <div className="pt-3 pb-8 px-4 space-y-10">
                     <label className="relative block mx-auto my-auto group">
+                      <input type="text"
+                        placeholder={"Buscar en campus CCLAM"}
+                        className="bg-slate-900 bg-opacity-95 rounded-xl pr-12 w-full mx-auto py-2 text-sm border-2 ring-0 border-slate-900 focus:text-base focus:border-gray-900 text-gray-400" />
                       <span className="sr-only">Buscar</span>
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+                      <button className="absolute inset-y-0 right-0 flex items-center px-2 rounded-xl">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                         </svg>
-                      </span>
-                      <input type="text"
-                        placeholder={"Buscar en campus CCLAM"}
-                        className="bg-slate-900 bg-opacity-95 rounded-xl pl-12 w-full mx-auto py-2 text-sm border-2 ring-0 border-slate-900 focus:text-base focus:border-gray-900 text-gray-400" />
+                      </button>
                     </label>
                     {data?.map((category, sec_k) => (
                       <div key={sec_k}>
@@ -234,7 +234,7 @@ export default function NavBar() {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
-                  <a className='bg-white rounded-full '>
+                  <a>
                     <img
                       className="block lg:hidden h-10 w-auto"
                       src="/images/cclamlogotipo.png"
@@ -255,64 +255,69 @@ export default function NavBar() {
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="h-full flex space-x-8">
                   <Popover className="flex">
-                    {({ open }) => (
-                      <>
-                        <div className="relative flex">
-                          <Popover.Button
-                            className={classNames(
-                              open
-                                ? 'border-blue-600 text-blue-600'
-                                : 'border-transparent',
-                              'text-gray-300 hover:border-blue-600 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
-                            )}
-                          >
-                            Categorías
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
-                          </Popover.Button>
-                        </div>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-200"
-                          enterFrom="opacity-0"
-                          enterTo="opacity-100"
-                          leave="transition ease-in duration-150"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                    <>
+                      <div className="relative flex">
+                        <Popover.Button
+                          onMouseEnter={() => setOpenMenuWeb(true)}
+                          onMouseLeave={() => setOpenMenuWeb(false)}
+                          open={openMenuWeb}
+                          className={classNames(
+                            openMenuWeb
+                              ? 'border-blue-600'
+                              : 'border-transparent',
+                            'text-gray-300 hover:border-blue-600 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
+                          )}
                         >
-                          <Popover.Panel className="absolute z-2000 top-full inset-x-0 text-sm text-gray-400 mt-2">
-                            <div className="absolute inset-0 top-1/2 bg-darkblue shadow" aria-hidden="true" />
-                            <div className="relative bg-slate-800 bg-opacity-90 backdrop-blur-xl rounded-md shadow-xl transition-none">
-                              <div className="max-w-7xl mx-auto px-8 py-10">
-                                <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
-                                  {data?.map((category, sec_k) => (
-                                    <div key={sec_k}>
-                                      <p id={`${category.name}-heading`} className="font-medium text-white cursor-default">
-                                        {category.name}
-                                      </p>
-                                      <ul
-                                        role="list"
-                                        aria-labelledby={`${category.name}-heading`}
-                                        className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                      >
-                                        {category.sections.map((item) => (
-                                          <li key={item.name} className="flex">
-                                            <a href={item.keyword} className="hover:text-white">
-                                              {item.name}
-                                            </a>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  ))}
-                                </div>
+                          Categorías
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        </Popover.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        show={openMenuWeb}
+                        enter="transition ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                      >
+                        <Popover.Panel
+                          onMouseEnter={() => setOpenMenuWeb(true)}
+                          onMouseLeave={() => setOpenMenuWeb(false)}
+                          static={true} className="absolute z-2000 top-full inset-x-0 text-sm text-gray-400">
+                          <div className="absolute inset-0 top-1/2" aria-hidden="true" />
+                          <div className="relative bg-slate-800 mt-3 rounded-md shadow-xl transition-none">
+                            <div className="max-w-7xl mx-auto px-8 py-10">
+                              <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
+                                {data?.map((category, sec_k) => (
+                                  <div key={sec_k}>
+                                    <p id={`${category.name}-heading`} className="font-medium text-white cursor-default">
+                                      {category.name}
+                                    </p>
+                                    <ul
+                                      role="list"
+                                      aria-labelledby={`${category.name}-heading`}
+                                      className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                    >
+                                      {category.sections.map((item) => (
+                                        <li key={item.name} className="flex">
+                                          <a href={item.keyword} className="hover:text-white">
+                                            {item.name}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ))}
                               </div>
                             </div>
-                          </Popover.Panel>
-                        </Transition>
-                      </>
-                    )}
+                          </div>
+                        </Popover.Panel>
+                      </Transition>
+                    </>
                   </Popover>
                 </div>
               </Popover.Group>
