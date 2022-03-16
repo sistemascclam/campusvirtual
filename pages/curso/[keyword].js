@@ -86,7 +86,7 @@ export default function Curso(){
                                     </div>
                                     <div className='w-1/6  px-1 ' >
                                         <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' >
-                                            <span class="block   mx-auto text-center   w-fit">
+                                            <span className="block   mx-auto text-center   w-fit">
                                                 {heart}
                                             </span>
                                         </div>
@@ -152,28 +152,28 @@ export default function Curso(){
                                     </div>
                                     <div className='py-0 lg:py-6 w-1/3'> 
                                         <div className='py-1'>
-                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                                <div class="bg-blue-600 h-2.5 rounded-full w-4/5" ></div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div className="bg-blue-600 h-2.5 rounded-full w-4/5" ></div>
                                             </div>
                                         </div>
                                         <div className='py-1'>
-                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/3" ></div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div className="bg-blue-600 h-2.5 rounded-full w-1/3" ></div>
                                             </div>
                                         </div>
                                         <div className='py-1'>
-                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/4" ></div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div className="bg-blue-600 h-2.5 rounded-full w-1/4" ></div>
                                             </div>
                                         </div>
                                         <div className='py-1'>
-                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                                <div class="bg-blue-600 h-2.5 rounded-full  w-1/5" ></div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div className="bg-blue-600 h-2.5 rounded-full  w-1/5" ></div>
                                             </div>
                                         </div>
                                         <div className='py-1'>
-                                            <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                                <div class="bg-blue-600 h-2.5 rounded-full w-1/6" ></div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                                                <div className="bg-blue-600 h-2.5 rounded-full w-1/6" ></div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@ export default function Curso(){
                                 <div className='py-2'>
                                     <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
                                         <div className='py-0 lg:py-6 w-14'> 
-                                            <div class="w-10 h-10 rounded-full bg-red-400">
+                                            <div className="w-10 h-10 rounded-full bg-red-400">
                                                 <img
                                                     className='rounded-full h-full '
                                                     src="../images/ejemplo2.JPG"
@@ -230,7 +230,7 @@ export default function Curso(){
                                 <div className='py-2'>
                                     <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
                                         <div className='py-0 lg:py-6 w-14'> 
-                                            <div class="w-10 h-10 rounded-full bg-red-400">
+                                            <div className="w-10 h-10 rounded-full bg-red-400">
                                                 <img
                                                     className='rounded-full h-full '
                                                     src="../images/ejemplo2.JPG"
@@ -270,7 +270,7 @@ export default function Curso(){
                                 <div className='py-2'>
                                     <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
                                         <div className='py-0 lg:py-6 w-14'> 
-                                            <div class="w-10 h-10 rounded-full bg-red-400">
+                                            <div className="w-10 h-10 rounded-full bg-red-400">
                                                 <img
                                                     className='rounded-full h-full '
                                                     src="../images/ejemplo2.JPG"
@@ -310,7 +310,7 @@ export default function Curso(){
                                 <div className='py-2'>
                                     <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
                                         <div className='py-0 lg:py-6 w-14'> 
-                                            <div class="w-10 h-10 rounded-full bg-red-400">
+                                            <div className="w-10 h-10 rounded-full bg-red-400">
                                                 <img
                                                     className='rounded-full h-full '
                                                     src="../images/ejemplo2.JPG"

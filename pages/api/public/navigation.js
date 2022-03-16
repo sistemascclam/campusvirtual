@@ -8,18 +8,8 @@ export default async function handle(req, res) {
     select: {
       id: true,
       name: true,
+      slug: true,
       description: true,
-      sections: {
-        select: {
-          id: true,
-          name: true,
-          keyword: true,
-          description: true
-        },
-        where: {
-          active: true,
-        },
-      },
     }
   })
   res.json(categories)

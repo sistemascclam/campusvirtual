@@ -268,7 +268,7 @@ export default function NavBar() {
                             'text-gray-300 hover:border-blue-600 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px'
                           )}
                         >
-                          Categorías
+                          Contenido
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                           </svg>
@@ -287,32 +287,36 @@ export default function NavBar() {
                         <Popover.Panel
                           onMouseEnter={() => setOpenMenuWeb(true)}
                           onMouseLeave={() => setOpenMenuWeb(false)}
-                          static={true} className="absolute z-2000 top-full inset-x-0 text-sm text-gray-400">
+                          static={true} className="absolute z-2000 top-full max-w-sm inset-x-0 mx-14 text-sm text-gray-400">
                           <div className="absolute inset-0 top-1/2" aria-hidden="true" />
-                          <div className="relative bg-slate-800 mt-3 rounded-md shadow-xl transition-none">
-                            <div className="max-w-7xl mx-auto px-8 py-10">
-                              <div className="row-start-1 grid grid-cols-6 gap-y-10 gap-x-8 text-sm">
-                                {data?.map((category, sec_k) => (
-                                  <div key={sec_k}>
-                                    <p id={`${category.name}-heading`} className="font-medium text-white cursor-default">
-                                      {category.name}
-                                    </p>
-                                    <ul
-                                      role="list"
-                                      aria-labelledby={`${category.name}-heading`}
-                                      className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                    >
-                                      {category.sections.map((item) => (
-                                        <li key={item.name} className="flex">
-                                          <a href={item.keyword} className="hover:text-white">
-                                            {item.name}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
+                          <div className="relative bg-slate-800 mt-3 rounded-xl shadow-xl transition-none">
+                            <div className="mx-auto px-8 py-8 row-start-1 grid grid-cols-1 gap-y-6 gap-x-10 text-sm">
+                              <div>
+                                <p id={`especialidades-heading`} className="font-medium text-md cursor-default">
+                                  Especialidades
+                                </p>
+                                <ul
+                                  role="list"
+                                  aria-labelledby={`especialidades-heading`}
+                                  className="mt-6 space-y-6 sm:mt-4 sm:space-y-2"
+                                >
+                                  {data?.map((category, sec_k) => (
+                                    <li key={sec_k} className="flex">
+                                      <a href={`#${category.slug}`} className="text-white hover:text-blue-600 cursor-pointer text-lg transition-all duration-200 ease-in-out">
+                                        {category.name}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
                               </div>
+                              <button className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                </svg>
+                                <span>
+                                  Lives
+                                </span>
+                              </button>
                             </div>
                           </div>
                         </Popover.Panel>

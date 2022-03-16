@@ -41,7 +41,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div className="min-h-screen bg-darkblue text-white p-10 w-full ">
+      <div className="min-h-screen text-white px-10 w-full ">
         {
           session ?
             <div>

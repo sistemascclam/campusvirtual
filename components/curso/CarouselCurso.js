@@ -40,28 +40,29 @@ export default function CarouselCurso({ arrayC }) {
                         <div className='  rounded-lg ' key={sec_k}>
                             <div className="box-border  p-1  rounded-l-xl   ">
                                 <div className='mx-auto py-6 p-2'>
-                                    <div className=' bg-slate-900  rounded-2xl  '>
+                                    <div className=' bg-slate-800 rounded-2xl shadow-xl'>
                                         <Link href={"/curso/" + Curso.id}>
                                             <a>
-                                                <div className='bg-slate-900 px-0 '>
+                                                <div className='px-0 '>
                                                     <Image
-                                                        className=' rounded-2xl '
+                                                        className='rounded-t-xl'
                                                         src={Curso.image}
-                                                        alt="Logo"
+                                                        alt={Curso.title}
                                                         width={380}
                                                         height={210}
+                                                        objectFit={"cover"}
                                                     />
                                                 </div>
                                                 <div className='py-2 px-3'>
                                                     <div>
-                                                        <span className='text-xs line-clamp-2 leading-5 h-10'>{Curso.title}</span>
+                                                        <span className='text-xs line-clamp-2 leading-5 max-h-10'>{Curso.title}</span>
                                                         <span className='text-xs text-slate-400 leading-5 '>{Curso.name}</span>
                                                     </div>
                                                     <div className='flex'>
-                                                    <span className='text-xs flex text-amber-400'> 
-                                                        {[...Array(5).keys()].map((a,i)=>i<Curso.valuation? star_full : star) }
-                                                        
-                                                         </span>
+                                                        <span className='text-xs flex text-amber-400'>
+                                                            {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? star_full : star)}
+
+                                                        </span>
                                                         <span className='text-xs text-slate-400'>({Curso.valuation})</span>
                                                     </div>
                                                     <div className='py-3'>

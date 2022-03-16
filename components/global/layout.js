@@ -33,7 +33,7 @@ export default function Layout({ children }) {
         <meta name="keywords" content={keywords} />
 
       </Head>
-      <main className="bg-themeWhite font-poppins relative bg-darkblue pt-28">
+      <main className="bg-themeWhite font-poppins relative bg-gradient-to-b from-darkblue to-footer pt-28">
         <Header />
         {children}
         <Footer />
