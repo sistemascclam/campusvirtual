@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React  from 'react';
 import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
- 
+
 export default function Curso(){
     const router = useRouter()
     const {keyword} = router.query
@@ -29,17 +29,11 @@ export default function Curso(){
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>;
     
-    if(arrayDC != null){
-        var cadena = arrayDC.texto.split('|,|')
-        var txt = ''
-        for (let index = 0; index < cadena.length; index++) {
-            txt += `
-            <div className='py-0 lg:py-6 '>
-                <div className='py-1'> HTML el lenguaje de marcado para la web</div>
-            </div>`
-        }
+        var cadena = '';
 
-    }
+        if(arrayDC != null){
+            var cadena = arrayDC.texto.split('|,|')
+        }
   
     return(
         <Layout home>
@@ -101,31 +95,12 @@ export default function Curso(){
                     <div className="block bg-darkblue text-white  p-4  w-full">
                         <div className='block py-4 px-4 rounded-lg  border-solid border-2 border-slate-600'>
                             <span className='text-xl font-semibold' >Lo que aprenderás</span> 
-                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-2 text-xs" >
-                                <div className='py-0 lg:py-6 '> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                    <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                                    <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                </div>
-                                <div className='py-0 lg:py-6'> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                    <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                                    <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                </div>
-                                <div className='py-0 lg:py-6'> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                    <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                                    <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                </div>
-                                <div className='py-0 lg:py-6'> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                    <div className='py-1'>{check} CSS el lenguaje de estilos que le dará color a tus aplicaciones</div>
-                                    <div className='py-1'>{check} CSS grid, la grilla de CSS</div> 
-                                    <div className='py-1'>{check} HTML el lenguaje de marcado para la web</div>
-                                </div>
+                            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-2 text-xs" >                     
+                                {cadena?.map((Array, sec_k) => (
+                                    <div className='py-0 '>
+                                        <div className='py-1'>{check} {Array}</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
