@@ -36,12 +36,12 @@ export default function Home() {
   </svg>;
  
   return (
-    
+
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div className="min-h-screen bg-darkblue text-white p-10 w-full ">
+      <div className="min-h-screen text-white px-10 w-full ">
         {
           session ?
             <div>
@@ -52,72 +52,76 @@ export default function Home() {
               </b>
             </div> : ""
         }
-        <div className="  p-4 w-full flex  justify-center ">
-          <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-2 " >
-            <div className='py-0 lg:py-6'>
-              <div className='bg-slate-900 rounded-lg min-h-full'>
-                <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
-                  <div className="p-4 w-1/3  hidden lg:block rounded-l-xl bg-slate-900">
-                    {icon_1}
-                  </div>
-                  <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3 ">
-                    <span>
-                      <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_11}</span>
-                      <b className='text-2xl lg:text-4xl sm:text-2xl'>15</b>
+        {
+          session ?
+            <div className="w-full flex justify-center mb-10">
+              <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 " >
+                <div className='py-0 lg:py-6'>
+                  <div className='bg-slate-900 rounded-lg min-h-full'>
+                    <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
+                      <div className="p-4 w-1/3  hidden lg:block rounded-l-xl bg-slate-900">
+                        {icon_1}
+                      </div>
+                      <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3 ">
+                        <span>
+                          <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_11}</span>
+                          <b className='text-2xl lg:text-4xl sm:text-2xl'>15</b>
+                        </span>
+                        <span className='text-xs '>
+                          <br />
+                          Cursos Iniciados
+                        </span>
+                      </div>
                     </span>
-                    <span className='text-xs '>
-                      <br />
-                      Cursos Iniciados
+                  </div>
+                </div>
+                <div className='py-0 lg:py-6'>
+                  <div className='bg-slate-900 rounded-lg min-h-full'>
+                    <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
+                      <div className="p-4 w-1/3  hidden lg:block rounded-l-xl bg-slate-900">
+                        {icon_2}
+                      </div>
+                      <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3">
+                        <span  >
+                          <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_12}</span>
+                          <b className='text-2xl lg:text-4xl sm:text-2xl'>15</b>
+                        </span>
+                        <br />
+                        <span className='text-xs '>
+                          Cursos
+                        </span>
+                        <span className='text-xs '>
+                          &nbsp;Completos
+                        </span>
+                      </div>
                     </span>
                   </div>
-                </span>
+                </div>
+                <div className='py-0 lg:py-6'>
+                  <div className='bg-slate-900 rounded-lg min-h-full'>
+                    <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
+                      <div className="p-4 w-1/3 hidden lg:block rounded-l-xl bg-slate-900">
+                        {icon_3}
+                      </div>
+                      <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3">
+                        <span>
+                          <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_13}</span>
+                          <b className='text-2xl lg:text-4xl sm:text-2xl'>300</b>
+                        </span>
+                        <span className='text-xs'>
+                          <br />
+                          Minutos Vistos
+                        </span>
+                      </div>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className='py-0 lg:py-6'>
-              <div className='bg-slate-900 rounded-lg min-h-full'>
-                <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
-                  <div className="p-4 w-1/3  hidden lg:block rounded-l-xl bg-slate-900">
-                    {icon_2}
-                  </div>
-                  <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3">
-                    <span  >
-                      <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_12}</span>
-                      <b className='text-2xl lg:text-4xl sm:text-2xl'>15</b>
-                    </span>
-                    <br />
-                    <span className='text-xs '>
-                      Cursos
-                    </span>
-                    <span className='text-xs '>
-                      &nbsp;Completos
-                    </span>
-                  </div>
-                </span>
-              </div>
-            </div>
-            <div className='py-0 lg:py-6'>
-              <div className='bg-slate-900 rounded-lg min-h-full'>
-                <span className='flex lg:w-64 sm:w-40 xs:w-50 shadow-lg' >
-                  <div className="p-4 w-1/3 hidden lg:block rounded-l-xl bg-slate-900">
-                    {icon_3}
-                  </div>
-                  <div className="p-4 w-full text-center rounded-xl lg:rounded-r-xl bg-slate-900 mx-3">
-                    <span>
-                      <span className='block lg:hidden mx-auto text-center lg:mx-0 w-fit'>{icon_13}</span>
-                      <b className='text-2xl lg:text-4xl sm:text-2xl'>300</b>
-                    </span>
-                    <span className='text-xs'>
-                      <br />
-                      Minutos Vistos
-                    </span>
-                  </div>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='text-3xl font-serif font-bold font-mono'>
-          Qué aprender ahora
+            : ""
+        }
+        <div className=' text-3xl font-serif font-bold font-mono'>
+        Aprende de cero a experto
         </div>
         <div className='text-xl  py-6 font-bold '>
           Recomendaciones para llevar un curso
@@ -130,6 +134,6 @@ export default function Home() {
         <CarouselCurso arrayC={arrayC}/> 
       </div>
     </Layout>
-    
+
   )
 }

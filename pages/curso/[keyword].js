@@ -28,21 +28,25 @@ export default function Curso(){
     var check = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>;
-    var thumbup =   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                    </svg>;
-    var thumbdown = <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" />
-                    </svg>;
+    
+    if(arrayDC != null){
+        var cadena = arrayDC.texto.split('|,|')
+        var txt = ''
+        for (let index = 0; index < cadena.length; index++) {
+            txt += `
+            <div className='py-0 lg:py-6 '>
+                <div className='py-1'> HTML el lenguaje de marcado para la web</div>
+            </div>`
+        }
 
-
-                
+    }
+  
     return(
         <Layout home>
             <Head>
                 <title>{siteTitle}</title>
             </Head> 
-                <div className="  min-h-screen bg-darkblue text-white p-10 w-full px-14">
+                <div className="  min-h-screen bg-darkblue text-white w-full px-14">
                     {arrayDC != null ?
                     <>
                     <div className='lg:flex xl:flex'>
@@ -68,11 +72,9 @@ export default function Curso(){
                                 <div className='flex py-2'>
                                     <span className='  flex text-amber-400'>
                                         {[...Array(5).keys()].map((a,i)=>i<arrayDC.valuation? star_full : star) }
-
                                     </span> <span className='text-sm text-slate-400 my-auto px-2'>({arrayDC.valuation})</span> 
                                 </div>
                                 <span className='text-3xl font-semibold'>{arrayDC.title}</span>
-                                
                                 <span className='text-slate-100 py-5 block'> 
                                     {arrayDC.description}
                                 </span> 
@@ -202,22 +204,6 @@ export default function Curso(){
                                             <div className='block py-2 text-sm'>
                                                 El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
                                             </div>
-                                            <span className='text-xs'>¿Te ha resultado útil esta reseña?</span>
-                                            <div className='flex py-3'>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbup}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbdown}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3 py-2'>
-                                                    Denunciar
-                                                </div>
-                                            </div>  
                                         </div> 
                                     </div>
                                     <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
@@ -242,22 +228,6 @@ export default function Curso(){
                                             <div className='block py-2 text-sm'>
                                                 El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
                                             </div>
-                                            <span className='text-xs'>¿Te ha resultado útil esta reseña?</span>
-                                            <div className='flex py-3'>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbup}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbdown}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3 py-2'>
-                                                    Denunciar
-                                                </div>
-                                            </div>  
                                         </div> 
                                     </div>
                                     <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
@@ -282,22 +252,6 @@ export default function Curso(){
                                             <div className='block py-2 text-sm'>
                                                 El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
                                             </div>
-                                            <span className='text-xs'>¿Te ha resultado útil esta reseña?</span>
-                                            <div className='flex py-3'>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbup}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbdown}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3 py-2'>
-                                                    Denunciar
-                                                </div>
-                                            </div>  
                                         </div> 
                                     </div>
                                     <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
@@ -322,22 +276,6 @@ export default function Curso(){
                                             <div className='block py-2 text-sm'>
                                                 El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
                                             </div>
-                                            <span className='text-xs'>¿Te ha resultado útil esta reseña?</span>
-                                            <div className='flex py-3'>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbup}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3'>
-                                                    <div className='w-min py-1 px-1 text-xs rounded-full border-solid border-2 border-slate-800'>
-                                                        {thumbdown}
-                                                    </div>
-                                                </div>
-                                                <div className='px-3 py-2'>
-                                                    Denunciar
-                                                </div>
-                                            </div>  
                                         </div> 
                                     </div>
                                 </div> 

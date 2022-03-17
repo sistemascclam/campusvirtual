@@ -20,7 +20,7 @@ const responsive = {
     },
     mobile: {
         breakpoint: { max: 464, min: 0 },
-        items: 2
+        items: 1
     }
 };
 
@@ -34,38 +34,40 @@ export default function CarouselCurso({ arrayC }) {
 
     return (
         <>
-        {arrayC?.length > 0 ?
-            <Carousel responsive={responsive} >
-                {arrayC?.map((Curso, sec_k) => (
-                    <div className='rounded-lg ' key={sec_k}>
-                        <div className="box-border  p-1  rounded-l-xl   ">
-                            <div className='mx-auto py-6 p-2'>
-                                <div className=' bg-slate-900  rounded-2xl  '>
-                                    <Link href={"/curso/" + Curso.ruta}>
+            {arrayC?.length > 0 ?
+                <Carousel responsive={responsive} >
+                    {arrayC?.map((Curso, sec_k) => (
+                        <div className='  rounded-lg ' key={sec_k}>
+                            <div className="box-border rounded-l-xl   ">
+                                <div className='mx-auto py-6 lg:pr-6'>
+                                    <div className=' bg-slate-800 rounded-2xl shadow-xl'>
+                                        <Link href={"/curso/" + Curso.ruta}>
                                         <a>
-                                            <div className='bg-slate-900 px-0 '>
-                                                <Image
-                                                    className=' rounded-2xl '
-                                                    src={Curso.image}
-                                                    alt="Logo"
-                                                    width={380}
-                                                    height={210}
-                                                />
-                                            </div>
-                                            <div className='py-2 px-3'>
-                                                <div>
-                                                    <span className='text-xs line-clamp-2 leading-5 h-10'>{Curso.title}</span>
-                                                    <span className='text-xs text-slate-400 leading-5 '>{Curso.name}</span>
+                                            <div>
+                                                <div className='px-0 '>
+                                                    <Image
+                                                        className='rounded-t-xl'
+                                                        src={Curso.image}
+                                                        alt={Curso.title}
+                                                        width={380}
+                                                        height={210}
+                                                        objectFit={"cover"}
+                                                    />
                                                 </div>
-                                                <div className='flex'>
-                                                <span className='text-xs flex text-amber-400'> 
-                                                    {[...Array(5).keys()].map((a,i)=>i<Curso.valuation? star_full : star) }
-                                                    
+                                                <div className='py-2 px-3'>
+                                                    <div>
+                                                        <span className='text-xs line-clamp-2 leading-5 max-h-10'>{Curso.title}</span>
+                                                        <span className='text-xs text-slate-400 leading-5 '>{Curso.name}</span>
+                                                    </div>
+                                                    <div className='flex'>
+                                                        <span className='text-xs flex text-amber-400'>
+                                                            {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? star_full : star)}
                                                         </span>
-                                                    <span className='text-xs text-slate-400'>({Curso.valuation})</span>
-                                                </div>
-                                                <div className='py-3'>
-                                                    S/<span className='text-base'>{Curso.price.toFixed(2)}</span>
+                                                        <span className='text-xs text-slate-400'>({Curso.valuation})</span>
+                                                    </div>
+                                                    <div className='py-3'>
+                                                        S/<span className='text-base'>{Curso.price.toFixed(2)}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </a>
