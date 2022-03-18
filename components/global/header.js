@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { signIn, signOut, useSession } from "next-auth/react"
 import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
@@ -97,9 +97,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function NavBar() {
+export default function NavBar({bgTransparent}) {
   const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
+  const [navTransparent, setnavTransparent] = useState(true)
 
   const closeMenu = () => {
     setOpen(!open)
@@ -107,9 +108,22 @@ export default function NavBar() {
 
   const { data } = useSWR('/api/public/navigation', (...args) => fetch(...args).then(res => res.json()))
 
+
+  useEffect(function onFirstMount() {
+    function onScroll() {
+      setnavTransparent(window.scrollY >= 20 ? false : true);
+    }
+
+    window.addEventListener("scroll", onScroll);
+
+   return () => {
+      window.removeEventListener("scroll",onScroll);
+    }
+  }, []);
+
   return (
     <>
-      <nav className={`fixed top-0 bg-darkblue lg:py-2 transition-colors ease-in-out duration-300 inset-x-0 z-2000`}>
+      <nav className={`fixed top-0 ${navTransparent ? 'bg-transparent' : 'bg-darkblue' } lg:py-2 transition-all ease-in-out duration-500 inset-x-0 z-2000`}>
         <Transition.Root show={open} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 flex z-2000 lg:hidden" onClose={setOpen}>
             <Transition.Child

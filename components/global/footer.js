@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <footer className='text-white bg-footer py-12 mt-12'>
+        <footer className='text-white bg-footer py-12'>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 px-10 lg:px-20'>
                 <div>
                     <p className='font-bold'>Contáctanos</p>

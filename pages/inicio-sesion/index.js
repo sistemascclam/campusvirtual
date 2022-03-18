@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import Layout, { siteTitle } from "@global/layoutwoheader"
+import Layout, { siteTitle } from "@global/layout"
 import React, { useState } from 'react'
-import { signIn, getCsrfToken } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { signIn, getCsrfToken } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function Login({ csrfToken }) {
     const router = useRouter();
@@ -54,27 +54,16 @@ export default function Login({ csrfToken }) {
     }
 
     return (
-        <Layout>
+        <Layout widthPadding={false}>
             <Head>
                 <title>Inicio de Sesión | {siteTitle}</title>
             </Head>
-            <div className="flex min-h-screen bg-darkblue">
-                <div className="text-white lg:w-1/2  p-4 w-full">
-                    <div className='flex items-left justify-left py-12 px-4 sm:px-6 lg:px-8'>
-
+            <div className="flex min-h-screen bg-collage-courses bg-cover bg-top-left justify-center content-center items-center">
+                <div className="text-white lg:w-1/2 w-full pt-20">
+                    <div className='px-4 sm:px-6 lg:px-8'>
                         <div className="w-full max-w-xs mx-auto">
-                            <div className='mx-auto py-6 '>
-                                <Link href={"/"}>
-                                    <a>
-                                        <img
-                                            className="h-12 mx-auto "
-                                            src="images/cclamlogotipo.png"
-                                            alt="Logo"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className='text-left text-slate-100 text-sm'><b>Bienvenido de nuevo a tu Campus CCLAM</b></div>
+                            <p className='text-center text-4xl mb-3 text-slate-100 font-extrabold'>¡Bienvenido!</p>
+                            <p className='text-center text-slate-100 mb-4'><b>Ingresa a tu Campus CCLAM</b></p>
                             <div className="text-red-400 text-md text-center rounded p-2">
                                 {error}
                             </div>
@@ -102,7 +91,7 @@ export default function Login({ csrfToken }) {
                                     </label>
                                 </div>
                                 <div className="flex flex-col items-center justify-between">
-                                    <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                    <button type="submit" className="font-bold bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         INICIAR SESIÓN
                                     </button>
                                     <p className="my-4">ó</p>
@@ -110,19 +99,17 @@ export default function Login({ csrfToken }) {
                                         Inicia con google
                                     </button>
                                 </div>
-                                <div className='text-center py-4 w-5/6 mx-auto' >
-                                    <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
+                                <div className='text-center my-6 py-4 w-5/6 mx-auto' >
+                                    <div className='py-3 text-sm rounded-lg border-solid border-2 border-slate-600'>
                                         <span>¿No tienes cuenta?</span>
                                         <Link href="/registro">
-                                            <a> <span className='text-sky-500 underline'>Regístrate aquí</span></a>
+                                            <a> <span className='text-sky-500 font-extrabold'>Regístrate aquí</span></a>
                                         </Link>
                                     </div>
                                 </div>
                             </form>
                         </div>
-
                     </div>
-
                 </div>
                 <div className="text-white w-1/2 p-4 hidden lg:block ">
                 </div>

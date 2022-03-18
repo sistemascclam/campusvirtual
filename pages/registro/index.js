@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
-import { signIn, getCsrfToken } from 'next-auth/react';
-import Layout, { siteTitle } from "@global/layoutwoheader"
+import { signIn, getCsrfToken } from 'next-auth/react'
+import Layout, { siteTitle } from "@global/layout"
 import React, { useState } from 'react'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 export default function Login({ csrfToken }) {
     const router = useRouter();
@@ -36,25 +36,15 @@ export default function Login({ csrfToken }) {
     }
 
     return (
-        <Layout>
+        <Layout widthPadding={false}>
             <Head>
                 <title>Registro | {siteTitle}</title>
             </Head>
-            <div className="flex min-h-screen bg-darkblue">
+            <div className="flex min-h-screen bg-collage-courses bg-cover bg-top-left justify-center content-center items-center">
                 <div className="text-white lg:w-1/2 p-4 w-full">
-                    <div className='py-12 px-4 sm:px-6 lg:px-8'>
-                        <div className='mx-auto py-6 '>
-                            <Link href={"/"}>
-                                <a>
-                                    <img
-                                        className="h-12 mx-auto "
-                                        src="images/cclamlogotipo.png"
-                                        alt="Logo"
-                                    />
-                                </a>
-                            </Link>
-                        </div>
-                        <div className='text-center text-slate-100 '><b>Únete y comienza a potenciar tu carrera</b></div>
+                    <div className='py-6 px-4 sm:px-6 lg:px-8'>
+                        <p className='text-center text-4xl mb-3 text-slate-100 font-extrabold'>¡Regístrate!</p>
+                        <p className='text-center text-slate-100 mb-4'><b>Únete y comienza a potenciar tu carrera</b></p>
                         <div className="w-full max-w-xs mx-auto">
                             <div className="text-red-400 text-md text-center rounded p-2">
                                 {error}
@@ -72,7 +62,7 @@ export default function Login({ csrfToken }) {
                                     <input type="email" id="email" name="email" placeholder="ejm@gmail.com" autoComplete='off' required className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="flex flex-col items-center justify-between">
-                                    <button type="submit" className="bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                    <button type="submit" className="bg-blue-700 hover:bg-blue-600 font-bold text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         REGISTRARSE
                                     </button>
                                 </div>
@@ -81,17 +71,15 @@ export default function Login({ csrfToken }) {
                                 <span className='text-slate-400'>Al crear una cuenta estás aceptando los</span> <br /> <span className='text-gray-200 underline'>Términos de Servicio</span> <span className='text-slate-400'> y</span> <span className='text-gray-200 underline'> Privacidad</span>
                             </div>
                             <div className='text-center py-6 w-5/6 mx-auto' >
-                                <div className='py-3 text-xs   rounded-lg border-solid border-2 border-slate-600'>
+                                <div className='py-3 text-sm  rounded-lg border-solid border-2 border-slate-600'>
                                     <span>¿Ya tienes cuenta?</span>
                                     <Link href="/inicio-sesion">
-                                        <a> <span className='text-sky-500 underline'>Inicia sesión aquí</span></a>
+                                        <a> <span className='text-sky-500 font-extrabold'>Inicia sesión aquí</span></a>
                                     </Link>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
                 <div className="text-white w-1/2 p-4 hidden lg:block">
                     {/*cuerpo de la segunda parte*/}

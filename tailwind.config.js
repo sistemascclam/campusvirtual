@@ -5,6 +5,9 @@ module.exports = {
       'poppins': ['Nunito'],
     },
     extend: {
+      backgroundImage: theme => ({
+        'collage-courses': `url('/images/bg-collage-cursos.png')`,
+      }),
       colors:{
         darkblue:'#0d1a2e',
         purple:'#702CDD',
@@ -21,12 +24,6 @@ module.exports = {
     extend: {
     },
   },
-  extend: {
-    backgroundImage: {
-      'footer-texture': "url('/img/footer-texture.png')",
-    },
-  },
-
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
