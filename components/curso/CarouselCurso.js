@@ -40,10 +40,10 @@ export default function CarouselCurso({ arrayC }) {
                         <div className='  rounded-lg ' key={sec_k}>
                             <div className="box-border rounded-l-xl   ">
                                 <div className='mx-auto py-6 lg:pr-6'>
-                                    <div className=' bg-slate-800 rounded-2xl shadow-xl'>
-                                        <Link href={"/curso/" + Curso.id}>
-                                            <a>
-                                                <div className='px-0 '>
+                                    <Link href={"/curso/" + Curso.id}>
+                                        <a>
+                                            <div className=' bg-slate-800 rounded-2xl shadow-xl max-w-sm'>
+                                                <div className='px-0 w-full'>
                                                     <Image
                                                         className='rounded-t-xl'
                                                         src={Curso.image}
@@ -69,9 +69,9 @@ export default function CarouselCurso({ arrayC }) {
                                                         S/<span className='text-base'>{Curso.price.toFixed(2)}</span>
                                                     </div>
                                                 </div>
-                                            </a>
-                                        </Link>
-                                    </div>
+                                            </div>
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
