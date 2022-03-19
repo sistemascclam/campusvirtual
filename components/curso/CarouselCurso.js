@@ -40,10 +40,11 @@ export default function CarouselCurso({ arrayC }) {
                         <div className='  rounded-lg ' key={sec_k}>
                             <div className="box-border rounded-l-xl   ">
                                 <div className='mx-auto py-6 lg:pr-6'>
-                                    <Link href={"/curso/" + Curso.id}>
+                                    <div className=' bg-slate-800 rounded-2xl shadow-xl'>
+                                        <Link href={"/curso/" + Curso.ruta}>
                                         <a>
-                                            <div className=' bg-slate-800 rounded-2xl shadow-xl max-w-sm'>
-                                                <div className='px-0 w-full'>
+                                            <div>
+                                                <div className='px-0 '>
                                                     <Image
                                                         className='rounded-t-xl'
                                                         src={Curso.image}
@@ -61,7 +62,6 @@ export default function CarouselCurso({ arrayC }) {
                                                     <div className='flex'>
                                                         <span className='text-xs flex text-amber-400'>
                                                             {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? star_full : star)}
-
                                                         </span>
                                                         <span className='text-xs text-slate-400'>({Curso.valuation})</span>
                                                     </div>
@@ -75,10 +75,11 @@ export default function CarouselCurso({ arrayC }) {
                                 </div>
                             </div>
                         </div>
-                    ))}
-                </Carousel>
-                : ''
-            }
+                    </div>
+                ))}
+            </Carousel>
+            : ''
+        }
         </>
 
     )

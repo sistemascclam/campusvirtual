@@ -20,34 +20,41 @@ export default async function handle(req, res) {
         data: [
             {
                 "title": "Gerencia",
-                "name": "Gerencia",
+                "name": "Anibal Cruz",
+                "description": "Este es la primera descripción",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/gerencia.jpg",
                 "price": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Gerencia"),
-                "categoryId": 1
+                "categoryId": 1,
+                "texto": " HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| " 
             },
             {
                 "title": "Banca y Finanzas",
-                "name": "Banca y Finanzas",
+                "name": "Andy Geanmark",
+                "description": "Este es la segunda descripción",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/finanzas.jpg",
                 "price": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Banca y Finanzas"),
-                "categoryId": 1
+                "categoryId": 1,
+                "texto": " HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| " 
             },
             {
                 "title": "Administración de Negocios",
                 "name": "Administración de Negocios",
+                "description": "Este es la tercera descripción",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/administracion.jpg",
                 "price": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Administración de Negocios"),
-                "categoryId": 1
+                "categoryId": 1,
+                "texto": " HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| " 
             },
             {
                 "title": "Administración Aduanera",
                 "name": "Administración Aduanera",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/aduanas.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -57,6 +64,7 @@ export default async function handle(req, res) {
             {
                 "title": "Desarrollo Económico y Contable",
                 "name": "Desarrollo Económico y Contable",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/conta.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -66,6 +74,7 @@ export default async function handle(req, res) {
             {
                 "title": "Mercadeo",
                 "name": "Mercadeo",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/mercadeo.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -75,6 +84,7 @@ export default async function handle(req, res) {
             {
                 "title": "Asistencia",
                 "name": "Asistencia",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/asistencia.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -84,6 +94,7 @@ export default async function handle(req, res) {
             {
                 "title": "Administración en redes",
                 "name": "Administración en redes",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/redes.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -93,6 +104,7 @@ export default async function handle(req, res) {
             {
                 "title": "Manejo de Multimedia",
                 "name": "Manejo de Multimedia",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/multimedia.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -102,6 +114,7 @@ export default async function handle(req, res) {
             {
                 "title": "Community Maneger",
                 "name": "Community Maneger",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/comunitymanager.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -111,6 +124,7 @@ export default async function handle(req, res) {
             {
                 "title": "Marketing",
                 "name": "Marketing",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/marketing.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -120,6 +134,7 @@ export default async function handle(req, res) {
             {
                 "title": "Publicidad",
                 "name": "Publicidad",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/redes.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -129,6 +144,7 @@ export default async function handle(req, res) {
             {
                 "title": "Publicidad",
                 "name": "Publicidad",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/publicidad.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -138,6 +154,7 @@ export default async function handle(req, res) {
             {
                 "title": "Recursos Humanos y/o Talento Humano",
                 "name": "Recursos Humanos y/o Talento Humano",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/rrhh.jpg",
                 "price": getRandomNumber(20,200,2),
@@ -147,6 +164,7 @@ export default async function handle(req, res) {
             {
                 "title": "Cómo Convivir con el estrés Postpandemia",
                 "name": "Cómo Convivir con el estrés Postpandemia",
+                "description": "",
                 "valuation": getRandomNumber(0,5),
                 "image":"https://www.cclam.org.pe/recursos.base/public/storage/courses/2022/03/CqzeFz6SHaT7MFaZcYJfyICQp389M72VrOr2WGs5.png",
                 "price": getRandomNumber(20,200,2),

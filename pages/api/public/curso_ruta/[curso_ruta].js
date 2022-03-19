@@ -1,10 +1,11 @@
 import prisma from 'lib/prisma'
 
 export default async function handle(req, res) {
-    const  {curso_id}  = req.query
+    const  {curso_ruta}  = req.query
+    //const curso = await prisma.curso.findUnique({
     const curso = await prisma.curso.findUnique({
     where: {
-      id: parseInt(curso_id),
+      ruta: curso_ruta,
     }, 
     select: {
       id: true,
@@ -15,10 +16,9 @@ export default async function handle(req, res) {
       image: true,
       price: true,
       registration_date: true,
+      ruta: true,
+      texto: true,
     } 
   })
-  //res.json(curso)
   res.json(curso)
-
-  //res.end(req.query)
 }

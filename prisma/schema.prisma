@@ -82,6 +82,7 @@ model Curso {
   categoryId        Int
   cursoKeyword      CursoKeyword[] @relation(references: [id])
   ruta              String?        @unique
+  texto             String?
 }
 
 model CursoKeyword {
