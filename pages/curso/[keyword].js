@@ -47,41 +47,35 @@ export default function Curso() {
                     <>
                         <div className='lg:flex xl:flex'>
                             <div className="text-white lg:w-1/2  p-4 w-full">
-                                <div className='  rounded-lg'>
-                                    <div className="box-border  p-1  rounded-l-xl   ">
-                                        <div className='mx-auto py-5'>
-                                            <div className=' bg-slate-900  rounded-2xl  '>
-                                                <div className='bg-slate-900 px-0 '>
-                                                    <Image
-                                                        className=' rounded-2xl w-full'
-                                                        src={arrayDC.image}
-                                                        alt="Logo"
-                                                        width={600}
-                                                        height={400}
-                                                        layout="responsive"
-                                                        placeholder="blur"
-                                                        blurDataURL={rgbDataURL(6, 14, 34)}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <img
+                                    className='h-full rounded-2xl'
+                                    src={arrayDC.image}
+                                    layout="responsive"
+                                />
                             </div>
                             <div className="text-white lg:w-1/2  p-4 w-full">
                                 <div className='py-2 px-3 '>
+                                    <span className='text-3xl font-extrabold'>{arrayDC.title}</span><br/>
+                                    <span className='text-xs text-slate-400 leading-5 '>{arrayDC.name}</span>
                                     <div className='flex py-2'>
                                         <span className='  flex text-amber-400'>
                                             {[...Array(5).keys()].map((a, i) => i < arrayDC.valuation ? <span key={`star_${keyword}_${i}`}>{star_full}</span> : <span key={`star_${keyword}_${i}`}>{star}</span>)}
-                                        </span> <span className='text-sm text-slate-400 my-auto px-2'>({arrayDC.valuation})</span>
+                                        </span> <span className='text-sm text-blue-600 my-auto px-2 '>27 opiniones</span>
                                     </div>
-                                    <span className='text-3xl font-semibold'>{arrayDC.title}</span>
                                     <span className='text-slate-100 py-5 block'>
                                         {arrayDC.description}
                                     </span>
+
+                                    <span className='text-sm font-semibold' >Lo que aprenderás:</span>
+                                    {cadena?.map((Array, sec_k) => (
+                                        <div className='py-0 text-xs' key={sec_k}>
+                                            <div className='py-1'>{check} {Array}</div>
+                                        </div>
+                                    ))}
+ 
                                     <div className="flex items-center justify-between py-5">
                                         <div className='w-full'>
-                                            <button type="button" className="bg-violet-700 hover:bg-purple text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" >
+                                            <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" >
                                                 Añadir a la cesta
                                             </button>
                                         </div>
@@ -99,26 +93,14 @@ export default function Curso() {
                                 </div>
                             </div>
                         </div>
-                        <div className="block text-white  p-4  w-full">
-                            <div className='block py-4 px-4 rounded-lg  border-solid border-2 border-slate-600'>
-                                <span className='text-xl font-semibold' >Lo que aprenderás</span>
-                                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 my-2 text-xs" >
-                                    {cadena?.map((Array, sec_k) => (
-                                        <div className='py-0 ' key={sec_k}>
-                                            <div className='py-1'>{check} {Array}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
                     </>
                     : ''
                 }
 
                 <div className="block text-white  p-4  w-full">
                     <span className='text-xl font-semibold' >Calificaciones de estudiantes</span>
-                    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2 my-2 text-xs" >
-                        <div className='py-0 lg:py-6'>
+                    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2  text-xs" >
+                        <div className='py-0'>
                             <div className="flex  gap-3 my-2 text-xs" >
                                 <div className='py-0 lg:py-6 '>
                                     <div className='items-start'>
@@ -165,7 +147,7 @@ export default function Curso() {
                                 </div>
                             </div>
                         </div>
-                        <div className='py-0 lg:py-6'>
+                        <div className='py-0'>
                             <div className='py-2'>
                                 <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
                                     <div className='py-0 lg:py-6 w-14'>
