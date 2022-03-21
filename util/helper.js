@@ -1,3 +1,5 @@
+import errorsAuth from "constants/errorsAuth.json"
+
 export function stringToSlug(str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
@@ -16,7 +18,27 @@ export function stringToSlug(str) {
     return str;
 }
 
-export function getRandomNumber(min,max, decimals=0) {
-    let aleatorio=Math.random() * (max - min) + min
+export function getRandomNumber(min, max, decimals = 0) {
+    let aleatorio = Math.random() * (max - min) + min
     return parseFloat(aleatorio.toFixed(decimals));
 }
+
+export function getAuthError(error) {
+    return errorsAuth?.find(e => error === e.code)?.description ?? 'Ha ocurrido un error, por favor inténtelo más tarde';
+}
+
+//PONER COLOR COMO PLACEHOLDER EN IMAGENES
+export const keyStr =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+
+export const triplet = (e1, e2, e3) =>
+    keyStr.charAt(e1 >> 2) +
+    keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+    keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+    keyStr.charAt(e3 & 63)
+
+export const rgbDataURL = (r, g, b) =>
+    `data:image/gif;base64,R0lGODlhAQABAPAA${triplet(0, r, g) + triplet(b, 255, 255)
+    }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
+    
+//PONER COLOR COMO PLACEHOLDER EN IMAGENES

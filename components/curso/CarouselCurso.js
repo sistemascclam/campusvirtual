@@ -37,7 +37,7 @@ export default function CarouselCurso({ arrayC }) {
             {arrayC?.length > 0 ?
                 <Carousel responsive={responsive} >
                     {arrayC?.map((Curso, sec_k) => (
-                        <div className='  rounded-lg ' key={sec_k}>
+                        <div className='rounded-lg' key={`curso_card_${Curso.id}_${sec_k}`}>
                             <div className="box-border rounded-l-xl   ">
                                 <div className='mx-auto py-6 lg:pr-6'>
                                     <div className=' bg-slate-800 rounded-2xl shadow-xl'>
@@ -61,7 +61,7 @@ export default function CarouselCurso({ arrayC }) {
                                                     </div>
                                                     <div className='flex'>
                                                         <span className='text-xs flex text-amber-400'>
-                                                            {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? star_full : star)}
+                                                            {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? <span key={`star_full_key_${Curso.id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.id}_${i}`}>{star}</span>)}
                                                         </span>
                                                         <span className='text-xs text-slate-400'>({Curso.valuation})</span>
                                                     </div>

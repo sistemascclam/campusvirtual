@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { signIn, signOut, useSession } from "next-auth/react"
-import { Tab, Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
-import { useTheme } from 'next-themes'
+import { signOut, useSession } from "next-auth/react"
+import { Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
+import Image from 'next/image'
 
 const navigation = {
   categories: [
@@ -98,6 +98,7 @@ function classNames(...classes) {
 }
 
 export default function NavBar({bgTransparent}) {
+  const {session,status} = useSession()
   const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
   const [navTransparent, setnavTransparent] = useState(true)
@@ -241,20 +242,22 @@ export default function NavBar({bgTransparent}) {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
-                  <a>
-                    <img
-                      className="block lg:hidden h-10 w-auto"
+                  <a className="block lg:hidden h-10 w-auto">
+                    <Image 
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
+                      width={61.141}
+                      height={44}
                     />
                   </a>
                 </Link>
                 <Link href={"/"}>
-                  <a className='hidden lg:flex  items-center justify-center'>
-                    <img
-                      className="h-11 w-auto"
+                  <a className='hidden lg:flex items-center justify-center'>
+                    <Image 
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
+                      width={61.141}
+                      height={44}
                     />
                   </a>
                 </Link>
@@ -346,7 +349,7 @@ export default function NavBar({bgTransparent}) {
                 </label>
               </div>
             </div>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ${!session && status ==='loading' ? 'opacity-0' : 'opacity-100'} transition-all ease-out`}>
               <OpcionesAuth />
               {/* Profile dropdown */}
               <OpcionesUsuarioAuth closeMenu={closeMenu} />
@@ -447,11 +450,15 @@ const OpcionesUsuarioSiAuth = () => {
       <div>
         <Menu.Button className="bg-blue-600 flex text-sm rounded-full hover:bg-blue-700">
           <span className="sr-only">Abrir menu de usuario</span>
-          <span className='w-8 h-8 flex justify-center items-center text-white font-bold'>
-            {
-              session.user?.email?.substring(0, 1).toLocaleUpperCase()
-            }
-          </span>
+          {
+            session.user?.image ?
+            <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="user profile pic" /> :
+            <span className='w-8 h-8 flex justify-center items-center text-white font-bold'>
+              {
+                session.user?.email?.substring(0, 1).toLocaleUpperCase()
+              }
+            </span> 
+          }
         </Menu.Button>
       </div>
       <Transition
@@ -468,9 +475,11 @@ const OpcionesUsuarioSiAuth = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
             </svg>
+            <span className='text-ellipsis overflow-hidden'>
             {
-              session.user?.email
+              session.user?.name ?? session.user?.email
             }
+            </span>
           </div>
           <Menu.Item>
             {({ active }) => (

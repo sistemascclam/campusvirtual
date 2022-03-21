@@ -18,7 +18,7 @@ export default NextAuth({
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
@@ -30,16 +30,16 @@ export default NextAuth({
         // (i.e., the request IP address)
         const res = await fetch("http://localhost:3000/api/login", {
           method: 'POST',
-          body: JSON.stringify(credentials), 
+          body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" }
         })
         const user = await res.json()
 
-        // If no error and we have user data, return it
+        // // If no error and we have user data, return it
         if (res.ok && user) {
           return user
         }
-        // Return null if user data could not be retrieved
+        // // Return null if user data could not be retrieved
         return null
       }
     }),
@@ -53,11 +53,11 @@ export default NextAuth({
           pass: process.env.EMAIL_SERVER_PASSWORD
         },
         tls: {
-          rejectUnauthorized : false
+          rejectUnauthorized: false
         }
       },
       from: process.env.EMAIL_FROM,
-      async sendVerificationRequest ({
+      async sendVerificationRequest({
         identifier: email,
         url,
         provider: { server, from }
@@ -76,21 +76,52 @@ export default NextAuth({
     GoogleProvider({
       id: 'google',
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/inicio-sesion',
+    // verifyRequest: '/auth/verify-request'
   },
   session: {
-    strategy: 'jwt',
-    jwt: true
+    strategy: 'jwt'
   },
-  debug: true,
+  // debug: true,
+  callbacks: {
+    // async jwt(token,user){
+    //   if(user){
+    //     token.id=user.id
+    //   }
+    //   return token
+    // },
+    // async session(session,token){
+    //   session.user.id = token.id
+    //   return session
+    // }
+    async session({ session, user, token }) {
+      session.user.id = token.id
+      return session
+    },
+    async jwt({ token, user }) {
+      // Persist the OAuth access_token to the token right after signin
+      if (user) {
+        token.id = user.id
+      }
+      
+      return token
+    }
+  }
 });
 
-function html ({ url, host, email }) {
+function html({ url, host, email }) {
   const escapedEmail = `${email.replace(/\./g, '&#8203;.')}`
   const escapedHost = `${host.replace(/\./g, '&#8203;.')}`
   // Your email template here
@@ -104,6 +135,6 @@ function html ({ url, host, email }) {
   `
 }
 
-function text ({ url, host }) {
+function text({ url, host }) {
   return `Sign in to ${host}\n${url}\n\n`
 }

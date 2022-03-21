@@ -1,0 +1,54 @@
+[
+    {
+        "code": "Configuration",
+        "description": "Hay un problema con el servidor de configuración."
+    },
+    {
+        "code": "AccessDenied",
+        "description": "Acceso denegado"
+    },
+    {
+        "code": "Verification",
+        "description": "El token de acceso ha expirado o ya se usó."
+    },
+    {
+        "code": "OAuthSignin",
+        "description": "Ha ocurrido un error en la petición"
+    },
+    {
+        "code": "OAuthCallback",
+        "description": "Ha ocurrido un error en la respuesta."
+    },
+    {
+        "code": "OAuthCreateAccount",
+        "description": "No se pudo registrar el usuario."
+    },
+    {
+        "code": "EmailCreateAccount",
+        "description": "No se pudo crear usuario en la base de datos."
+    },
+    {
+        "code": "Callback",
+        "description": "Error en la petición de respuesta."
+    },
+    {
+        "code": "OAuthAccountNotLinked",
+        "description": "Correo ya registrado con otro método. Por favor inicie sesión."
+    },
+    {
+        "code": "EmailSignin",
+        "description": "Ha ocurrido un error al enviar el correo de verificación."
+    },
+    {
+        "code": "CredentialsSignin",
+        "description": "Ha ocurrido un error en la autorización."
+    },
+    {
+        "code": "SessionRequired",
+        "description": "Debe estar autenticado para ver este contenido."
+    },
+    {
+        "code": "Default",
+        "description": "Ha ocurrido un error, por favor contáctese con el proveedor."
+    }
+]
