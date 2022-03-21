@@ -52,10 +52,12 @@ export default NextAuth({
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD
         },
-        tls: {
-          rejectUnauthorized: false
-        }
-      },
+
+      tls : {
+        rejectUnauthorized : false
+      }
+    },
+
       from: process.env.EMAIL_FROM,
       async sendVerificationRequest({
         identifier: email,
@@ -111,29 +113,52 @@ export default NextAuth({
       session.user.id = token.id
       return session
     },
-    async jwt({ token, user,profile,account  }) {
+    async jwt({ token, user, profile, account }) {
       // console.log('JWT callback invoked with %o', { token, user,profile,account  })
       if (user) {
         token.id = user.id
       }
-      
+
       return token
     }
   }
 });
 
 function html({ url, host, email }) {
+
   const escapedEmail = `${email.replace(/\./g, '&#8203;.')}`
   const escapedHost = `${host.replace(/\./g, '&#8203;.')}`
+
   // Your email template here
   return `
-      <body>
-        <h1>Your magic link! 🪄</h1>
-        <h3>Your email is ${escapedEmail}</h3>
+      <body style="color:black">
+
+    <button style="background-color:#7e22ce;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
+  
+      <img  style="width:4rem; height:3rem;position:absolute;left:45%; top:15%" src="https://cclam.org.pe/publico/logotipodark.png"/>
+
+   </button>
+        <h1 > Hola: </h1>
+         <h3 style="color: gray">Gracias por registrarte en el campus CCLAM. Estamos muy contentos <br>
+           de tenerte con nosotros</h3>
+           <p>
+         <h3  style="color: gray">En adelante, este sera tu nombre de usuario para poder iniciar sesion:
+          <br><a href="${url}" style="color:blue">${escapedEmail}</a>
+        </h3>
+
         <p>
-          <a href="${url}">Sign in to ${escapedHost}</a>
-      </body>
+
+        <div style="color: gray">Gracias</div>
+          <div style="color: gray">CAMARA DE COMERCIO Y PRODUCCION DE LAMBAYEQUE</div>
+               <p>
+             <a href="${url}">Verifica tu email y completa tus datos para que empieces a aprender.<br>
+               ${escapedHost}</a> 
+           
+   </body>
+      <div style="text-align: center; color: gray">@2022. All rigthtd reserved <hr style="width:100%"></div>
+
   `
+
 }
 
 function text({ url, host }) {
