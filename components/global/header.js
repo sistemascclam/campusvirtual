@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { signOut, useSession } from "next-auth/react"
+import { signOut, useSession,signIn  } from "next-auth/react"
 import { Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
@@ -98,7 +98,7 @@ function classNames(...classes) {
 }
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 export default function NavBar({ bgTransparent }) {
-  const { session, status } = useSession()
+  const { data:session, status } = useSession()
   const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
   const [navTransparent, setnavTransparent] = useState(true)
@@ -479,10 +479,10 @@ const OpcionesNoAuth = () => <>
 </>
 
 const OpcionesUsuarioAuth = ({ closeMenu }) => {
-  const { data: session } = useSession()
+  const { data: session,status } = useSession()
   return (<>
     {
-      session ?
+      status!='loading' && session ?
         <OpcionesUsuarioSiAuth />
         :
         <OpcionesUsuarioNoAuth closeMenu={closeMenu} />
@@ -492,14 +492,15 @@ const OpcionesUsuarioAuth = ({ closeMenu }) => {
 
 const OpcionesUsuarioSiAuth = () => {
   const { data: session } = useSession()
+  console.log(session?.error);
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
         <Menu.Button className="bg-blue-600 flex text-sm rounded-full hover:bg-blue-700">
           <span className="sr-only">Abrir menu de usuario</span>
           {
-            session.user?.image ?
-              <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="user profile pic" /> :
+            session && session.user && session.user.image ?
+              <img className='w-8 h-8 rounded-full' src={session.user.image} alt="user profile pic" /> :
               <span className='w-8 h-8 flex justify-center items-center text-white font-bold'>
                 {
                   session.user?.email?.substring(0, 1).toLocaleUpperCase()

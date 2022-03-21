@@ -106,12 +106,13 @@ export default NextAuth({
     //   session.user.id = token.id
     //   return session
     // }
-    async session({ session, user, token }) {
+    async session({ session, token }) {
+      // console.log('session callback invoked with %o', { session, token })
       session.user.id = token.id
       return session
     },
-    async jwt({ token, user }) {
-      // Persist the OAuth access_token to the token right after signin
+    async jwt({ token, user,profile,account  }) {
+      // console.log('JWT callback invoked with %o', { token, user,profile,account  })
       if (user) {
         token.id = user.id
       }
