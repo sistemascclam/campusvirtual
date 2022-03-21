@@ -102,6 +102,7 @@ export default function Login({ csrfToken }) {
     );
 }
 
+//No acceder a la ruta si el usuario está logeado
 export async function getServerSideProps(context) {
     const session = await getSession(context)
     

@@ -17,6 +17,9 @@ module.exports = {
       },
       zIndex:{
         '2000': '2000',
+      },
+      borderWidth: {
+      '1': '1px',
       }
     },
   },

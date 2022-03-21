@@ -38,11 +38,11 @@ export default function Curso() {
     }
 
     return (
-        <Layout home>
+        <Layout>
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <div className="  min-h-screen text-white w-full px-14">
+            <div className="  min-h-screen text-white w-full">
                 {arrayDC != null ?
                     <>
                         <div className='lg:flex xl:flex'>

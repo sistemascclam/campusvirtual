@@ -96,9 +96,9 @@ const navigation = {
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-
-export default function NavBar({bgTransparent}) {
-  const {session,status} = useSession()
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+export default function NavBar({ bgTransparent }) {
+  const { session, status } = useSession()
   const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
   const [navTransparent, setnavTransparent] = useState(true)
@@ -107,7 +107,7 @@ export default function NavBar({bgTransparent}) {
     setOpen(!open)
   }
 
-  const { data } = useSWR('/api/public/navigation', (...args) => fetch(...args).then(res => res.json()))
+  const { data } = useSWR('/api/public/navigation', fetcher)
 
 
   useEffect(function onFirstMount() {
@@ -117,14 +117,14 @@ export default function NavBar({bgTransparent}) {
 
     window.addEventListener("scroll", onScroll);
 
-   return () => {
-      window.removeEventListener("scroll",onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
     }
   }, []);
 
   return (
     <>
-      <nav className={`fixed top-0 ${navTransparent ? 'bg-transparent' : 'bg-darkblue' } lg:py-2 transition-all ease-in-out duration-500 inset-x-0 z-2000`}>
+      <nav className={`fixed top-0 ${navTransparent ? 'bg-transparent' : 'bg-darkblue'} lg:py-2 transition-all ease-in-out duration-500 inset-x-0 z-2000`}>
         <Transition.Root show={open} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 flex z-2000 lg:hidden" onClose={setOpen}>
             <Transition.Child
@@ -176,21 +176,21 @@ export default function NavBar({bgTransparent}) {
                     <div>
                       <Disclosure defaultOpen={true}>
                         <span className='text-gray-400 text-sm'>Especialidades</span>
-                            <Disclosure.Panel>
-                              <ul
-                                role="list"
-                                aria-labelledby={`especialidades-heading-mobile`}
-                                className="mt-6 flex flex-col space-y-6"
-                              >
-                                {data?.map((category, sec_k) => (
-                                  <li key={category.name} className="flow-root">
-                                    <a href={`#${category.slug}`} className="-m-2 p-2 block text-white">
-                                      {category.name}
-                                    </a>
-                                  </li>
-                                ))}
-                              </ul>
-                            </Disclosure.Panel>
+                        <Disclosure.Panel>
+                          <ul
+                            role="list"
+                            aria-labelledby={`especialidades-heading-mobile`}
+                            className="mt-6 flex flex-col space-y-6"
+                          >
+                            {data?.map((category, sec_k) => (
+                              <li key={category.name} className="flow-root">
+                                <a href={`#${category.slug}`} className="-m-2 p-2 block text-white">
+                                  {category.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </Disclosure.Panel>
                       </Disclosure>
                     </div>
                   </div>
@@ -243,7 +243,7 @@ export default function NavBar({bgTransparent}) {
               <div className="flex-shrink-0 flex items-center  justify-center rounded-full">
                 <Link href={"/"}>
                   <a className="block lg:hidden h-10 w-auto">
-                    <Image 
+                    <Image
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                       width={61.141}
@@ -253,7 +253,7 @@ export default function NavBar({bgTransparent}) {
                 </Link>
                 <Link href={"/"}>
                   <a className='hidden lg:flex items-center justify-center'>
-                    <Image 
+                    <Image
                       src="/images/cclamlogotipo.png"
                       alt="Logo"
                       width={61.141}
@@ -335,21 +335,9 @@ export default function NavBar({bgTransparent}) {
                   </Popover>
                 </div>
               </Popover.Group>
-              <div className="hidden sm:flex w-full justify-center ml-3">
-                <label className="relative block mx-auto w-8/12 my-auto group">
-                  <span className="sr-only">Buscar</span>
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                  <input type="text"
-                    placeholder={"Buscar en campus CCLAM"}
-                    className="bg-slate-900 bg-opacity-95 rounded-xl pl-12 w-full mx-auto py-2 text-sm border-2 ring-0 border-slate-900 focus:text-base focus:border-gray-900 text-gray-400" />
-                </label>
-              </div>
+              <SearchButton />
             </div>
-            <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ${!session && status ==='loading' ? 'opacity-0' : 'opacity-100'} transition-all ease-out`}>
+            <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ${!session && status === 'loading' ? 'opacity-0' : 'opacity-100'} transition-all ease-out`}>
               <OpcionesAuth />
               {/* Profile dropdown */}
               <OpcionesUsuarioAuth closeMenu={closeMenu} />
@@ -359,6 +347,65 @@ export default function NavBar({bgTransparent}) {
       </nav>
     </>
   )
+}
+
+const SearchButton = () => {
+  const [search, setsearch] = useState(null)
+  return (
+    <div className="hidden sm:flex w-full justify-center ml-3 ">
+      <label className="relative block mx-auto w-8/12 my-auto group">
+        <span className="sr-only">Buscar</span>
+        <span className="absolute inset-y-0 left-0 flex items-center pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+          </svg>
+        </span>
+        <input type="text"
+          onChange={(e) => setsearch(e.target.value)}
+          value={search ? search : ""}
+          placeholder={"Buscar en campus CCLAM"}
+          className={`bg-slate-900 bg-opacity-95 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-sm rounded-xl border-slate-900 border-2 focus:border-gray-900'} ring-0 focus:text-base text-gray-400`}
+        />
+        {
+          search && search.length>=2 ?
+            <SearchItems search={search} setsearch={setsearch} /> : ""
+        }
+      </label>
+    </div>
+  )
+}
+
+function SearchItems({ search, setsearch }) {
+  const router = useRouter()
+  const { data } = useSWR(`/api/public/search?search=${search}`, fetcher);
+
+  if (!search) {
+    return null
+  }
+
+  const handleSelectedCourse = (ruta) => {
+    setsearch(null)
+    router.push(`/curso/${ruta}`)
+  }
+
+  return <div className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
+    {
+      !data || data?.length == 0 ?
+        <p className='opacity-70 italic'>No se encontraron resultados</p> : ""
+    }
+    {data?.map((item) =>
+      <div key={item.id} onClick={() => handleSelectedCourse(item.ruta)} className="mb-1 flex flex-col hover:bg-slate-800 rounded-xl p-3 cursor-pointer">
+        <span className={`text-xs bg-blue-700 rounded-xl p-1 w-max font-semibold mt-1`}>
+          {item.category.name}
+        </span>
+        <p className='text-lg my-1'>{item.title}</p>
+        <p className='text-sm flex'><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+        </svg>
+          {item.name}</p>
+      </div>
+    )}
+  </div>
 }
 
 const OpcionesAuth = () => {
@@ -452,12 +499,12 @@ const OpcionesUsuarioSiAuth = () => {
           <span className="sr-only">Abrir menu de usuario</span>
           {
             session.user?.image ?
-            <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="user profile pic" /> :
-            <span className='w-8 h-8 flex justify-center items-center text-white font-bold'>
-              {
-                session.user?.email?.substring(0, 1).toLocaleUpperCase()
-              }
-            </span> 
+              <img className='w-8 h-8 rounded-full' src={session.user?.image} alt="user profile pic" /> :
+              <span className='w-8 h-8 flex justify-center items-center text-white font-bold'>
+                {
+                  session.user?.email?.substring(0, 1).toLocaleUpperCase()
+                }
+              </span>
           }
         </Menu.Button>
       </div>
@@ -476,9 +523,9 @@ const OpcionesUsuarioSiAuth = () => {
               <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
             </svg>
             <span className='text-ellipsis overflow-hidden'>
-            {
-              session.user?.name ?? session.user?.email
-            }
+              {
+                session.user?.name ?? session.user?.email
+              }
             </span>
           </div>
           <Menu.Item>
