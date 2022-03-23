@@ -20,6 +20,9 @@ module.exports = {
       },
       borderWidth: {
       '1': '1px',
+      },
+      maxWidth:{
+        '8xl': '1920px',
       }
     },
   },

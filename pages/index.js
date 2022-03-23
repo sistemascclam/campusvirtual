@@ -38,7 +38,7 @@ export default function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div className="min-h-screen text-white px-10 w-full ">
+      <div className="min-h-screen text-white w-full">
         {
           status!=='loading' && session ?
             <div>
