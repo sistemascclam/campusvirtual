@@ -95,19 +95,11 @@ export default NextAuth({
   },
   session: {
     strategy: 'jwt'
+    // strategy: 'database'
   },
   // debug: true,
   callbacks: {
-    // async jwt(token,user){
-    //   if(user){
-    //     token.id=user.id
-    //   }
-    //   return token
-    // },
-    // async session(session,token){
-    //   session.user.id = token.id
-    //   return session
-    // }
+    //JWT STRATEGY
     async session({ session, token }) {
       // console.log('session callback invoked with %o', { session, token })
       session.user.id = token.id
@@ -121,6 +113,16 @@ export default NextAuth({
 
       return token
     }
+    //JWT STRATEGY
+    //DATABASE STRATEGY
+    // async session({ session, user, token }) {
+    //   console.log({session, user, token});
+    //   delete user.password
+    //   // console.log('session callback invoked with %o', { session, token })
+    //   // session.user.id = token.id
+    //   return session
+    // },
+    //DATABASE STRATEGY
   }
 });
 
