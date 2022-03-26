@@ -135,7 +135,7 @@ function html({ url, host, email }) {
   return `
       <body style="color:black">
 
-    <button style="background-color:#7e22ce;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
+    <button style="background-color:#1d4ed8;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
   
       <img  style="width:4rem; height:3rem;position:absolute;left:45%; top:15%" src="https://cclam.org.pe/publico/logotipodark.png"/>
 
