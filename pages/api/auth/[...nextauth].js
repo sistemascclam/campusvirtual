@@ -91,7 +91,7 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/inicio-sesion',
-    verifyRequest: 'verificar-correo'
+    verifyRequest: '/verificar-correo'
   },
   session: {
     strategy: 'jwt'
