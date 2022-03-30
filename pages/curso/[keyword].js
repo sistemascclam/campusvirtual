@@ -1,16 +1,264 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
-import Image from 'next/image';
-import { rgbDataURL } from 'util/helper';
+import { useSession } from 'next-auth/react';
 
 export default function Curso() {
     const router = useRouter()
     const { keyword } = router.query
-    var dataDC = useSWR(`/api/public/curso_ruta/${keyword}`, (...args) => fetch(...args).then(res => res.json()))
+    var dataDC = useSWR(`/api/public/cursoRuta/${keyword}`, (...args) => fetch(...args).then(res => res.json()))
     var arrayDC = dataDC.data
+    const session = useSession()
+    const [auxIdUsuario, setauxIdUsuario]   = useState(0)
+    const [_enCarrito, _setenCarrito]   = useState(false)
+    const [_esFavorito, _setesFavorito] = useState(false)
+    const [_auxidFavorite, _setauxidFavorite] = useState(0)
+    const [_auxactiveFavorite, _setauxactiveFavorite] = useState(false)
+    const [_auxidCart, _setauxidCart] = useState(0)
+    const [_auxactiveCart, _setauxactiveCart] = useState(false)
+    var auxIdCurso = 0
+    if (arrayDC != null){
+        auxIdCurso = arrayDC.id
+    }
+    const _auxIdCurso = auxIdCurso
+
+    const localFavorito = async (event) => {
+        var arrayDataFav = localStorage.getItem("arrayDataFav")
+        if (arrayDataFav != null && arrayDataFav != ''){
+            arrayDataFav = JSON.parse(arrayDataFav)
+            for (let i = 0; i < arrayDataFav.length; i++) {
+                if(arrayDataFav[i]['idCurso'] == _auxIdCurso && arrayDataFav[i]['active'] == true){
+                    _setesFavorito(true)
+                    break;
+                }
+            }
+        }
+    }
+    const localCart = async (event) => {
+        var arrayDataCart = localStorage.getItem("arrayDataCart")
+        if (arrayDataCart != null && arrayDataCart != ''){
+            arrayDataCart = JSON.parse(arrayDataCart)
+            for (let i = 0; i < arrayDataCart.length; i++) {
+                if(arrayDataCart[i]['idCurso'] == _auxIdCurso && arrayDataCart[i]['active'] == true){
+                    _setenCarrito(true)
+                    break;
+                } 
+            }
+        }
+    }
+
+    /*useEffect(() => {
+        let aux_activeFavorite = false
+        let aux_activeCart = false
+        let aux_idFavorite = 0
+        let aux_idCart = 0
+        if (arrayDC != null){
+            if((arrayDC.favorites.length) != 0){
+                aux_idFavorite = arrayDC.favorites[0].id
+                aux_activeFavorite = arrayDC.favorites[0].active
+            }
+            if((arrayDC.shopingCarts.length) != 0){
+                aux_idCart = arrayDC.shopingCarts[0].id
+                aux_activeCart = arrayDC.shopingCarts[0].active
+            }
+            _setauxidFavorite(aux_idFavorite)
+            _setauxactiveFavorite(aux_activeFavorite)
+            _setauxidCart(aux_idCart)
+            _setauxactiveCart(aux_activeCart)
+        }
+
+        if (session.data != null){ //BD
+            setauxIdUsuario(session.data.user.id)
+            if (_auxactiveFavorite) {
+                _setesFavorito(true)
+            }
+            if(_auxactiveCart){
+                _setenCarrito(true)
+            }
+        }else{ //localStorage
+            localFavorito()
+            localCart() 
+        }
+    }, [session, arrayDC])*/
+
+
+    const veractiveFavorite = async (event) => {
+        _setesFavorito(event)
+    }
+    const veractiveCart = async (event) => {
+        _setenCarrito(event)
+    }
+    const veridFavorite = async (event) => {
+        _setauxidFavorite(event)
+    }
+    const veridCart = async (event) => {
+        _setauxidCart(event)
+    }
+    useEffect(() => {
+        if (arrayDC != null){
+            if((arrayDC.favorites.length) != 0){
+                veridFavorite(arrayDC.favorites[0].id)
+                veractiveFavorite(arrayDC.favorites[0].active)
+            }
+            if((arrayDC.shopingCarts.length) != 0){
+                veridCart(arrayDC.shopingCarts[0].id)
+                veractiveCart(arrayDC.shopingCarts[0].active)
+            }
+        }
+
+        if (session.data != null){ //BD
+            setauxIdUsuario(session.data.user.id) 
+        }else{ //localStorage
+            localFavorito()
+            localCart() 
+        }
+    }, [session, arrayDC])
+
+
+    const addFavorite = async (event) => {
+        event.preventDefault();
+        if(auxIdUsuario != 0){ //se a iniciado sesión
+            //verificar si ya se ha registrado en la BD
+            if(_auxidFavorite != ''){ //ya se a registrado en la BD
+                var resp = fetch(`/api/public/actionFavorites/activ--`+_auxidFavorite, (...args) => fetch(...args).then(res => res.json()))
+            }else{
+                var resp = fetch(`/api/public/addFavorites/${_auxIdCurso}`, (...args) => fetch(...args).then(res => res.json()))
+                const response = fetch(`/api/public/listCurso/${_auxIdCurso}`)
+                .then(res => res.json())
+                .then(data => localStorage.setItem("arrayFavCar",JSON.stringify(data)));
+            }
+        }else{
+            var arrayDataFav = localStorage.getItem("arrayDataFav")
+            if (arrayDataFav != null && arrayDataFav != '') {
+                arrayDataFav = JSON.parse(arrayDataFav)
+                var encontrado = false
+                for (let i = 0; i < arrayDataFav.length; i++){
+                    if(arrayDataFav[i]['idCurso'] == _auxIdCurso){
+                        arrayDataFav[i]['active'] = true
+                        encontrado = true
+                        break;
+                    }
+                }
+                if(!encontrado){
+                    arrayDataFav.push({ idCurso: _auxIdCurso, active: true })
+                }
+                localStorage.setItem("arrayDataFav",JSON.stringify(arrayDataFav))
+            }else{
+                var auxArray = []
+                auxArray.push({ idCurso: _auxIdCurso, active: true })
+                localStorage.setItem("arrayDataFav",JSON.stringify(auxArray))
+            }
+        }
+    }
+
+    const addShoping = async (event) => {
+        event.preventDefault();
+        if(auxIdUsuario != 0){ //se a iniciado sesión || registrar en la
+            //verificar si ya se ha registrado en la BD
+            if(_auxidCart != ''){ //ya se a registrado en la BD
+                var resp = fetch(`/api/public/actionShoping/activ--`+_auxidCart, (...args) => fetch(...args).then(res => res.json()))
+            }else{
+                var resp = fetch(`/api/public/addShoping/${_auxIdCurso}`, (...args) => fetch(...args).then(res => res.json()))
+                const response = fetch(`/api/public/listCurso/${_auxIdCurso}`)
+                .then(res => res.json())
+                .then(data => localStorage.setItem("arrayFavCar",JSON.stringify(data)));
+            }
+        }else{
+            var arrayDataCart = localStorage.getItem("arrayDataCart")
+            if (arrayDataCart != null && arrayDataCart != '') {
+                arrayDataCart = JSON.parse(arrayDataCart)
+                var encontrado = false
+                for (let i = 0; i < arrayDataCart.length; i++){
+                    if(arrayDataCart[i]['idCurso'] == _auxIdCurso){
+                        arrayDataCart[i]['active'] = true
+                        encontrado = true
+                        break;
+                    }
+                }
+                if(!encontrado){
+                    arrayDataCart.push({ idCurso: _auxIdCurso, active: true })
+                }
+                localStorage.setItem("arrayDataCart",JSON.stringify(arrayDataCart))
+            }else{
+                var auxArray = []
+                auxArray.push({ idCurso: _auxIdCurso, active: true })
+                localStorage.setItem("arrayDataCart",JSON.stringify(auxArray))
+            }
+        }
+    }
+
+    const removeFavorite = async (event) => {
+        event.preventDefault();
+        if(auxIdUsuario != 0){ 
+            //verificar si existe en la tabla Favorites
+            var _auxId = 0
+            var arrayFavCar = localStorage.getItem("arrayFavCar")
+            if (arrayFavCar != null && arrayFavCar != ''){
+                arrayFavCar = JSON.parse(arrayFavCar)
+                if((arrayFavCar[1].cursoFav[0]) != null) {
+                    _auxId = arrayFavCar[1].cursoFav[0].id
+                }
+            }
+            if(_auxidFavorite != ''){ //ya se a registrado en la BD
+                var resp = fetch(`/api/public/actionFavorites/remov--`+_auxidFavorite, (...args) => fetch(...args).then(res => res.json()))
+            }else{
+                _auxidFavorite = _auxId
+                var resp = fetch(`/api/public/actionFavorites/remov--`+_auxId, (...args) => fetch(...args).then(res => res.json()))
+            }
+        }else{
+            var arrayDataFav = localStorage.getItem("arrayDataFav")
+            if (arrayDataFav != null && arrayDataFav != '') {
+                var arrayDataFav = localStorage.getItem("arrayDataFav")
+                if (arrayDataFav != null && arrayDataFav != ''){
+                    arrayDataFav = JSON.parse(arrayDataFav)
+                    for (let i = 0; i < arrayDataFav.length; i++) {
+                        if(arrayDataFav[i]['idCurso'] == _auxIdCurso && arrayDataFav[i]['active'] == true){
+                            arrayDataFav[i]['active'] = false 
+                            break;
+                        }
+                    }
+                } 
+                localStorage.setItem("arrayDataFav",JSON.stringify(arrayDataFav))
+            }
+        }
+    }
+
+    const removeShoping = async (event) => {
+        event.preventDefault();
+        if(auxIdUsuario != 0){ //se a iniciado sesión || registrar en la
+            var _auxId = 0
+            var arrayFavCar = localStorage.getItem("arrayFavCar")
+            if (arrayFavCar != null && arrayFavCar != ''){
+                arrayFavCar = JSON.parse(arrayFavCar)
+                if((arrayFavCar[0].cursoCart[0]) != null) {
+                    _auxId = arrayFavCar[0].cursoCart[0].id
+                }
+            }
+            if(_auxidCart != ''){ //ya se a registrado en la BD
+                var resp = fetch(`/api/public/actionShoping/remov--`+_auxidCart, (...args) => fetch(...args).then(res => res.json()))
+            }else{
+                _auxidCart = _auxId
+                var resp = fetch(`/api/public/actionShoping/remov--`+_auxId, (...args) => fetch(...args).then(res => res.json()))
+            }
+        }else{
+            var arrayDataCart = localStorage.getItem("arrayDataCart")
+            if (arrayDataCart != null && arrayDataCart != '') {
+                var arrayDataCart = localStorage.getItem("arrayDataCart")
+                if (arrayDataCart != null && arrayDataCart != ''){
+                    arrayDataCart = JSON.parse(arrayDataCart)
+                    for (let i = 0; i < arrayDataCart.length; i++) {
+                        if(arrayDataCart[i]['idCurso'] == _auxIdCurso && arrayDataCart[i]['active'] == true){
+                            arrayDataCart[i]['active'] = false 
+                            break;
+                        }
+                    }
+                } 
+                localStorage.setItem("arrayDataCart",JSON.stringify(arrayDataCart))
+            }
+        }
+    }
 
     var star = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -27,12 +275,14 @@ export default function Curso() {
     var heart = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
     </svg>;
+    var heart_full = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"  />
+    </svg>;
     var check = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
     </svg>;
 
     var cadena = '';
-
     if (arrayDC != null) {
         var cadena = arrayDC.texto?.split('|,|')
     }
@@ -65,7 +315,6 @@ export default function Curso() {
                                     <span className='text-slate-100 py-5 block'>
                                         {arrayDC.description}
                                     </span>
-
                                     <span className='text-sm font-semibold' >Lo que aprenderás:</span>
                                     {cadena?.map((Array, sec_k) => (
                                         <div className='py-0 text-xs' key={sec_k}>
@@ -74,17 +323,31 @@ export default function Curso() {
                                     ))}
  
                                     <div className="flex items-center justify-between py-5">
-                                        <div className='w-full'>
-                                            <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" >
-                                                Añadir a la cesta
-                                            </button>
+                                        <div className='w-full' onClick={() => _setenCarrito(!_enCarrito)}>
+                                            {_enCarrito == false ? 
+                                                <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={addShoping}>
+                                                    Añadir a la cesta
+                                                </button>
+                                                :
+                                                <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={removeShoping}>
+                                                    Quitar de la cesta
+                                                </button>
+                                            }
                                         </div>
-                                        <div className='w-1/6  px-1 ' >
-                                            <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' >
-                                                <span className="block   mx-auto text-center   w-fit">
-                                                    {heart}
-                                                </span>
-                                            </div>
+                                        <div className='w-1/6  px-1 ' onClick={() => _setesFavorito(!_esFavorito)}>
+                                                {_esFavorito == false ? 
+                                                    <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={addFavorite}>
+                                                        <span className="block   mx-auto text-center   w-fit">
+                                                            {heart}
+                                                        </span>
+                                                    </div>
+                                                    :
+                                                    <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={removeFavorite}>
+                                                        <span className="block   mx-auto text-center   w-fit">
+                                                            {heart_full}
+                                                        </span>
+                                                    </div>
+                                                }
                                         </div>
                                     </div>
                                     <div className='block py-3 px-2  text-center rounded-lg  border-solid border-2 border-slate-600'>
