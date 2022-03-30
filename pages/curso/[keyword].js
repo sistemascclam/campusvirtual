@@ -83,28 +83,15 @@ export default function Curso() {
         }
     }, [session, arrayDC])*/
 
-
-    const veractiveFavorite = async (event) => {
-        _setesFavorito(event)
-    }
-    const veractiveCart = async (event) => {
-        _setenCarrito(event)
-    }
-    const veridFavorite = async (event) => {
-        _setauxidFavorite(event)
-    }
-    const veridCart = async (event) => {
-        _setauxidCart(event)
-    }
     useEffect(() => {
         if (arrayDC != null){
             if((arrayDC.favorites.length) != 0){
-                veridFavorite(arrayDC.favorites[0].id)
-                veractiveFavorite(arrayDC.favorites[0].active)
+                _setauxidFavorite(arrayDC.favorites[0].id)
+                _setesFavorito(arrayDC.favorites[0].active)
             }
             if((arrayDC.shopingCarts.length) != 0){
-                veridCart(arrayDC.shopingCarts[0].id)
-                veractiveCart(arrayDC.shopingCarts[0].active)
+                _setauxidCart(arrayDC.shopingCarts[0].id)
+                _setenCarrito(arrayDC.shopingCarts[0].active)
             }
         }
 
