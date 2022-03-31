@@ -83,10 +83,32 @@ model Curso {
   cursoKeyword      CursoKeyword[] @relation(references: [id])
   ruta              String?        @unique
   texto             String?
+  favorites         Favorites[]
+  shopingCarts      ShopingCart[]
 }
 
 model CursoKeyword {
   id    Int     @id @default(autoincrement())
   name  String?
   curso Curso[] @relation(references: [id])
+}
+
+model ShopingCart {
+  id                Int       @id @default(autoincrement())
+  idUsuario         String
+  idCurso           Int
+  registration_date DateTime  @default(now())     
+  active            Boolean   @default(true)
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+
+}
+
+model Favorites {
+  id                Int       @id @default(autoincrement())
+  idUsuario         String
+  idCurso           Int
+  registration_date DateTime  @default(now())  
+  active            Boolean   @default(true)
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+
 }

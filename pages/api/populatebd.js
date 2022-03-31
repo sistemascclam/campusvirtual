@@ -2,7 +2,6 @@ import prisma from 'lib/prisma'
 import { getRandomNumber, stringToSlug } from 'util/helper'
 
 export default async function handle(req, res) {
-    // await prisma.category.deleteMany({})
     const categories = await prisma.category.createMany({
         skipDuplicates: true,
         data: [
