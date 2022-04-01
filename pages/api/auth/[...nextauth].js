@@ -91,23 +91,15 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/inicio-sesion',
-    verifyRequest: 'verificar-correo'
+    verifyRequest: '/verificar-correo'
   },
   session: {
     strategy: 'jwt'
+    // strategy: 'database'
   },
   // debug: true,
   callbacks: {
-    // async jwt(token,user){
-    //   if(user){
-    //     token.id=user.id
-    //   }
-    //   return token
-    // },
-    // async session(session,token){
-    //   session.user.id = token.id
-    //   return session
-    // }
+    //JWT STRATEGY
     async session({ session, token }) {
       // console.log('session callback invoked with %o', { session, token })
       session.user.id = token.id
@@ -121,6 +113,16 @@ export default NextAuth({
 
       return token
     }
+    //JWT STRATEGY
+    //DATABASE STRATEGY
+    // async session({ session, user, token }) {
+    //   console.log({session, user, token});
+    //   delete user.password
+    //   // console.log('session callback invoked with %o', { session, token })
+    //   // session.user.id = token.id
+    //   return session
+    // },
+    //DATABASE STRATEGY
   }
 });
 
@@ -133,7 +135,7 @@ function html({ url, host, email }) {
   return `
       <body style="color:black">
 
-    <button style="background-color:#7e22ce;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
+    <button style="background-color:#1d4ed8;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
   
       <img  style="width:4rem; height:3rem;position:absolute;left:45%; top:15%" src="https://cclam.org.pe/publico/logotipodark.png"/>
 

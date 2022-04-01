@@ -4,7 +4,6 @@ import React from 'react';
 import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
 import Image from 'next/image';
-import { rgbDataURL } from 'util/helper';
 
 export default function Curso() {
     const router = useRouter()
@@ -46,16 +45,18 @@ export default function Curso() {
                 {arrayDC != null ?
                     <>
                         <div className='lg:flex xl:flex'>
-                            <div className="text-white lg:w-1/2  p-4 w-full">
-                                <img
+                            <div className="text-white lg:w-1/2 m-4 w-auto relative h-72 xl:h-auto">
+                                <Image
                                     className='h-full rounded-2xl'
                                     src={arrayDC.image}
-                                    layout="responsive"
+                                    layout="fill"
+                                    objectFit='cover'
+                                    objectPosition="top"
                                 />
                             </div>
-                            <div className="text-white lg:w-1/2  p-4 w-full">
+                            <div className="text-white lg:w-1/2 p-4 w-full">
                                 <div className='py-2 px-3 '>
-                                    <span className='text-3xl font-extrabold'>{arrayDC.title}</span><br/>
+                                    <span className='text-3xl font-extrabold'>{arrayDC.title}</span><br />
                                     <span className='text-xs text-slate-400 leading-5 '>{arrayDC.name}</span>
                                     <div className='flex py-2'>
                                         <span className='  flex text-amber-400'>
@@ -72,7 +73,7 @@ export default function Curso() {
                                             <div className='py-1'>{check} {Array}</div>
                                         </div>
                                     ))}
- 
+
                                     <div className="flex items-center justify-between py-5">
                                         <div className='w-full'>
                                             <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" >
@@ -97,11 +98,11 @@ export default function Curso() {
                     : ''
                 }
 
-                <div className="block text-white  p-4  w-full">
-                    <span className='text-xl font-semibold' >Calificaciones de estudiantes</span>
+                <div className="block text-white p-4 w-full mt-8">
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2  text-xs" >
                         <div className='py-0'>
-                            <div className="flex  gap-3 my-2 text-xs" >
+                            <p className='text-xl font-semibold mb-6'>Calificaciones de estudiantes</p>
+                            <div className="flex gap-3 my-2 text-xs">
                                 <div className='py-0 lg:py-6 '>
                                     <div className='items-start'>
                                         <div className='text-center'>
@@ -147,9 +148,10 @@ export default function Curso() {
                                 </div>
                             </div>
                         </div>
-                        <div className='py-0'>
+                        <div className='py-0 mt-10 sm:mt-0'>
+                            <p className='text-xl font-semibold mb-6'>Comentarios</p>
                             <div className='py-2'>
-                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
+                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 text-xs" >
                                     <div className='py-0 lg:py-6 w-14'>
                                         <div className="w-10 h-10 rounded-full bg-red-400">
                                             <img
@@ -170,7 +172,7 @@ export default function Curso() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
+                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
                             </div>
                             <div className='py-2'>
                                 <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
@@ -194,7 +196,7 @@ export default function Curso() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
+                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
                             </div>
                             <div className='py-2'>
                                 <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
@@ -218,7 +220,7 @@ export default function Curso() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='block w-full rounded-lg  border-solid border-2 border-slate-600'></div>
+                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
                             </div>
                             <div className='py-2'>
                                 <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
