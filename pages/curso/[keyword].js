@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
 import { useSession } from 'next-auth/react';
+import Link from 'next/link'
 
 export default function Curso() {
     const router = useRouter()
@@ -48,40 +49,6 @@ export default function Curso() {
             }
         }
     }
-
-    /*useEffect(() => {
-        let aux_activeFavorite = false
-        let aux_activeCart = false
-        let aux_idFavorite = 0
-        let aux_idCart = 0
-        if (arrayDC != null){
-            if((arrayDC.favorites.length) != 0){
-                aux_idFavorite = arrayDC.favorites[0].id
-                aux_activeFavorite = arrayDC.favorites[0].active
-            }
-            if((arrayDC.shopingCarts.length) != 0){
-                aux_idCart = arrayDC.shopingCarts[0].id
-                aux_activeCart = arrayDC.shopingCarts[0].active
-            }
-            _setauxidFavorite(aux_idFavorite)
-            _setauxactiveFavorite(aux_activeFavorite)
-            _setauxidCart(aux_idCart)
-            _setauxactiveCart(aux_activeCart)
-        }
-
-        if (session.data != null){ //BD
-            setauxIdUsuario(session.data.user.id)
-            if (_auxactiveFavorite) {
-                _setesFavorito(true)
-            }
-            if(_auxactiveCart){
-                _setenCarrito(true)
-            }
-        }else{ //localStorage
-            localFavorito()
-            localCart() 
-        }
-    }, [session, arrayDC])*/
 
     useEffect(() => {
         if (arrayDC != null){
@@ -143,7 +110,6 @@ export default function Curso() {
     const addShoping = async (event) => {
         event.preventDefault();
         if(auxIdUsuario != 0){ //se a iniciado sesión || registrar en la
-            //verificar si ya se ha registrado en la BD
             if(_auxidCart != ''){ //ya se a registrado en la BD
                 var resp = fetch(`/api/public/actionShoping/activ--`+_auxidCart, (...args) => fetch(...args).then(res => res.json()))
             }else{
@@ -321,21 +287,24 @@ export default function Curso() {
                                                 </button>
                                             }
                                         </div>
+                                        
                                         <div className='w-1/6  px-1 ' onClick={() => _setesFavorito(!_esFavorito)}>
                                                 {_esFavorito == false ? 
                                                     <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={addFavorite}>
+                                                        <Link href="#"><a>
                                                         <span className="block   mx-auto text-center   w-fit">
                                                             {heart}
-                                                        </span>
+                                                        </span></a></Link>
                                                     </div>
                                                     :
                                                     <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={removeFavorite}>
-                                                        <span className="block   mx-auto text-center   w-fit">
+                                                        <Link href="#"><a><span className="block   mx-auto text-center   w-fit">
                                                             {heart_full}
-                                                        </span>
+                                                        </span></a></Link>
                                                     </div>
                                                 }
                                         </div>
+                                        
                                     </div>
                                     <div className='block py-3 px-2  text-center rounded-lg  border-solid border-2 border-slate-600'>
                                         Comprar ahora

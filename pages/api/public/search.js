@@ -14,7 +14,7 @@ export default async function handle(req, res) {
           select: {
             name: true
           }
-        }
+        }  
       },
       where: {
         active: true,
