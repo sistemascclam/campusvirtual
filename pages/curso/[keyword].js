@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 export default function Curso() {
     const router = useRouter()
     const { keyword } = router.query
-    var dataDC = useSWR(`/api/public/cursoRuta/${keyword}`, (...args) => fetch(...args).then(res => res.json()))
+    var dataDC = useSWR(`/api/curso/${keyword}`, (...args) => fetch(...args).then(res => res.json()))
     var arrayDC = dataDC.data
     const session = useSession()
     const [auxIdUsuario, setauxIdUsuario]   = useState(0)
