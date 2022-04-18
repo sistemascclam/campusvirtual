@@ -4,7 +4,7 @@ import Layout, { siteTitle } from "@global/layout";
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import useSWR from 'swr'
-import CarouselCurso from 'components/curso/carouselCurso'
+import CarouselCurso from 'components/carouselCurso/carouselCurso'
 
 export default function Home() {
   const { data:session,status } = useSession()
@@ -92,7 +92,7 @@ export default function Home() {
                         </span>
                       </div>
                     </span>
-                  </div>
+                  </div> 
                 </div>
                 <div className='py-0 lg:py-6'>
                   <div className='bg-slate-900 rounded-lg min-h-full'>
