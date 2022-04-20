@@ -71,17 +71,16 @@ export default function CarouselCurso({ arrayC }) {
                                                 </div>
                                             </div>
                                         </a>
-                                    </Link>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </Carousel>
-            : ''
-        }
+                    ))}
+                </Carousel>
+                : ''
+            }
         </>
-
     )
 }
 
