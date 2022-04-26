@@ -79,8 +79,8 @@ export default function curso({ arrayData }) {
                                             </div>
                                             <Image
                                                 className='rounded-t-xl'
-                                                src={arrayC[sec_k].curso.image}
-                                                alt={arrayC[sec_k].curso.title}
+                                                src={Curso.curso.image}
+                                                alt={Curso.curso.title}
                                                 width={380}
                                                 height={210}
                                                 objectFit={"cover"}
@@ -88,17 +88,17 @@ export default function curso({ arrayData }) {
                                         </div>
                                         <div className='py-2 px-3'>
                                             <div>
-                                                <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{arrayC[sec_k].curso.title}</span>
-                                                <span className='text-sm text-slate-400 leading-5 '>{arrayC[sec_k].curso.name}</span>
+                                                <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{Curso.curso.title}</span>
+                                                <span className='text-sm text-slate-400 leading-5 '>{Curso.curso.name}</span>
                                             </div>
                                             <div className='flex'>
                                                 <span className='text-sm flex text-amber-400'>
-                                                    {[...Array(5).keys()].map((a, i) => i < arrayC[sec_k].curso.valuation ? <span key={`star_full_key_${arrayC[sec_k].curso.id}_${i}`}>{star_full}</span> : <span key={`star_key_${arrayC[sec_k].curso.id}_${i}`}>{star}</span>)}
+                                                    {[...Array(5).keys()].map((a, i) => i < Curso.curso.valuation ? <span key={`star_full_key_${Curso.curso.id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.curso.id}_${i}`}>{star}</span>)}
                                                 </span>
-                                                <span className='text-sm text-slate-400'>({arrayC[sec_k].curso.valuation})</span>
+                                                <span className='text-sm text-slate-400'>({Curso.curso.valuation})</span>
                                             </div>
                                             <div className='py-3 text-slate-50'>
-                                                S/<span className='text-base  '>{arrayC[sec_k].curso.price.toFixed(2)}</span>
+                                                S/<span className='text-base  '>{Curso.curso.price?.toFixed(2)}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -130,8 +130,8 @@ export default function curso({ arrayData }) {
                                                 </div>
                                                 <Image
                                                     className='rounded-t-xl'
-                                                    src={arrayC[sec_k].curso[0].image}
-                                                    alt={arrayC[sec_k].curso[0].title}
+                                                    src={Curso.curso[0]?.image}
+                                                    alt={Curso.curso[0]?.title}
                                                     width={380}
                                                     height={210}
                                                     objectFit={"cover"}
@@ -139,17 +139,17 @@ export default function curso({ arrayData }) {
                                             </div>
                                             <div className='py-2 px-3'>
                                                 <div>
-                                                    <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{arrayC[sec_k].curso[0].title}</span>
-                                                    <span className='text-sm text-slate-400 leading-5 '>{arrayC[sec_k].curso[0].name}</span>
+                                                    <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{Curso.curso[0]?.title}</span>
+                                                    <span className='text-sm text-slate-400 leading-5 '>{Curso.curso[0].name}</span>
                                                 </div>
                                                 <div className='flex'>
                                                     <span className='text-sm flex text-amber-400'>
-                                                        {[...Array(5).keys()].map((a, i) => i < arrayC[sec_k].curso[0].valuation ? <span key={`star_full_key_${arrayC[sec_k].curso[0].id}_${i}`}>{star_full}</span> : <span key={`star_key_${arrayC[sec_k].curso[0].id}_${i}`}>{star}</span>)}
+                                                        {[...Array(5).keys()].map((a, i) => i < Curso.curso[0].valuation ? <span key={`star_full_key_${Curso.curso[0].id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.curso[0].id}_${i}`}>{star}</span>)}
                                                     </span>
-                                                    <span className='text-sm text-slate-400'>({arrayC[sec_k].curso[0].valuation})</span>
+                                                    <span className='text-sm text-slate-400'>({Curso.curso[0].valuation})</span>
                                                 </div>
                                                 <div className='py-3 text-slate-50'>
-                                                    S/<span className='text-base  '>{arrayC[sec_k].curso[0].price.toFixed(2)}</span>
+                                                    S/<span className='text-base  '>{Curso.curso[0].price?.toFixed(2)}</span>
                                                 </div>
                                             </div>
                                         </div>

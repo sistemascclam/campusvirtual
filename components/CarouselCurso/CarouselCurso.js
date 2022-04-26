@@ -66,7 +66,7 @@ export default function CarouselCurso({ arrayC }) {
                                                         <span className='text-xs text-slate-400'>({Curso.valuation})</span>
                                                     </div>
                                                     <div className='py-3'>
-                                                        S/<span className='text-base'>{Curso.price.toFixed(2)}</span>
+                                                        S/<span className='text-base'>{Curso.price?.toFixed(2)}</span>
                                                     </div>
                                                 </div>
                                             </div>
