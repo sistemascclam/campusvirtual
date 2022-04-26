@@ -34,7 +34,6 @@ export default function Favoritos() {
                 for (let i = 0; i < arrayDataCart.length; i++){
                     if(arrayDataCart[i]['idCurso'] == _auxidFavorite){
                         arrayDataCart[i]['active'] = false 
-                        //sumaTotal = _total - 
                         break
                     }
                 }
@@ -62,10 +61,10 @@ export default function Favoritos() {
             let arrayDataCart = localStorage.getItem("arrayDataCart")
             if (arrayDataCart != null && arrayDataCart != ''){
                 data = arrayDataCart
-            } 
-            fetch('/api/public/buscarCarritoLocal/'+data)
-            .then(response => response.json())
-            .then(_data => (setarrayC(_data[0].resultado), _settotal(_data[0].suma)));
+                fetch('/api/public/buscarCarritoLocal/'+data)
+                .then(response => response.json())
+                .then(_data => (setarrayC(_data[0].resultado), _settotal(_data[0].suma)));
+            }
             _setAction('localStorage')
         }
     },[session, auxarrayC])
@@ -86,43 +85,50 @@ export default function Favoritos() {
                     Mi carrito de compras
                 </div>
             </div>
-
+            {arrayC?.length > 0 ?
+                '' : 
+                <>
+                    <div className="   text-center w-full  py-14 border-inherit ">
+                        <p className='text-slate-100 text-2xl '>No tienes nada en tu carrito de compras</p> 
+                    </div>
+                </>
+            }
             <div className="lg:flex md:flex min-h-screen bg-cover bg-top-left py-5 ">
-                <div className="text-white lg:w-2/3 ">
+                <div className={`text-white lg:w-2/3`}>
                 {arrayC?.length > 0 ?
                     _action == 'BD'?
                         arrayC?.map((Curso, sec_k) => (
-                        <div className='w-full flex py-3 px-14' key={`curso_card_${Curso.id}_${sec_k}`}>
-                            <div className="text-white w-1/4 w-full h-32 ">
-                                <img
-                                    className='rounded-l-lg h-full w-full'
-                                    src={arrayC[sec_k].curso.image}
-                                    alt={arrayC[sec_k].curso.title}
-                                />
-                            </div>
-                            <div className="flex text-white w-3/4 w-full rounded-r-xl bg-slate-800">
-                                <div className='w-5/6 border-solid '>
-                                    <div className='py-4 px-5'>
-                                        <div>
-                                            <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-bold'>{arrayC[sec_k].curso.title}</span>
-                                            <span className='text-sm text-slate-400 leading-5 py-3'>{arrayC[sec_k].curso.name}</span>
+                            <div className='w-full flex py-3 px-14' key={`curso_card_${Curso.id}_${sec_k}`}>
+                                <div className="text-white w-1/4 w-full h-32 ">
+                                    <img
+                                        className='rounded-l-lg h-full w-full'
+                                        src={arrayC[sec_k].curso.image}
+                                        alt={arrayC[sec_k].curso.title}
+                                    />
+                                </div>
+                                <div className="flex text-white w-3/4 w-full rounded-r-xl bg-slate-800">
+                                    <div className='w-5/6 border-solid '>
+                                        <div className='py-4 px-5'>
+                                            <div>
+                                                <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-bold'>{arrayC[sec_k].curso.title}</span>
+                                                <span className='text-sm text-slate-400 leading-5 py-3'>{arrayC[sec_k].curso.name}</span>
+                                            </div>
+                                            <div className='py-3 text-slate-50 font-bold'>
+                                                S/<span className='text-base  '>{arrayC[sec_k].curso.price.toFixed(2)}</span>
+                                            </div>
                                         </div>
-                                        <div className='py-3 text-slate-50 font-bold'>
-                                            S/<span className='text-base  '>{arrayC[sec_k].curso.price.toFixed(2)}</span>
+                                    </div>
+                                    <div className='w-1/6 border-solid '>
+                                        <div className='text-right flex justify-end px-8' title="Eliminar">
+                                            <Link href="#"><a>
+                                            <div className='min-w-0 rounded-full bg-slate-800 py-2 px-1  text-white ' onClick={() => deleteElement(Curso.id)}>
+                                                {trash}
+                                            </div>
+                                            </a></Link>
                                         </div>
                                     </div>
                                 </div>
-                                <div className='w-1/6 border-solid '>
-                                    <div className='text-right flex justify-end px-8' title="Eliminar">
-                                        <Link href="#"><a>
-                                        <div className='min-w-0 rounded-full bg-slate-800 py-2 px-1  text-white ' onClick={() => deleteElement(Curso.id)}>
-                                            {trash}
-                                        </div>
-                                        </a></Link>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
                         )) : 
                         arrayC?.map((Curso, sec_k) => (
                             <div className='w-full flex py-3 px-14' key={`curso_card_${Curso.id}_${sec_k}`}>
@@ -160,36 +166,41 @@ export default function Favoritos() {
                     : ''
                 }
                 </div>
-                <div className="text-white lg:w-1/3 ">
-                   <div className=' py-3 px-14'>
-                        <div className='border-solid border-2 border-slate-800 rounded-3xl bg-slate-800'>
-                            <div className='text-center text-lg py-2'>Total</div>
-                            <div className='text-center text-4xl font-bold py-2'>S/. {_total.toFixed(2)}</div>
-                            <div className='py-2 px-8'> 
-                                <label className="relative block">
-                                    <span className="absolute inset-y-0 right-3 flex items-center pl-2" >
-                                        <div className='py-0 lg:py-6 '>
-                                            <Link href="#"><a>
-                                            <div className="  rounded-full bg-blue-400">
-                                                {search}
+
+                {arrayC?.length > 0 ?
+                    <div className="text-white lg:w-1/3 ">
+                        <div className=' py-3 px-14'>
+                            <div className='border-solid border-2 border-slate-800 rounded-3xl bg-slate-800'>
+                                <div className='text-center text-lg py-2'>Total</div>
+                                <div className='text-center text-4xl font-bold py-2'>S/. {_total.toFixed(2)}</div>
+                                <div className='py-2 px-8'> 
+                                    <label className="relative block">
+                                        <span className="absolute inset-y-0 right-3 flex items-center pl-2" >
+                                            <div className='py-0 lg:py-6 '>
+                                                <Link href="#"><a>
+                                                <div className="  rounded-full bg-blue-400">
+                                                    {search}
+                                                </div>
+                                                </a></Link>
                                             </div>
-                                            </a></Link>
-                                        </div>
-                                    </span>
-                                    <input type="text" id="codigo" name="codigo" placeholder="Código de descuento" autoComplete='off' required className="text-black shadow bg-slate-100  appearance-none border rounded-full w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
-                                </label> 
-                            </div>
-                            <div className='py-8'>
-                                <Link href="#"><a>
-                                <div className='py-2 w-32 mx-auto block py-1 px-0 bg-blue-600 text-center rounded-lg  border-solid border-2 border-blue-600 rounded-full'>
-                                    Pagar
+                                        </span>
+                                        <input type="text" id="codigo" name="codigo" placeholder="Código de descuento" autoComplete='off' required className="text-black shadow bg-slate-100  appearance-none border rounded-full w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    </label> 
                                 </div>
-                                </a></Link>
+                                <div className='py-8'>
+                                    <Link href="#"><a>
+                                    <div className='py-2 w-32 mx-auto block py-1 px-0 bg-blue-600 text-center rounded-lg  border-solid border-2 border-blue-600 rounded-full'>
+                                        Pagar
+                                    </div>
+                                    </a></Link>
+                                </div>
                             </div>
                         </div>
-                   </div>
-                </div>
+                    </div>
+                    : ''
+                }
             </div>
+
         </Layout>  
     )
 }   

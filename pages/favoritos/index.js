@@ -122,7 +122,12 @@ export default function Favoritos() {
             <div className="flex min-h-screen bg-cover bg-top-left py-5 px-5">
             {existeData == true ?
                 <Curso arrayData={aux_Data}/>
-                :''
+                :
+                <>
+                    <div className="block   mx-auto text-center   w-fit py-8">
+                        <p className='text-slate-100 text-2xl '>No tienes nada en favoritos</p> 
+                    </div>
+                </>
             }
             </div>
 
