@@ -389,10 +389,6 @@ function SearchItems({ search, setsearch }) {
   }
 
   return <div className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
-    {
-      !data || data?.length == 0 ?
-        <p className='opacity-70 italic'>No se encontraron resultados</p> : ""
-    }
     {data?.map((item) =>
       <div key={item.id} onClick={() => handleSelectedCourse(item.ruta)} className="mb-1 flex flex-col hover:bg-slate-800 rounded-xl p-3 cursor-pointer">
         <span className={`text-xs bg-blue-700 rounded-xl p-1 w-max font-semibold mt-1`}>
@@ -405,6 +401,10 @@ function SearchItems({ search, setsearch }) {
           {item.name}</p>
       </div>
     )}
+    {
+      data && !Array.isArray(data) ?
+        <p className='opacity-70 italic'>No se encontraron resultados</p> : ""
+    }
   </div>
 }
 

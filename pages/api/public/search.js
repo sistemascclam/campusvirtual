@@ -42,7 +42,8 @@ export default async function handle(req, res) {
         title: 'asc',
       }
     })
-    res.json(searchCourses)
+    let finalrpta = searchCourses ? searchCourses : null
+    res.json(finalrpta)
   }else{
     res.end()
   }

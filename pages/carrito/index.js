@@ -81,7 +81,7 @@ export default function Favoritos() {
                 <title>{siteTitle}</title>
             </Head>
             <div className='text-2xl font-serif font-bold font-mono text-slate-50  '>
-                <div className='lg:w-1/3 md:w-1/2 sm:w-1/2 sm:px-5 px-5 border-b-2 border-transparent border-sky-700'>
+                <div className='lg:w-1/3 md:w-1/2 sm:w-1/2 sm:px-5 px-5 border-b-2 border-transparent border-blue-600'>
                     Mi carrito de compras
                 </div>
             </div>
