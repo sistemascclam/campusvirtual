@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import "react-multi-carousel/lib/styles.css";
-  
+import CursoCard from './cursoCard';
+
 export default function curso({ arrayData }) {
-    const [arrayC, setarrayC]   = useState(null)
+    const [arrayC, setarrayC] = useState(null)
     const [_action, _setAction] = useState('')
 
     var star = <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,152 +18,62 @@ export default function curso({ arrayData }) {
         <path d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" />
     </svg>;
 
-    function deleteElement(_auxidFavorite){
-        if(_action == 'BD'){
-            fetch('/api/public/actionFavorites/remov--'+_auxidFavorite)
-            .then(response => response.json())
-            .then(data => setarrayC(data));
-        }else if(_action == 'localStorage'){
+    function deleteElement(_auxidFavorite) {
+        if (_action == 'BD') {
+            fetch('/api/public/actionFavorites/remov--' + _auxidFavorite)
+                .then(response => response.json())
+                .then(data => setarrayC(data));
+        } else if (_action == 'localStorage') {
             var arrayDataFav = localStorage.getItem("arrayDataFav")
             if (arrayDataFav != null && arrayDataFav != '') {
                 arrayDataFav = JSON.parse(arrayDataFav)
-                for (let i = 0; i < arrayDataFav.length; i++){
-                    if(arrayDataFav[i]['idCurso'] == _auxidFavorite){
+                for (let i = 0; i < arrayDataFav.length; i++) {
+                    if (arrayDataFav[i]['idCurso'] == _auxidFavorite) {
                         arrayDataFav[i]['active'] = false
                         break;
                     }
                 }
-                localStorage.setItem("arrayDataFav",JSON.stringify(arrayDataFav))
+                localStorage.setItem("arrayDataFav", JSON.stringify(arrayDataFav))
                 var auxarrayDataFav = localStorage.getItem("arrayDataFav")
-    
-                fetch('/api/public/listFavoritesLocalStorage/'+auxarrayDataFav+'--0')
-                .then(response => response.json())
-                .then(data => setarrayC(data));
+
+                fetch('/api/public/listFavoritesLocalStorage/' + auxarrayDataFav + '--0')
+                    .then(response => response.json())
+                    .then(data => setarrayC(data));
             }
         }
     }
 
     useEffect(() => {
-        if(arrayData[0].action == 'BD'){ //BD
+        if (arrayData[0].action == 'BD') { //BD
             setarrayC(arrayData[0].arrayC)
             _setAction('BD')
-        }else if(arrayData[0].action == 'localStorage'){ //localStorage
+        } else if (arrayData[0].action == 'localStorage') { //localStorage
             //setarrayC(arrayData[0].arrayC)
-            fetch('/api/public/listFavoritesLocalStorage/'+arrayData[0].arrayC+'--0')
-            .then(response => response.json())
-            .then(data => setarrayC(data));
+            fetch('/api/public/listFavoritesLocalStorage/' + arrayData[0].arrayC + '--0')
+                .then(response => response.json())
+                .then(data => setarrayC(data));
             _setAction('localStorage')
         }
-        
-    },[arrayData])
 
-  return (
-    <>
-    {arrayC != null ?
-        _action == 'BD' ?
-        <div className="w-full flex justify-center ">
-            <div className="grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 " >
-            {arrayC.map((Curso, sec_k) => (
-                <div className={`py-0 lg:py-6`} key={`curso_card_${Curso.id}_${sec_k}`}>
-                    <div className='rounded-lg' >
-                        <div className="box-border rounded-l-xl">
-                            <div className='mx-auto py-6 lg:pr-6'>
-                                <div className=' bg-slate-800 rounded-2xl shadow-xl'>
-                                    <div>
-                                        <div className='px-0 '>
-                                            <div className='text-right flex justify-end px-8' title="Eliminar">
-                                                <Link href="#"><a>
-                                                    <div className='min-w-0 rounded-full bg-slate-800 py-1 px-1 absolute z-10 text-white ' onClick={() => deleteElement(Curso.id)}>
-                                                        {trash}
-                                                    </div>
-                                                </a></Link>
-                                            </div>
-                                            <Image
-                                                className='rounded-t-xl'
-                                                src={Curso.curso.image}
-                                                alt={Curso.curso.title}
-                                                width={380}
-                                                height={210}
-                                                objectFit={"cover"}
-                                            />
-                                        </div>
-                                        <div className='py-2 px-3'>
-                                            <div>
-                                                <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{Curso.curso.title}</span>
-                                                <span className='text-sm text-slate-400 leading-5 '>{Curso.curso.name}</span>
-                                            </div>
-                                            <div className='flex'>
-                                                <span className='text-sm flex text-amber-400'>
-                                                    {[...Array(5).keys()].map((a, i) => i < Curso.curso.valuation ? <span key={`star_full_key_${Curso.curso.id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.curso.id}_${i}`}>{star}</span>)}
-                                                </span>
-                                                <span className='text-sm text-slate-400'>({Curso.curso.valuation})</span>
-                                            </div>
-                                            <div className='py-3 text-slate-50'>
-                                                S/<span className='text-base  '>{Curso.curso.price?.toFixed(2)}</span>
-                                            </div>
-                                        </div>
+    }, [arrayData])
+
+    return (
+        <>
+            {arrayC != null ?
+                    <div className="w-full">
+                        <div className="grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 " >
+                            {arrayC?.map((Curso, sec_k) => (
+                                <div className={`relative`} key={`curso_card_${Curso.id}_${sec_k}`}>
+                                    <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-1 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-slate-800 text-white' onClick={() => deleteElement(Curso.id)}>
+                                        {trash}
                                     </div>
+                                    <CursoCard Curso={_action == 'BD' ? Curso.curso : Curso.curso[0]} />
                                 </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
-                </div>
-            ))}
-            </div>
-        </div> 
-        :
-        <div className="w-full flex justify-center ">
-            <div className="grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 " >
-                {arrayC?.map((Curso, sec_k) => (
-                    <div className={`py-0 lg:py-6`} key={`curso_card_${Curso.id}_${sec_k}`}>
-                        <div className='rounded-lg' >
-                            <div className="box-border rounded-l-xl">
-                                <div className='mx-auto py-6 lg:pr-6'>
-                                    <div className=' bg-slate-800 rounded-2xl shadow-xl'>
-                                        <div>
-                                            <div className='px-0 '>
-                                                <div className='text-right flex justify-end px-8'>
-                                                    <Link href="#"><a>
-                                                    <div className='min-w-0 rounded-full bg-slate-800 py-1 px-1 absolute z-10 text-white ' onClick={() => deleteElement(Curso.id)}>
-                                                        {trash}
-                                                    </div>
-                                                    </a></Link>
-                                                </div>
-                                                <Image
-                                                    className='rounded-t-xl'
-                                                    src={Curso.curso[0]?.image}
-                                                    alt={Curso.curso[0]?.title}
-                                                    width={380}
-                                                    height={210}
-                                                    objectFit={"cover"}
-                                                />
-                                            </div>
-                                            <div className='py-2 px-3'>
-                                                <div>
-                                                    <span className='text-sm line-clamp-2 leading-5 max-h-10 text-slate-50 font-medium'>{Curso.curso[0]?.title}</span>
-                                                    <span className='text-sm text-slate-400 leading-5 '>{Curso.curso[0].name}</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <span className='text-sm flex text-amber-400'>
-                                                        {[...Array(5).keys()].map((a, i) => i < Curso.curso[0].valuation ? <span key={`star_full_key_${Curso.curso[0].id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.curso[0].id}_${i}`}>{star}</span>)}
-                                                    </span>
-                                                    <span className='text-sm text-slate-400'>({Curso.curso[0].valuation})</span>
-                                                </div>
-                                                <div className='py-3 text-slate-50'>
-                                                    S/<span className='text-base  '>{Curso.curso[0].price?.toFixed(2)}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    : ''
-    }
-</>
-  )
+                : ''
+            }
+        </>
+    )
 }

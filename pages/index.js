@@ -5,10 +5,11 @@ import React from 'react';
 import { useSession } from 'next-auth/react';
 import useSWR from 'swr'
 import CarouselCurso from 'components/carouselCurso/carouselCurso'
+import Carousel from 'components/Carousel'
 
 export default function Home() {
-  const { data:session,status } = useSession()
-  const {data:arrayC} = useSWR('/api/curso', (...args) => fetch(...args).then(res => res.json()))
+  const { data: session, status } = useSession()
+  const { data: arrayC } = useSWR('/api/curso', (...args) => fetch(...args).then(res => res.json()))
   var icon_1 = <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-max   text-blue-800" viewBox="0 0 20 20" fill="currentColor">
     <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
   </svg>;
@@ -40,7 +41,7 @@ export default function Home() {
       </Head>
       <div className="min-h-screen text-white w-full">
         {
-          status!=='loading' && session ?
+          status !== 'loading' && session ?
             <div>
               <b>Hola, {" "}
                 {
@@ -50,7 +51,7 @@ export default function Home() {
             </div> : ""
         }
         {
-          status!=='loading' && session ?
+          status !== 'loading' && session ?
             <div className="w-full flex justify-center mb-10">
               <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 " >
                 <div className='py-0 lg:py-6'>
@@ -92,7 +93,7 @@ export default function Home() {
                         </span>
                       </div>
                     </span>
-                  </div> 
+                  </div>
                 </div>
                 <div className='py-0 lg:py-6'>
                   <div className='bg-slate-900 rounded-lg min-h-full'>
@@ -123,12 +124,11 @@ export default function Home() {
         <div className='text-xl  py-6 font-bold '>
           Recomendaciones para llevar un curso
         </div>
-        <CarouselCurso arrayC={arrayC} />
-
-        <div className='text-xl  py-6 font-bold'>
+        <Carousel array={arrayC} />
+        <div className='text-xl  mt-12 py-6 font-bold'>
           Porque viste {'"'}<span className='text-cyan-400'>Introducción a juegos en 3D en web</span>{'"'}
         </div>
-        <CarouselCurso arrayC={arrayC} />
+        <Carousel array={arrayC} />
       </div>
     </Layout>
   )

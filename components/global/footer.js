@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer className='text-white bg-footer py-12'>
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 px-10 lg:px-20'>
-                <div>
+                <div className='mb-6 md:mb-0'>
                     <p className='font-bold'>Más Información</p>
                     <ul className='text-gray-300 mt-2'>
                         <li className='flex items-center gap-2 mt-4 mb-2'>
@@ -26,7 +26,7 @@ export default function Footer() {
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div className='mb-6 md:mb-0'>
                     <p className='font-bold'>Paga aquí con</p>
                     <ul className='text-gray-300 mt-2'>
                         <span>
@@ -38,7 +38,7 @@ export default function Footer() {
                         </span>
                     </ul>
                 </div>
-                <div>
+                <div className='mb-6 md:mb-0'>
                     <p className='font-bold'>Contáctanos</p>
                     <ul className='text-gray-300 mt-2'>
                         <li className='flex items-center gap-2 mt-4 mb-2'>

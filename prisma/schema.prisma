@@ -110,5 +110,23 @@ model Favorites {
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
   curso             Curso     @relation(fields: [idCurso], references: [id])
+}
 
+model Leccion {
+  id                Int            @id @default(autoincrement())
+  title             String
+  description       String?
+  cuerpo            String?       @db.Text
+  url               String?       @db.Text
+  orden             Int?          @default(1)
+  helpers           HelperLeccion[]
+}
+
+model HelperLeccion {
+  id                Int            @id @default(autoincrement())
+  title             String
+  description       String?
+  orden             Int?          @default(1)
+  leccionId         Int
+  lecciones         Leccion       @relation(fields: [leccionId], references: [id])
 }

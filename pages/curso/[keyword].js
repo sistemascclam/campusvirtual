@@ -278,7 +278,7 @@ export default function Curso() {
                                         </div>
                                     ))}
 
-                                    <div className="flex items-center justify-between py-5">
+                                    <div className="flex items-center justify-between pt-5 pb-2">
                                         <div className='w-full' onClick={() => _setenCarrito(!_enCarrito)}>
                                             {_enCarrito == false ? 
                                                 <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={addShoping}>

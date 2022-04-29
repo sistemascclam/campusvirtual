@@ -32,14 +32,14 @@ export default function curso({ arrayData }) {
             <>
             {arrayC?.map((Curso, sec_k) => (
                 <div className='w-full flex py-3 px-14' key={`curso_card_${Curso.id}_${sec_k}`}>
-                    <div className="text-white w-1/4 w-full h-32 ">
+                    <div className="text-white w-full h-32 ">
                         <img
                             className='rounded-l-lg h-full w-full'
                             src={arrayC[sec_k].curso.image}
                             alt={arrayC[sec_k].curso.title}
                         />
                     </div>
-                    <div className="flex text-white w-3/4 w-full rounded-r-xl bg-slate-800">
+                    <div className="flex text-white w-full rounded-r-xl bg-slate-800">
                         <div className='w-5/6 border-solid '>
                             <div className='py-4 px-5'>
                                 <div>
