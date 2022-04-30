@@ -25,6 +25,7 @@ export default async function handle(req, res) {
               valuation: true,
               image: true,
               price: true,
+              priceWODiscount:true,
               registration_date: true,
               ruta: true,
               texto: true,

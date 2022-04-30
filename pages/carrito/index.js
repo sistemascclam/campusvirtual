@@ -110,7 +110,7 @@ export default function Favoritos() {
                 </div>
 
                 {arrayC?.length > 0 ?
-                    <div className="text-white lg:w-1/3 ">
+                    <div className="text-white lg:w-1/3 shadow-lg">
                         <div className=' py-3 px-14'>
                             <div className='border-solid border-2 border-slate-800 rounded-3xl bg-slate-800'>
                                 <div className='text-center text-lg py-2'>Total</div>

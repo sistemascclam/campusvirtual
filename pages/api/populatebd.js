@@ -13,8 +13,10 @@ export default async function handle(req, res) {
             { id: 6, name: 'Legal', slug: 'legal' }
         ],
     })
-    await prisma.curso.deleteMany({})
-    const cursos = await prisma.curso.createMany({
+    await prisma.ShopingCart.deleteMany({})
+    await prisma.Favorites.deleteMany({})
+    await prisma.Curso.deleteMany({})
+    const cursos = await prisma.Curso.createMany({
         skipDuplicates: true,
         data: [
             {
@@ -24,6 +26,7 @@ export default async function handle(req, res) {
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/gerencia.jpg",
                 "price": getRandomNumber(20,200,2),
+                "priceWODiscount": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Gerencia"),
                 "categoryId": 1,
                 "texto": " HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| " 
@@ -46,6 +49,7 @@ export default async function handle(req, res) {
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/administracion.jpg",
                 "price": getRandomNumber(20,200,2),
+                "priceWODiscount": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Administración de Negocios"),
                 "categoryId": 1,
                 "texto": " HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| HTML el lenguaje de marcado para la web |,| CSS el lenguaje de estilos que le dará color a tus aplicaciones |,| CSS grid, la grilla de CSS |,| HTML el lenguaje de marcado para la web |,| " 
@@ -157,6 +161,7 @@ export default async function handle(req, res) {
                 "valuation": getRandomNumber(0,5),
                 "image":"https://raw.githubusercontent.com/sistemascclam/cclamweb/main/public/images/servicios/desarrolloempresarial/especialidades/rrhh.jpg",
                 "price": getRandomNumber(20,200,2),
+                "priceWODiscount": getRandomNumber(20,200,2),
                 "ruta": stringToSlug("Recursos Humanos y/o Talento Humano"),
                 "categoryId": 3
             },

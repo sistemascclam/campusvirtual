@@ -4,7 +4,7 @@ import CursoCard from './Curso/cursoCard'
 
 let timeOutF;
 const gap = 20
-export default function Carousel({ array, xl = 5, lg = 3, md = 2, sm = 1 }) {
+export default function Carousel({ array, xl = 5, lg = 3, md = 2, sm = 1, options=false }) {
     const [perPage, setperPage] = useState(xl)
     const [showingUntil, setshowingUntil] = useState(perPage)
     const [animate, setanimate] = useState(false)
@@ -102,13 +102,13 @@ export default function Carousel({ array, xl = 5, lg = 3, md = 2, sm = 1 }) {
     return (
         <div ref={container} className="relative overflow-x-hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
             <Left show={perPage < showingUntil} handleClick={previousSlide} />
-            <div className={`flex gap-5 justify-start w-max ${animate ? 'transform transition-all duration-700' : ''}`} style={{ transform: `translateX(${animate ? (direction ? `-${(elementWidth + gap) * 2}` : '0') : `-${(elementWidth + gap)}`}px)` }}>
+            <div className={`flex gap-5 justify-start w-max pt-2 ${animate ? 'transform transition-all duration-700' : ''}`} style={{ transform: `translateX(${animate ? (direction ? `-${(elementWidth + gap) * 2}` : '0') : `-${(elementWidth + gap)}`}px)` }}>
                 {
                     array?.filter((s, i) => ((showingUntil - perPage) == 0 ? 0 : (showingUntil - perPage - 1)) <= i && (i) <= (showingUntil))
                         .map((Curso, i) =>
                             <div key={`carousel_card_${i}`} style={{ width: `${elementWidth}px`, marginLeft: `${(showingUntil - perPage) + i == 0 ? (elementWidth + gap) : '0'}px` }}>
 
-                                <CursoCard Curso={Curso} />
+                                <CursoCard Curso={Curso} options={options} />
 
                             </div>
                         )

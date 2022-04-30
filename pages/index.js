@@ -121,14 +121,14 @@ export default function Home() {
         <div className=' text-3xl font-serif font-bold font-mono'>
           Aprende de cero a experto
         </div>
-        <div className='text-xl  py-6 font-bold '>
+        <div className='text-xl  pt-6 pb-5 font-bold '>
           Recomendaciones para llevar un curso
         </div>
-        <Carousel array={arrayC} />
-        <div className='text-xl  mt-12 py-6 font-bold'>
+        <Carousel array={arrayC} options={true} />
+        <div className='text-xl  mt-12 pt-6 pb-5 font-bold'>
           Porque viste {'"'}<span className='text-cyan-400'>Introducción a juegos en 3D en web</span>{'"'}
         </div>
-        <Carousel array={arrayC} />
+        <Carousel array={arrayC} options={true} />
       </div>
     </Layout>
   )

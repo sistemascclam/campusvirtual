@@ -76,6 +76,7 @@ model Curso {
   valuation         Float?
   image             String?
   price             Float?
+  priceWODiscount   Float?
   registration_date DateTime       @default(now())
   active            Boolean        @default(true)
   category          Category       @relation(fields: [categoryId], references: [id])

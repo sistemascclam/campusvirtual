@@ -27,6 +27,18 @@ export function getAuthError(error) {
     return errorsAuth?.find(e => error === e.code)?.description ?? 'Ha ocurrido un error, por favor inténtelo más tarde';
 }
 
+export const toMoney=(param,decimales=2)=>{
+    return (Number(param)).toLocaleString('en-US', { style: 'decimal', maximumFractionDigits: decimales, minimumFractionDigits: decimales });
+}
+
+export const withLeftZeros=(param)=>{
+    let finalnum=param+"";
+    while(finalnum.length<4){
+        finalnum="0"+finalnum;
+    }
+    return finalnum;
+}
+
 //PONER COLOR COMO PLACEHOLDER EN IMAGENES
 export const keyStr =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
