@@ -51,8 +51,8 @@ export default function CursoCard({ Curso, options = false }) {
                 </div>
                 <div className='h-full p-3 flex flex-col justify-between gap-2'>
                     <div className=''>
-                        <p className='text-lg line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
-                        <p className='text-base line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>
+                        <p className='text-md line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
+                        <p className='text-sm line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>
                     </div>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center'>

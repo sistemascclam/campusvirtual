@@ -4,7 +4,7 @@ import CursoCard from './Curso/cursoCard'
 
 let timeOutF;
 const gap = 20
-export default function Carousel({ array, xl = 5, lg = 3, md = 2, sm = 1, options=false }) {
+export default function Carousel({ array, xl = 4, lg = 3, md = 2, sm = 1, options=false }) {
     const [perPage, setperPage] = useState(xl)
     const [showingUntil, setshowingUntil] = useState(perPage)
     const [animate, setanimate] = useState(false)
