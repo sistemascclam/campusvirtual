@@ -51,8 +51,8 @@ export default function CursoCard({ Curso, options = false }) {
                 </div>
                 <div className='h-full p-3 flex flex-col justify-between gap-2'>
                     <div className=''>
-                        <p className='text-lg line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
-                        <p className='text-base line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>
+                        <p className='text-md line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
+                        <p className='text-sm line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>
                     </div>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center'>
@@ -62,8 +62,8 @@ export default function CursoCard({ Curso, options = false }) {
                             <span className='text-sm text-slate-400 ml-1'>({Curso.valuation})</span>
                         </div>
                         <div className='flex flex-col text-right'>
-                            <span className='text-md line-through text-gray-400'>{Curso.priceWODiscount ? `S/.${Curso.priceWODiscount?.toFixed(2)}` : ''}</span>
-                            <span className='text-lg'>S/.{Curso.price?.toFixed(2)}</span>
+                            <span className='text-sm line-through text-gray-400'>{Curso.priceWODiscount ? `S/.${Curso.priceWODiscount?.toFixed(2)}` : ''}</span>
+                            <span className='text-md'>S/.{Curso.price?.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
