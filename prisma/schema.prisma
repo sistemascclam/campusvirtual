@@ -85,6 +85,7 @@ model Curso {
   texto             String?
   favorites         Favorites[]
   shopingCarts      ShopingCart[]
+  progress          Progress[]
 }
 
 model CursoKeyword {
@@ -110,5 +111,25 @@ model Favorites {
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
   curso             Curso     @relation(fields: [idCurso], references: [id])
+}
 
+model Progress {
+  id                Int       @id @default(autoincrement())
+  idUsuario         String
+  idCurso           Int
+  registration_date DateTime  @default(now())  
+  active            Boolean   @default(true)
+  advance           Int       @default(0)
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+  qualification     Qualification[]
+}
+
+model Qualification {
+  id                Int       @id @default(autoincrement())
+  idProgres         Int
+  description       String
+  star              Int       @default(0)
+  registration_date DateTime  @default(now())  
+  active            Boolean   @default(true)
+  progress          Progress     @relation(fields: [idProgres], references: [id])
 }
