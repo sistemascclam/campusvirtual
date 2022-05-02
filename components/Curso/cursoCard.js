@@ -31,7 +31,7 @@ export default function CursoCard({ Curso, options = false }) {
                         layout="responsive"
                     />
                     {
-                        options ?
+                        options && Curso.price ?
                         <div className='transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 absolute inset-0 rounded-t-xl flex justify-center items-center gap-4'>
                             <div className='bg-black absolute inset-0 z-1 rounded-t-xl border-1 border-black opacity-80'></div>
                             <button className='relative w-14 h-14 hover:-translate-y-1 z-20 bg-blue-600 hover:bg-blue-700 transition-all duration-300 ease-in-out rounded-full flex justify-center items-center' onClick={(e) => { e.preventDefault(); e.stopPropagation(); alert("carrito") }}>
@@ -63,7 +63,7 @@ export default function CursoCard({ Curso, options = false }) {
                         </div>
                         <div className='flex flex-col text-right'>
                             <span className='text-md line-through text-gray-400'>{Curso.priceWODiscount ? `S/.${Curso.priceWODiscount?.toFixed(2)}` : ''}</span>
-                            <span className='text-lg'>S/.{Curso.price?.toFixed(2)}</span>
+                            <span className='text-lg'>{Curso.price ? `S/.${Curso.price?.toFixed(2)}` : 'Gratis'}</span>
                         </div>
                     </div>
                 </div>
