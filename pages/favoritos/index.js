@@ -90,7 +90,7 @@ export default function Favoritos() {
     </svg>;
 
     return (
-        <Layout>
+        <Layout> 
             <Head>
                 <title>{siteTitle}</title>
             </Head>

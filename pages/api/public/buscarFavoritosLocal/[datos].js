@@ -19,7 +19,7 @@ export default async function handle(req, res){
                     description: true,
                     name: true,
                     valuation: true,
-                    image: true,
+                    image: true, 
                     price: true,
                     registration_date: true,
                     ruta: true,
