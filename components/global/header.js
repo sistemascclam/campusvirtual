@@ -422,31 +422,31 @@ const OpcionesAuth = () => {
 
 const OpcionesSiAuth = () => <>
   <Link href="/progress">
-  <button
-    type="button"
-    title="Mi progreso"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
-  >
-    <span className="sr-only">Ver mi progreso</span>
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path d="M12 14l9-5-9-5-9 5 9 5z" />
-      <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-    </svg>
-  </button>
+    <button
+      type="button"
+      title="Mi progreso"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+    >
+      <span className="sr-only">Ver mi progreso</span>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+      </svg>
+    </button>
   </Link>
 
   <Link href="/carrito">
-  <button
-    type="button"
-    title="Carrito de compras"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
-  >
-    <span className="sr-only">Ver carrito de compra</span>
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
-  </button>
+    <button
+      type="button"
+      title="Carrito de compras"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+    >
+      <span className="sr-only">Ver carrito de compra</span>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    </button>
   </Link>
 
   <Link href="/favoritos">
@@ -465,29 +465,29 @@ const OpcionesSiAuth = () => <>
 
 const OpcionesNoAuth = () => <>
   <Link href="/carrito">
-  <button
-    type="button"
-    title="Carrito de compras"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
-  >
-    <span className="sr-only">Ver carrito de compra</span>
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
-  </button>
+    <button
+      type="button"
+      title="Carrito de compras"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+    >
+      <span className="sr-only">Ver carrito de compra</span>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    </button>
   </Link>
 
   <Link href="/favoritos">
-  <button
-    type="button"
-    title="Lista de deseos"
-    className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
-  >
-    <span className="sr-only">Ver lista de deseos</span>
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-    </svg>
-  </button>
+    <button
+      type="button"
+      title="Lista de deseos"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+    >
+      <span className="sr-only">Ver lista de deseos</span>
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+    </button>
   </Link>
 
 </>
@@ -537,17 +537,26 @@ const OpcionesUsuarioSiAuth = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-        className={`text-center origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
-          <div className="text-left w-full text-xs font-medium text-gray-500 cursor-default px-4 flex py-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-            </svg>
-            <span className='text-ellipsis overflow-hidden'>
-              {
-                session.user?.name ?? session.user?.email
-              }
-            </span>
+          className={`text-center origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+          <div className="w-full font-medium cursor-default px-4 py-2 text-center pb-4 border-b-1">
+            <p className='text-ellipsis overflow-hidden line-clamp-1 font-bold text-sm'>
+              Hola, {session.user?.name ?? ''}
+            </p>
+            <p className='text-ellipsis overflow-hidden text-xs text-gray-500 line-clamp-1'>
+              {session.user?.email}
+            </p>
           </div>
+          <Menu.Item>
+            {({ active }) => (
+              <Link href="/perfil">
+                <a
+                  className={'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b-1'}
+                >
+                  Mi Perfil
+                </a>
+              </Link>
+            )}
+          </Menu.Item>
           <Menu.Item>
             {({ active }) => (
               <a
