@@ -54,7 +54,7 @@ export default NextAuth({
         },
 
       tls : {
-        rejectUnauthorized : false
+        rejectUnauthorized :false
       }
     },
 
