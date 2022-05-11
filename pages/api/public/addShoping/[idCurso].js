@@ -10,12 +10,23 @@ export default async function handle(req, res) {
 
     if(auxId !='0'){
         const {idCurso} = req.query 
-        const result = await prisma.ShopingCart.create({
-            data: {
-                'idUsuario' : auxId,
+        let data = await prisma.ShopingCart.findMany({
+            where: {
+                idUsuario: auxId,
                 'idCurso' : parseInt(idCurso) ,
-            },
-        })
+            }, 
+            select: {
+                id: true,
+            } 
+        }) 
+        if(data.length == 0){
+            const result = await prisma.ShopingCart.create({
+                data: {
+                    'idUsuario' : auxId,
+                    'idCurso' : parseInt(idCurso) ,
+                },
+            })
+        }
     }
 
     res.status(200).json('arrayData')

@@ -1,6 +1,12 @@
 import prisma from 'lib/prisma'
+import { getSession } from 'next-auth/react';
 
 export default async function handle(req, res) {
+  const session = await getSession({req})
+  var auxId ='0'
+  if(session?.user != null){
+    auxId = session.user.id
+  }
   const curso = await prisma.curso.findMany({
     where: {
       active: true,
@@ -17,6 +23,24 @@ export default async function handle(req, res) {
       registration_date: true,
       ruta: true,
       texto: true,
+      favorites: {
+        where : {
+          idUsuario : auxId,
+        },
+        select : {
+          id: true,
+          active: true
+        }
+      },
+      shopingCarts: {
+        where : {
+          idUsuario : auxId,
+        },
+        select : {
+          id: true,
+          active: true
+        }
+      },
     } 
   })
   res.json(curso)
