@@ -10,19 +10,19 @@ export default function CursoCardLarge({ Curso }) {
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
     </svg>;
     return (
-        <div className="box-border rounded-2xl bg-slate-800 h-full text-white shadow-lg">
+        <div className="box-border rounded-xl bg-slate-800 h-full text-white shadow-lg">
             <Link href={"/curso/" + Curso.ruta}>
-                <a className='w-full flex'>
-                    <div className=' w-3/12 relative'>
+                <a className='w-full flex flex-col md:flex-row'>
+                    <div className='h-40 md:h-auto w-full md:w-3/12 relative'>
                         <Image
-                            className='rounded-l-lg h-full w-full'
+                            className='rounded-l-xl h-full w-full'
                             src={Curso.image}
                             alt={Curso.title}
                             objectFit={"cover"}
                             layout="fill"
                         />
                     </div>
-                    <div className='w-9/12 pl-5 py-4'>
+                    <div className='w-full md:w-9/12 pl-5 py-2 md:py-4'>
                         <div className='my-2'>
                             <p className='text-lg line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
                             <p className='text-base text-slate-400 leading-tight mt-1'>{Curso.name}</p>

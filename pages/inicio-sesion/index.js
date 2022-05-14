@@ -80,7 +80,7 @@ export default function Login({ csrfToken }) {
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Correo electrónico
                                     </label>
-                                    <input required type="email" id="email" placeholder="ejm@gmail.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    <input required type="email" id="email" placeholder="email@domain.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="mb-6">
                                     <div className='py-1'>

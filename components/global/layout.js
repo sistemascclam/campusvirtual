@@ -7,7 +7,7 @@ export const keywords = 'campus virtual, campus, virtual, cursos, cclam, chiclay
 import Header from '@global/header';
 import Footer from './footer'
 
-export default function Layout({ children, widthPadding = true }) {
+export default function Layout({ children, widthPadding = true, widthPaddingX=true }) {
 
   return (
     <>
@@ -33,9 +33,9 @@ export default function Layout({ children, widthPadding = true }) {
         <meta name="keywords" content={keywords} />
 
       </Head>
-      <main className={`bg-themeWhite font-poppins relative bg-gradient-to-b from-darkblue to-footer ${widthPadding ? 'pt-28 lg:px-6' : ''}`}>
+      <main className={`bg-themeWhite font-poppins relative bg-gradient-to-b from-darkblue to-footer ${widthPadding ? `pt-28 ${widthPaddingX ? 'lg:px-6' : ''}` : ''}`}>
         <Header bgTransparent={!widthPadding} />
-        <div className={ widthPadding ? `max-w-8xl mx-auto px-10` : '' }>
+        <div className={ widthPadding ? `max-w-8xl mx-auto ${widthPaddingX ? 'px-6 md:px-10' : ''}` : '' }>
           {children}
         </div>
         <Footer />

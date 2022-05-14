@@ -39,7 +39,10 @@ export default async function handle(req, res) {
             star: true,
           }
         }
-      } 
+      } ,
+      orderBy: {
+        advance: 'asc',
+      },
 
     }) 
 

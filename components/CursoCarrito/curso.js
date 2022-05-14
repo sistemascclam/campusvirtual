@@ -53,11 +53,9 @@ export default function curso({ arrayData }) {
                         </div>
                         <div className='w-1/6 border-solid '>
                             <div className='text-right'>
-                                <Link href="#"><a>
-                                <div className='absolute z-10 text-white py-3 pl-8' onClick={() => deleteElement(Curso.id)}>
+                                <button className='absolute z-10 text-white py-3 pl-8' onClick={() => deleteElement(Curso.id)}>
                                     {trash}
-                                </div>
-                                </a></Link>
+                                </button>
                             </div>
                         </div>
                     </div>

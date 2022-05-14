@@ -61,7 +61,7 @@ export default function curso({ arrayData }) {
         <>
             {arrayC != null ?
                     <div className="w-full">
-                        <div className="grid grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 " >
+                        <div className="grid grid-cols-1 lg:grid-cols-5 xl:grid-cols-5 gap-5 " >
                             {arrayC?.map((Curso, sec_k) => (
                                 <div className={`relative`} key={`curso_card_${Curso.id}_${sec_k}`}>
                                     <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-1 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-slate-800 text-white' onClick={() => deleteElement(Curso.id)}>

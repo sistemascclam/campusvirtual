@@ -11,38 +11,39 @@ export default function Favoritos() {
     const [existeData, setexisteData] = useState(false)
     const [txtBusqueda, setTxtBusqueda] = useState('')
     const [accion, setaccion] = useState('')
-    const [dataBusqueda, setdataBusqueda] = useState(false)
 
     const session = useSession()
     const { data: _data } = useSWR('/api/public/getFavoritos/0', (...args) => fetch(...args).then(res => res.json()))
 
     useEffect(() => {
-        var arrayData = []
-        if (session.data != null) { //BD 
-            arrayData.push({
-                action: 'BD',
-                arrayC: _data,
-            })
-            setaux_Data(arrayData)
-            if (_data?.length > 0) {
-                setexisteData(true)
+        if (session?.status != 'loading') {
+            var arrayData = []
+            if (session.data != null) { //BD 
+                arrayData.push({
+                    action: 'BD',
+                    arrayC: _data,
+                })
+                setaux_Data(arrayData)
+                if (_data?.length > 0) {
+                    setexisteData(true)
+                }
+                setaccion('BD')
+            } else { //localStorage
+                let data = []
+                let arrayDataFav = localStorage.getItem("arrayDataFav")
+                if (arrayDataFav != null && arrayDataFav != '') {
+                    data = arrayDataFav
+                }
+                arrayData.push({
+                    action: 'localStorage',
+                    arrayC: data,
+                })
+                setaux_Data(arrayData)
+                if (data?.length > 0) {
+                    setexisteData(true)
+                }
+                setaccion('localStorage')
             }
-            setaccion('BD')
-        } else { //localStorage
-            let data = []
-            let arrayDataFav = localStorage.getItem("arrayDataFav")
-            if (arrayDataFav != null && arrayDataFav != '') {
-                data = arrayDataFav
-            }
-            arrayData.push({
-                action: 'localStorage',
-                arrayC: data,
-            })
-            setaux_Data(arrayData)
-            if (data?.length > 0) {
-                setexisteData(true)
-            }
-            setaccion('localStorage')
         }
     }, [session, _data])
 
@@ -90,36 +91,34 @@ export default function Favoritos() {
     </svg>;
 
     return (
-        <Layout> 
+        <Layout>
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <div className='flex'>
-                <div className='w-3/4'>
-                    <div className='text-2xl font-serif font-bold font-mono text-slate-50  '>
-                        <div className='w-max pb-2 border-b-2 border-transparent px-2 border-blue-600'>
+            <div className='flex flex-col md:flex-row'>
+                <div className='w-full md:w-3/4'>
+                    <div className='text-2xl font-serif font-bold font-mono text-slate-50 '>
+                        <div className='w-max pb-2 border-b-2 border-transparent pl-1 pr-2 border-blue-600'>
                             Mi lista de deseos
                         </div>
                     </div>
                 </div>
-                <div className='w-1/4'>
-                    <div className='py-2 px-5'>
-                        <label className="relative block">
+                <div className='w-full md:w-1/4 '>
+                    <div className='py-2 px-0 md:px-5'>
+                        <label className="relative block mt-3 md:mt-0">
                             <span className="absolute inset-y-0  flex items-center pl-2" onClick={() => buscar(txtBusqueda)}>
                                 <div className='py-0 lg:py-6 '>
-                                    <Link href="#"><a>
-                                        <div className="  rounded-full ">
+                                        <div className="rounded-full ">
                                             {search}
                                         </div>
-                                    </a></Link>
                                 </div>
                             </span>
-                            <input type="text" id="txtBusqueda" name="txtBusqueda" placeholder="Buscar en mi lista de deseos" onChange={event => buscar(event.target.value)} autoComplete='off' required className="shadow bg-slate-100 text-xs appearance-none border rounded-full w-full py-2 px-8 leading-tight focus:outline-none focus:shadow-outline" />
+                            <input type="search" id="txtBusqueda" name="txtBusqueda" placeholder="Buscar en mi lista de deseos" onChange={event => buscar(event.target.value)} autoComplete='off' required className="shadow bg-slate-100 text-xs appearance-none border rounded-full w-full py-2 pl-8 leading-tight focus:outline-none focus:shadow-outline" />
                         </label>
                     </div>
                 </div>
             </div>
-            <div className="flex min-h-screen bg-cover bg-top-left py-5 px-5">
+            <div className="flex min-h-screen bg-cover bg-top-left py-5">
                 {existeData == true ?
                     <Curso arrayData={aux_Data} />
                     :

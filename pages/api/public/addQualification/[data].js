@@ -8,7 +8,7 @@ export default async function handle(req, res) {
  
     const result = await prisma.qualification.create({
         data: {
-            idProgres : parseInt(datos[3]),
+            idProgres : datos[3],
             description : datos[1],
             star : parseInt(datos[0]),
         },

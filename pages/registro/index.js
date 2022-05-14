@@ -67,7 +67,7 @@ export default function Login({ csrfToken }) {
                                     <label className="block text-slate-300 text-sm mb-2" >
                                         Correo electrónico
                                     </label>
-                                    <input type="email" id="email" name="email" placeholder="ejm@gmail.com" autoComplete='off' required className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    <input type="email" id="email" name="email" placeholder="email@domain.com" autoComplete='off' required className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="flex flex-col items-center justify-between mt-6">
                                     <button type="submit" className="bg-blue-700 hover:bg-blue-600 font-bold text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">

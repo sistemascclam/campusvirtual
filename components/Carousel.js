@@ -99,6 +99,7 @@ export default function Carousel({ array, xl = 4, lg = 3, md = 2, sm = 1, option
         }
         // add your conditional logic here
     }
+    
     return (
         <div ref={container} className="relative overflow-x-hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
             <Left show={perPage < showingUntil} handleClick={previousSlide} />

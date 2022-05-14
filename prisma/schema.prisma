@@ -46,6 +46,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  favorites     Favorites[]
+  shopingcart   ShopingCart[]
+  progresos     Progress[]
 }
 
 model VerificationToken {
@@ -64,7 +67,7 @@ model Category {
   slug     String  @unique
   description String?
   active      Boolean @default(true)
-  curso       Curso[]
+  cursos       Curso[]
 }
 
 // NUEVAS TABLAS
@@ -87,6 +90,7 @@ model Curso {
   favorites         Favorites[]
   shopingCarts      ShopingCart[]
   progress          Progress[]
+  lecciones         Leccion[]
 }
 
 model CursoKeyword {
@@ -101,6 +105,7 @@ model ShopingCart {
   idCurso           Int
   registration_date DateTime  @default(now())     
   active            Boolean   @default(true)
+  usuario           User     @relation(fields: [idUsuario], references: [id])
   curso             Curso     @relation(fields: [idCurso], references: [id])
 
 }
@@ -111,45 +116,63 @@ model Favorites {
   idCurso           Int
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
+  usuario           User     @relation(fields: [idUsuario], references: [id])
   curso             Curso     @relation(fields: [idCurso], references: [id])
 }
 
 model Leccion {
-  id                Int            @id @default(autoincrement())
+  id                String    @id @default(cuid())
   title             String
   description       String?
   cuerpo            String?       @db.Text
   url               String?       @db.Text
   orden             Int?          @default(1)
+  duracion          Float?        
+  idCurso           Int
+  curso             Curso     @relation(fields: [idCurso], references: [id])
   helpers           HelperLeccion[]
+  progresos         Progress[]
 }
 
 model HelperLeccion {
   id                Int            @id @default(autoincrement())
   title             String
   description       String?
+  url               String?
   orden             Int?          @default(1)
-  leccionId         Int
+  leccionId         String
   lecciones         Leccion       @relation(fields: [leccionId], references: [id])
 }
 
 model Progress {
-  id                Int       @id @default(autoincrement())
+  id                String    @id @default(cuid())
   idUsuario         String
   idCurso           Int
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
   advance           Int       @default(0)
   curso             Curso     @relation(fields: [idCurso], references: [id])
+  user              User     @relation(fields: [idUsuario], references: [id])
   qualification     Qualification[]
+  lastLeccion       String?
+  leccion           Leccion?   @relation(fields: [lastLeccion], references: [id])
 }
 
 model Qualification {
   id                Int       @id @default(autoincrement())
-  idProgres         Int
+  idProgres         String
   description       String
   star              Int       @default(0)
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
-  progress          Progress     @relation(fields: [idProgres], references: [id])
+  progress          Progress  @relation(fields: [idProgres], references: [id])
+}
+
+model DiscountCodes {
+  id                Int       @id @default(autoincrement())
+  code              String
+  monto             Decimal?  @db.Decimal(10, 2)
+  description       String?
+  registration_date DateTime  @default(now())  
+  active            Boolean   @default(true)
 }

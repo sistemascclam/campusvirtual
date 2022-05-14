@@ -1,114 +1,37 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { signOut, useSession, signIn } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
 import Image from 'next/image'
-
-const navigation = {
-  categories: [
-    {
-      id: 'categorias',
-      name: 'Categorias',
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
-          ],
-        },
-        {
-          id: 'clothing2',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories2',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands2',
-          name: 'Brands',
-          items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
-          ],
-        },
-      ],
-    },
-  ]
-}
+import axios from '@util/Api';
+import { useSWRConfig } from 'swr'
+import AppContext from 'components/AppContext'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-const fetcher = (...args) => fetch(...args).then(res => res.json())
 export default function NavBar({ bgTransparent }) {
+  const router = useRouter()
   const { data: session, status } = useSession()
   const [openMenuWeb, setOpenMenuWeb] = useState(false)
   const [open, setOpen] = useState(false)
   const [navTransparent, setnavTransparent] = useState(true)
+  const [datanavigation, setdatanavigation] = useState(null)
 
   const closeMenu = () => {
     setOpen(!open)
   }
 
-  const { data } = useSWR('/api/public/navigation', fetcher)
+  const loadnavigation = async () => {
+    const axiosReq = await axios.get(`/api/public/navigation`);
+    const { data } = axiosReq;
+    setdatanavigation(data)
+  }
 
+  useEffect(() => {
+    loadnavigation()
+  }, [])
 
   useEffect(function onFirstMount() {
     function onScroll() {
@@ -161,18 +84,59 @@ export default function NavBar({ bgTransparent }) {
                   </button>
                 </div>
                 <div className="mt-2">
-                  <div className="pt-3 pb-8 px-4 space-y-10">
+                  <div className="pt-3 pb-8 px-4 space-y-8">
                     <label className="relative block mx-auto my-auto group">
-                      <input type="text"
-                        placeholder={"Buscar en campus CCLAM"}
-                        className="bg-slate-900 bg-opacity-95 rounded-xl pr-12 w-full mx-auto py-2 text-sm border-2 ring-0 border-slate-900 focus:text-base focus:border-gray-900 text-gray-400" />
-                      <span className="sr-only">Buscar</span>
-                      <button className="absolute inset-y-0 right-0 flex items-center px-2 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-                        </svg>
-                      </button>
+                      <form onSubmit={(e) => {
+                        e.preventDefault();
+                        router.push({
+                          pathname: '/busqueda',
+                          query: {
+                            buscar: document.getElementById('buscarsm').value
+                          }
+                        });
+                        closeMenu()
+                      }}>
+                        <input type="text"
+                          id="buscarsm"
+                          placeholder={"Buscar en campus CCLAM"}
+                          className="bg-slate-900 bg-opacity-95 rounded-xl pr-12 w-full mx-auto py-2 text-sm border-2 ring-0 border-slate-900 focus:text-base focus:border-gray-900 text-gray-400" />
+                        <span className="sr-only">Buscar</span>
+                        <button className="absolute inset-y-0 right-0 flex items-center px-2 rounded-xl" type='submit'>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-slate-400 " viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </form>
                     </label>
+                    <div className="flex justify-between gap-x-2">
+                      {
+                        session?.status != "loading" && session ?
+                          <Link href="/progreso">
+                            <a className="text-white flex flex-col items-center rounded bg-slate-800 w-full py-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                              </svg>
+                              Progreso
+                            </a>
+                          </Link> : ''
+                      }
+                      <Link href="/favoritos">
+                        <a className="text-white flex flex-col items-center rounded bg-slate-800 w-full py-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                          </svg>
+                          Favoritos
+                        </a>
+                      </Link>
+                      <Link href="/carrito">
+                        <a className="text-white flex flex-col items-center rounded bg-slate-800 w-full py-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                          </svg>
+                          Carrito
+                        </a>
+                      </Link>
+                    </div>
                     <div>
                       <Disclosure defaultOpen={true}>
                         <span className='text-gray-400 text-sm'>Especialidades</span>
@@ -182,11 +146,15 @@ export default function NavBar({ bgTransparent }) {
                             aria-labelledby={`especialidades-heading-mobile`}
                             className="mt-6 flex flex-col space-y-6"
                           >
-                            {data?.map((category, sec_k) => (
+                            {datanavigation?.map((category, sec_k) => (
                               <li key={category.name} className="flow-root">
-                                <a href={`#${category.slug}`} className="-m-2 p-2 block text-white">
-                                  {category.name}
-                                </a>
+                                <Link
+                                  href={`/busqueda?categoria=${category.slug}`}
+                                >
+                                  <a className="-m-2 p-2 block text-white">
+                                    {category.name}
+                                  </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -195,7 +163,7 @@ export default function NavBar({ bgTransparent }) {
                     </div>
                   </div>
                 </div>
-                <div className="py-6 px-4 space-y-6">
+                <div className="pb-6 px-4 space-y-6">
                   <button className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white ">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
@@ -206,20 +174,41 @@ export default function NavBar({ bgTransparent }) {
                   </button>
                 </div>
                 <div className="border-t border-1 border-slate-800 py-6 px-4 space-y-6">
-                  <div className="flow-root">
-                    <Link href="/inicio-sesion">
-                      <a href="#" className="-m-2 p-2 block text-gray-400 hover:text-white">
-                        Ingresar
-                      </a>
-                    </Link>
-                  </div>
-                  <div className="flow-root">
-                    <Link href="/registro">
-                      <a href="#" className="-m-2 p-2 block text-gray-400 hover:text-white">
-                        Crear cuenta
-                      </a>
-                    </Link>
-                  </div>
+                  {
+                    session?.status != "loading" && session ?
+                      <>
+                        <div className="flow-root">
+                          <Link href="/perfil">
+                            <a href="#" className="-m-2 p-2 block text-gray-400 hover:text-white">
+                              Mi perfil
+                            </a>
+                          </Link>
+                        </div>
+                        <div className="flow-root">
+                          <button
+                            onClick={() => signOut()}
+                            className="-m-2 p-2 block text-gray-400 hover:text-white">
+                            Cerrar Sesión
+                          </button>
+                        </div>
+                      </> :
+                      <>
+                        <div className="flow-root">
+                          <Link href="/inicio-sesion">
+                            <a href="#" className="-m-2 p-2 block text-gray-400 hover:text-white">
+                              Ingresar
+                            </a>
+                          </Link>
+                        </div>
+                        <div className="flow-root">
+                          <Link href="/registro">
+                            <a href="#" className="-m-2 p-2 block text-gray-400 hover:text-white">
+                              Crear cuenta
+                            </a>
+                          </Link>
+                        </div>
+                      </>
+                  }
                 </div>
               </div>
             </Transition.Child>
@@ -310,11 +299,16 @@ export default function NavBar({ bgTransparent }) {
                                   aria-labelledby={`especialidades-heading`}
                                   className="mt-6 space-y-6 sm:mt-4 sm:space-y-2"
                                 >
-                                  {data?.map((category, sec_k) => (
+                                  {datanavigation?.map((category, sec_k) => (
                                     <li key={sec_k} className="flex">
-                                      <a href={`#${category.slug}`} className="text-white hover:text-blue-600 cursor-pointer text-lg transition-all duration-200 ease-in-out">
-                                        {category.name}
-                                      </a>
+                                      <Link
+
+                                        href={`/busqueda?categoria=${category.slug}`}
+                                      >
+                                        <a className="text-white hover:text-blue-600 cursor-pointer text-lg transition-all duration-200 ease-in-out">
+                                          {category.name}
+                                        </a>
+                                      </Link>
                                     </li>
                                   ))}
                                 </ul>
@@ -377,7 +371,19 @@ const SearchButton = () => {
 
 function SearchItems({ search, setsearch }) {
   const router = useRouter()
-  const { data } = useSWR(`/api/public/search?search=${search}`, fetcher);
+  const [data, setdata] = useState(null)
+
+  const loadSearch = async () => {
+    const axiosReq = await axios.get(`/api/public/search?search=${search}`);
+    const { data } = axiosReq;
+    setdata(data)
+  }
+
+  useEffect(() => {
+    if (search) {
+      loadSearch()
+    }
+  }, [search])
 
   if (!search) {
     return null
@@ -389,7 +395,7 @@ function SearchItems({ search, setsearch }) {
   }
 
   return <div className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
-    {data?.map((item) =>
+    {data?.cursos?.map((item) =>
       <div key={item.id} onClick={() => handleSelectedCourse(item.ruta)} className="mb-1 flex flex-col hover:bg-slate-800 rounded-xl p-3 cursor-pointer">
         <span className={`text-xs bg-blue-700 rounded-xl p-1 w-max font-semibold mt-1`}>
           {item.category.name}
@@ -402,7 +408,19 @@ function SearchItems({ search, setsearch }) {
       </div>
     )}
     {
-      data && !Array.isArray(data) ?
+      data?.cursos && data?.cursos?.length > 0 ?
+        <button
+          onClick={() =>
+            router.push({
+              pathname: '/busqueda',
+              query: {
+                buscar: search
+              }
+            })}
+          className='opacity-70 italic text-center w-full h-10 hover:bg-slate-800 rounded-xl mb-1'>Ver todos los resultados</button> : ""
+    }
+    {
+      data?.cursos && data?.cursos?.length == 0 ?
         <p className='opacity-70 italic'>No se encontraron resultados</p> : ""
     }
   </div>
@@ -410,20 +428,24 @@ function SearchItems({ search, setsearch }) {
 
 const OpcionesAuth = () => {
   const { data: session } = useSession()
+  const { cache } = useSWRConfig()
+  const shopingcartList = cache.get("/api/shopingcart")
+  
+  const value = useContext(AppContext);
+  let { localStorageData } = value.state;
   return (<>
     {
       session ?
-        <OpcionesSiAuth />
+        <OpcionesSiAuth carrito={shopingcartList?.length > 0} />
         :
-        <OpcionesNoAuth />
+        <OpcionesNoAuth carrito={localStorageData?.cart?.length > 0} />
     }
   </>)
 }
 
-const OpcionesSiAuth = () => <>
-  <Link href="/progress">
-    <button
-      type="button"
+const OpcionesSiAuth = ({ carrito }) => <>
+  <Link href="/progreso">
+    <a
       title="Mi progreso"
       className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
     >
@@ -433,25 +455,30 @@ const OpcionesSiAuth = () => <>
         <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
       </svg>
-    </button>
+    </a>
   </Link>
 
   <Link href="/carrito">
-    <button
-      type="button"
+    <a
       title="Carrito de compras"
-      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white relative"
     >
       <span className="sr-only">Ver carrito de compra</span>
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
-    </button>
+      {
+        carrito ?
+          <>
+            <span className="flex h-3 w-3 bg-blue-600 rounded-full absolute top-0 -right-1 text-white justify-center text-sm items-center content-center pt-1 font-semibold"></span>
+            <span className="animate-ping flex h-3 w-3 bg-blue-600 rounded-full absolute top-0 -right-1 text-white justify-center text-sm items-center content-center pt-1 font-semibold"></span>
+          </> : ''
+      }
+    </a>
   </Link>
 
   <Link href="/favoritos">
-    <button
-      type="button"
+    <a
       title="Lista de deseos"
       className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
     >
@@ -459,21 +486,28 @@ const OpcionesSiAuth = () => <>
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
       </svg>
-    </button>
+    </a>
   </Link>
 </>
 
-const OpcionesNoAuth = () => <>
+const OpcionesNoAuth = ({carrito}) => <>
   <Link href="/carrito">
     <button
       type="button"
       title="Carrito de compras"
-      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white"
+      className="hidden lg:block mx-1 p-1 rounded-full text-gray-400 hover:text-white relative"
     >
       <span className="sr-only">Ver carrito de compra</span>
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
+      {
+        carrito ?
+          <>
+            <span className="flex h-3 w-3 bg-blue-600 rounded-full absolute top-0 -right-1 text-white justify-center text-sm items-center content-center pt-1 font-semibold"></span>
+            <span className="animate-ping flex h-3 w-3 bg-blue-600 rounded-full absolute top-0 -right-1 text-white justify-center text-sm items-center content-center pt-1 font-semibold"></span>
+          </> : ''
+      }
     </button>
   </Link>
 
