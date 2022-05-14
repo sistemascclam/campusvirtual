@@ -2,7 +2,7 @@
   "name": "campuscamara",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npx prisma generate && npx prisma migrate dev && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
