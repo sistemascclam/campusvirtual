@@ -131,7 +131,7 @@ export default function Favoritos() {
                 </>
             }
             <div className="flex flex-col md:flex-row min-h-screen bg-cover bg-top-left py-5 ">
-                <div className='text-white text-center block md:hidden mb-3'>Cursos Seleccionados</div>
+                <div className='text-white text-center block md:hidden my-3'>Cursos Seleccionados</div>
                 <div className={`text-white lg:w-2/3`}>
                     {arrayC?.length > 0 ?
                         arrayC?.map((Curso, sec_k) => (
@@ -147,9 +147,9 @@ export default function Favoritos() {
                 </div>
 
                 {arrayC?.length > 0 ?
-                    <div className="text-white w-full md:w-1/3 shadow-lg order-first md:order-last">
+                    <div className="text-white w-full md:w-1/3 order-first md:order-last">
                         <div className='pb-6 px-0 md:px-14'>
-                            <div className='border-solid border-2 border-slate-800 rounded-2xl bg-slate-800'>
+                            <div className='border-solid border-2 border-slate-900 md:border-slate-800 rounded-2xl shadow-lg bg-slate-900 md:bg-slate-800'>
                                 <div className='text-center text-lg py-2'>Total</div>
                                 {
                                     descuento ?
