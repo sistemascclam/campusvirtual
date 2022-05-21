@@ -54,14 +54,13 @@ export default async function handler(req, res) {
                     // "ipnTargetUrl": "https://www.cclam.org.pe/recursos.base/public/api/ipn",
                     "amount": total,
                     "currency": "PEN",
-                    "more": "parameters",
+                    "orderId":"myOrderId-21030",
                     "customer": {
-                        "email": session?.user?.email
-                    },
-                    "shoppingCart": {
-                        "cartItemInfo": cartItemInfo
-                    },
-                    "metadata":{...req.query,total,cartItemInfo}
+                        "email": session?.user?.email,
+                        "shoppingCart": {
+                            "cartItemInfo": cartItemInfo
+                        }
+                    }
                 },
                 {
                     headers: {

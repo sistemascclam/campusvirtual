@@ -23,6 +23,25 @@ module.exports = {
       },
       maxWidth:{
         '8xl': '1920px',
+      },
+      animation:{
+        'successcard': 'successcard 2s',
+      },
+      keyframes: {
+        'successcard': {
+          '0%': {
+            width: '10rem',
+            height: '10rem',
+          },
+          '50%': {
+            width: '10rem',
+            height: '10rem',
+          },
+          '100%': {
+            width: '7rem',
+            height: '7rem',
+          },
+        },
       }
     },
   },

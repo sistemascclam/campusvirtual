@@ -7,12 +7,12 @@ import axios from '@util/Api';
 import Link from 'next/link'
 import Video from 'components/Video'
 import Lottie from "lottie-react";
-import lottieJson from '../../../../public/animations/medal.json'
+import lottieJson from '@animations/medal.json'
 import { getCsrfToken, getSession } from 'next-auth/react'
 
 const DoneCard = ({ handleClick, curso }) => {
     return (
-        <div className='bg-blue-800 w-max h-max max-w-lg rounded-3xl shadow-md mx-auto py-7 md:py-10 px-2 md:px-10 mt-0 md:mt-16'>
+        <div className='bg-blue-800 w-max h-max max-w-lg rounded-3xl shadow-md mx-auto py-7 md:py-10 px-3 md:px-10 mt-0 md:mt-16'>
             <p className='font-black text-center text-2xl md:text-3xl mb-3'>CURSO TERMINADO</p>
             <p className='text-center text-lg md:text-xl opacity-80 mb-1 md:mb-2 leading-tight'>Felicitaciones por completar el curso de</p>
             <p className='text-center mb-0 md:mb-1 text-xl md:text-3xl font-bold'>{curso?.title}</p>
