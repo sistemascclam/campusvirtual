@@ -99,7 +99,7 @@ export default function Favoritos() {
     const handleSubmitPay = (e) => {
         e.preventDefault();
         let codigo = document.getElementById("codigo").value
-        router.push(`/checkout/${codigo ? `?codigodescuento=${codigo}` : ''}`)
+        router.push(`/verificarpago/${codigo ? `?codigodescuento=${codigo}` : ''}`)
 
     }
 
@@ -130,9 +130,9 @@ export default function Favoritos() {
                     </div>
                 </>
             }
-            <div className="flex flex-col md:flex-row min-h-screen bg-cover bg-top-left py-5 ">
-                <div className='text-white text-center block md:hidden my-3'>Cursos Seleccionados</div>
-                <div className={`text-white lg:w-2/3`}>
+            <div className="flex flex-col lg:flex-row min-h-screen bg-cover bg-top-left py-5 gap-x-8">
+                <div className='text-white text-center block lg:hidden my-3'>Cursos Seleccionados</div>
+                <div className={`text-white w-full lg:w-8/12`}>
                     {arrayC?.length > 0 ?
                         arrayC?.map((Curso, sec_k) => (
                             <div key={`curso_card_${Curso.id}_${sec_k}`} className="mb-6 relative">
@@ -147,8 +147,7 @@ export default function Favoritos() {
                 </div>
 
                 {arrayC?.length > 0 ?
-                    <div className="text-white w-full md:w-1/3 order-first md:order-last">
-                        <div className='pb-6 px-0 md:px-14'>
+                    <div className="text-white w-full lg:w-4/12 order-first lg:order-last ">
                             <div className='border-solid border-2 border-slate-900 md:border-slate-800 rounded-2xl shadow-lg bg-slate-900 md:bg-slate-800'>
                                 <div className='text-center text-lg py-2'>Total</div>
                                 {
@@ -174,7 +173,7 @@ export default function Favoritos() {
                                     </label>
                                     {
                                         errordescuento ?
-                                        <p className='text-center mt-1 italic'>No se encontró el descuento</p> : ""
+                                            <p className='text-center mt-1 italic'>No se encontró el descuento</p> : ""
                                     }
                                 </form>
                                 <div className='mb-8 mt-6'>
@@ -183,7 +182,6 @@ export default function Favoritos() {
                                     </button>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     : ''
                 }

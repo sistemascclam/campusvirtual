@@ -7,7 +7,7 @@ import axios from '@util/Api';
 import Link from 'next/link'
 import Video from 'components/Video'
 import Lottie from "lottie-react";
-import lottieJson from '../../../../public/animations/medal.json'
+import lottieJson from '@animations/medal.json'
 import { getCsrfToken, getSession } from 'next-auth/react'
 
 const DoneCard = ({ handleClick, curso }) => {

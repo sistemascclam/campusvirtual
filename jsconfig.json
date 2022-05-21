@@ -4,6 +4,7 @@
         "paths": {
             "@global/*":["components/global/*"],
             "@util/*":["util/*"],
+            "@animations/*":["public/animations/*"],
         }
     }
 }
