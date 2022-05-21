@@ -96,8 +96,8 @@ export default function Home() {
             </div>
             : ""
         }
-        <div className=' text-3xl font-serif font-bold font-mono'>
-          Aprende de cero a experto
+        <div className=' text-3xl font-serif font-bold font-mono mt-6'>
+          Eleva tu nivel de cero a experto
         </div>
         <div className='text-xl  pt-6 pb-5 font-bold '>
           Recomendaciones para llevar un curso
