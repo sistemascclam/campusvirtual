@@ -9,7 +9,7 @@ export default async function handle(req, res) {
         auxId = session.user.id
     }
 
-    if(req.method == "POST"){
+    if (req.method == "POST") {
         if (auxId) {
             if (action == "add") {
                 const addCurso = await prisma.ShopingCart.create({
@@ -27,8 +27,10 @@ export default async function handle(req, res) {
                     },
                 })
             }
+            res.json(idCurso)
+        } else {
+            res.status(401).json("Unauthorized")
         }
     }
 
-    res.status(200).json(idCurso)
 }   

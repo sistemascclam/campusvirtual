@@ -10,9 +10,47 @@ export default async function handler(req, res) {
     }
 
     if (auxId) {
-        const {customer} = data
+        const { customer } = data
+        customer.shoppingCart.cartItemInfo.forEach(c=>{
+            addCursoAProgress(c.productRef)
+        })
         res.json(data)
     } else {
         res.status(401).json("Unauthorized")
+    }
+}
+
+const addCursoAProgress = async (idCurso) => {
+    const progressres = await prisma.progress.count({
+        where: {
+          idUsuario: auxId,
+          idCurso: parseInt(idCurso),
+        }
+      })
+
+    if(progressres == 0){
+        await prisma.progress.create({
+            data: {
+                'idUsuario' : auxId,
+                'idCurso' : parseInt(idCurso) ,
+            },
+        })
+    
+        await prisma.shopingCart.update({
+            where:{
+                id : parseInt(idCurso),
+            },
+            data: {
+                active: false
+            },
+        })
+
+        await prisma.ShoppingHistory.create({
+            data: {
+                'idUsuario' : auxId,
+                'idCurso' : parseInt(idCurso),
+            },
+        })
+
     }
 }

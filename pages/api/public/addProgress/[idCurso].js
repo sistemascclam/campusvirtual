@@ -9,7 +9,7 @@ export default async function handle(req, res) {
     }
 
     if(auxId !='0'){
-        const {idCurso} = req.query 
+        const {idCurso} = req.query
         const progressres = await prisma.progress.count({
             where: {
               idUsuario: auxId,

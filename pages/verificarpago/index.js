@@ -19,8 +19,8 @@ const answer = {
     "orderStatus": "PAID",
     "serverDate": "2022-05-14T02:17:51+00:00",
     "orderDetails": {
-        "orderTotalAmount": 19704,
-        "orderEffectiveAmount": 19704,
+        "orderTotalAmount": 20136,
+        "orderEffectiveAmount": 20136,
         "orderCurrency": "PEN",
         "mode": "TEST",
         "orderId": null,
@@ -85,14 +85,14 @@ const answer = {
                   "productRef": 4,
                   "productLabel": "Administración Aduanera",
                   "productType": "SERVICE_FOR_BUSINESS",
-                  "productAmount": "9334.00",
+                  "productAmount": "3505.00",
                   "productQty": 1
                 },
                 {
                   "productRef": 6,
                   "productLabel": "Mercadeo",
                   "productType": "SERVICE_FOR_BUSINESS",
-                  "productAmount": "10370.00",
+                  "productAmount": "19631.00",
                   "productQty": 1
                 }
               ],
@@ -104,7 +104,7 @@ const answer = {
         {
             "shopId": "89289758",
             "uuid": "1acea34f4d784af297c108290ed1e082",
-            "amount": 19704,
+            "amount": 20136,
             "currency": "PEN",
             "paymentMethodType": "CARD",
             "paymentMethodToken": null,
@@ -120,7 +120,7 @@ const answer = {
             "metadata": null,
             "transactionDetails": {
                 "liabilityShift": "NO",
-                "effectiveAmount": 19704,
+                "effectiveAmount": 20136,
                 "effectiveCurrency": "PEN",
                 "creationContext": "CHARGE",
                 "cardDetails": {
@@ -139,7 +139,7 @@ const answer = {
                     "legacyTransDate": "2022-05-14T02:17:49+00:00",
                     "paymentMethodSource": "NEW",
                     "authorizationResponse": {
-                        "amount": 19704,
+                        "amount": 20136,
                         "currency": "PEN",
                         "authorizationDate": "2022-05-14T02:17:50+00:00",
                         "authorizationNumber": "3fe903",
@@ -204,7 +204,7 @@ const answer = {
                     "legacyTransDate": "2022-05-14T02:17:49+00:00",
                     "paymentMethodSource": "NEW",
                     "authorizationResponse": {
-                        "amount": 19704,
+                        "amount": 20136,
                         "currency": "PEN",
                         "authorizationDate": "2022-05-14T02:17:50+00:00",
                         "authorizationNumber": "3fe903",
@@ -485,7 +485,7 @@ export default function Checkout() {
 
 const DoneCard = ({ paiddata }) => {
     return (
-        <div className='bg-white rounded-3xl shadow-md pt-6 pb-10 my-10 w-4/12 mx-auto'>
+        <div className='bg-white rounded-3xl shadow-md pt-6 pb-10 my-10 w-11/12 md:w-4/12 mx-auto'>
             <div className="text-center">
                 <div className="mx-auto lg:px-10 max-w-sm lg:max-w-lg">
                     <div className="animate-successcard w-28 h-28 mx-auto">

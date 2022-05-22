@@ -184,11 +184,11 @@ export default async function handle(req, res) {
     const leccion = await prisma.leccion.createMany({
         skipDuplicates: true,
         data: [
-            { id: "160b4d59b33a4703b566134c288654d1", title: 'Gerencia - Parte 1', url: '/videos/videoprueba.mp4', orden:1,idCurso:1 },
-            { id: "a442d68302ac420889027ad4e3797949", title: 'Gerencia - Parte 2', url: '/videos/videoprueba2.mp4', orden:2,idCurso:1 },
-            { id: "c53419412cda4c9aab237b3bdb264a28", title: 'Banca y Finanzas - Parte 1', url: '/videos/videoprueba.mp4', orden:1,idCurso:2 },
-            { id: "a31156a87fb34d45918beb450eeff8bd", title: 'Banca y Finanzas - Parte 2', url: '/videos/videoprueba2.mp4', orden:2,idCurso:2 },
-            { id: "7af2a65475d64b3f9ff9421d9cf8d6d8", title: 'Banca y Finanzas - Parte 3', url: '/videos/videoprueba.mp4', orden:3,idCurso:2 },
+            { id: "160b4d59b33a4703b566134c288654d1", title: 'Gerencia - Parte 1', url: '/videos/videoprueba.mp4', orden:1, idCurso:1, duracion:20.5 },
+            { id: "a442d68302ac420889027ad4e3797949", title: 'Gerencia - Parte 2', url: '/videos/videoprueba2.mp4', orden:2, idCurso:1, duracion:30 },
+            { id: "c53419412cda4c9aab237b3bdb264a28", title: 'Banca y Finanzas - Parte 1', url: '/videos/videoprueba.mp4', orden:1, idCurso:2, duracion:35 },
+            { id: "a31156a87fb34d45918beb450eeff8bd", title: 'Banca y Finanzas - Parte 2', url: '/videos/videoprueba2.mp4', orden:2, idCurso:2, duracion:22 },
+            { id: "7af2a65475d64b3f9ff9421d9cf8d6d8", title: 'Banca y Finanzas - Parte 3', url: '/videos/videoprueba.mp4', orden:3, idCurso:2, duracion:25.5 },
         ],
     })
     res.status(200).json({ name: 'BD llenada', categories, cursos,leccion })

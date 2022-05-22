@@ -48,6 +48,7 @@ model User {
   sessions      Session[]
   favorites     Favorites[]
   shopingcart   ShopingCart[]
+  shopingHistory    ShoppingHistory[]
   progresos     Progress[]
 }
 
@@ -89,6 +90,7 @@ model Curso {
   texto             String?
   favorites         Favorites[]
   shopingCarts      ShopingCart[]
+  shopingHistory    ShoppingHistory[]
   progress          Progress[]
   lecciones         Leccion[]
 }
@@ -173,6 +175,18 @@ model DiscountCodes {
   code              String
   monto             Decimal?  @db.Decimal(10, 2)
   description       String?
+  registration_date DateTime  @default(now())  
+  active            Boolean   @default(true)
+}
+
+model ShoppingHistory {
+  id                Int       @id @default(autoincrement())
+  idUsuario         String
+  usuario           User     @relation(fields: [idUsuario], references: [id])
+  idCurso           Int
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+  monto             Decimal?  @db.Decimal(10, 2)
+  metadata          String?   @db.Text
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
 }
