@@ -11,6 +11,7 @@ import moment from "moment";
 import 'moment/locale/es';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
+import { getCsrfToken, getSession } from 'next-auth/react';
 moment.locale('es')
 
 const answer = {
@@ -23,7 +24,7 @@ const answer = {
         "orderEffectiveAmount": 20136,
         "orderCurrency": "PEN",
         "mode": "TEST",
-        "orderId": null,
+        "orderId": 1,
         "metadata": null,
         "_type": "V4/OrderDetails"
     },
@@ -516,6 +517,26 @@ const DoneCard = ({ paiddata }) => {
             </div>
         </div>
     )
+}
+
+
+//No acceder a la ruta si el usuario NO está logeado
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    return {
+        props: {
+            csrfToken: await getCsrfToken(context),
+        },
+    };
 }
 
 /*

@@ -73,26 +73,26 @@ model Category {
 
 // NUEVAS TABLAS
 model Curso {
-  id                Int            @id @default(autoincrement())
-  title             String
-  description       String?
-  name              String
-  valuation         Float?
-  image             String?
-  price             Float?
-  priceWODiscount   Float?
-  registration_date DateTime       @default(now())
-  active            Boolean        @default(true)
-  category          Category       @relation(fields: [categoryId], references: [id])
-  categoryId        Int
-  cursoKeyword      CursoKeyword[] @relation(references: [id])
-  ruta              String?        @unique
-  texto             String?
-  favorites         Favorites[]
-  shopingCarts      ShopingCart[]
-  shopingHistory    ShoppingHistory[]
-  progress          Progress[]
-  lecciones         Leccion[]
+  id                      Int            @id @default(autoincrement())
+  title                   String
+  description             String?
+  name                    String
+  valuation               Float?
+  image                   String?
+  price                   Float?
+  priceWODiscount         Float?
+  registration_date       DateTime       @default(now())
+  active                  Boolean        @default(true)
+  category                Category       @relation(fields: [categoryId], references: [id])
+  categoryId              Int
+  cursoKeyword            CursoKeyword[] @relation(references: [id])
+  ruta                    String?        @unique
+  texto                   String?
+  favorites               Favorites[]
+  shopingCarts            ShopingCart[]
+  shopintHistoryDetail    ShopintHistoryDetail[]
+  progress                Progress[]
+  lecciones               Leccion[]
 }
 
 model CursoKeyword {
@@ -180,13 +180,23 @@ model DiscountCodes {
 }
 
 model ShoppingHistory {
+  id                      Int       @id @default(autoincrement())
+  idUsuario               String
+  usuario                 User     @relation(fields: [idUsuario], references: [id])
+  monto                   Decimal?  @db.Decimal(10, 2)
+  metadata                String?   @db.Text
+  active                  Boolean   @default(true)
+  registration_date       DateTime  @default(now())  
+  shopintHistoryDetail    ShopintHistoryDetail[]
+}
+
+model ShopintHistoryDetail{
   id                Int       @id @default(autoincrement())
-  idUsuario         String
-  usuario           User     @relation(fields: [idUsuario], references: [id])
+  idShopingHistory  Int
+  shoppingHistory   ShoppingHistory     @relation(fields: [idShopingHistory], references: [id])
   idCurso           Int
   curso             Curso     @relation(fields: [idCurso], references: [id])
   monto             Decimal?  @db.Decimal(10, 2)
-  metadata          String?   @db.Text
-  registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
+  registration_date DateTime  @default(now())  
 }
