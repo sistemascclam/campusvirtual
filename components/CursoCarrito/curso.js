@@ -39,7 +39,7 @@ export default function curso({ arrayData }) {
                             alt={arrayC[sec_k].curso.title}
                         />
                     </div>
-                    <div className="flex text-white w-full rounded-r-xl bg-slate-800">
+                    <div className="flex text-white w-full rounded-r-xl bg-slate-900">
                         <div className='w-5/6 border-solid '>
                             <div className='py-4 px-5'>
                                 <div>

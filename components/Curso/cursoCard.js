@@ -70,7 +70,7 @@ export default function CursoCard({ Curso, options = false }) {
     }
 
     return (
-        <div className="box-border rounded-2xl bg-shadow- bg-slate-800 shadow-md h-full text-white cursor-pointer" onClick={handleCourseRoute}>
+        <div className="box-border rounded-2xl bg-slate-900 shadow-lg h-full text-white cursor-pointer" onClick={handleCourseRoute}>
             <div className='h-full flex flex-col'>
                 <div className='px-0 relative group'>
                     <Image

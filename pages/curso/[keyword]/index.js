@@ -1,12 +1,14 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import useSWR from 'swr'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link'
 import Layout, { siteTitle } from '@global/layout';
 import axios from '@util/Api';
+import moment from "moment";
+import 'moment/locale/es';
+moment.locale('es')
 
 export default function Curso() {
     const router = useRouter()
@@ -29,7 +31,7 @@ export default function Curso() {
     }
 
     useEffect(() => {
-        if(keyword){
+        if (keyword) {
             loadCurso()
         }
     }, [keyword])
@@ -75,7 +77,7 @@ export default function Curso() {
                 _setauxidCart(arrayDC.shopingCarts[0].id)
                 _setenCarrito(arrayDC.shopingCarts[0].active)
             }
-            if(arrayDC?.progress?.length>0){
+            if (arrayDC?.progress?.length > 0) {
                 _setBtnInscription("Ir al curso")
             }
         }
@@ -234,7 +236,7 @@ export default function Curso() {
         if (btnInscription == 'Inscribirse ahora') {
             var resp = fetch(`/api/public/addProgress/` + _auxIdCurso, (...args) => fetch(...args).then(res => res.json()))
             _setBtnInscription('Ir al curso');
-        }else{
+        } else {
             router.push(`/curso/${keyword}/leccion`)
         }
     }
@@ -245,10 +247,10 @@ export default function Curso() {
     var star_full = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
     </svg>;
-    var star2 = <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    var star2 = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
     </svg>;
-    var star_full2 = <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+    var star_full2 = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
     </svg>;
     var heart = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -287,18 +289,27 @@ export default function Curso() {
                             <div className="text-white lg:w-1/2 p-4 w-full">
                                 <div className='py-2 px-3 '>
                                     <span className='text-3xl font-extrabold'>{arrayDC.title}</span><br />
-                                    <span className='text-xs text-slate-400 leading-5 '>{arrayDC.name}</span>
-                                    <div className='flex py-2'>
-                                        <span className='  flex text-amber-400'>
-                                            {[...Array(5).keys()].map((a, i) => i < arrayDC.valuation ? <span key={`star_${keyword}_${i}`}>{star_full}</span> : <span key={`star_${keyword}_${i}`}>{star}</span>)}
-                                        </span> <span className='text-sm text-blue-600 my-auto px-2 '>27 opiniones</span>
+                                    <span className='text-lg text-slate-400'>por {arrayDC.name}</span>
+                                    <div className='flex py-2 items-center'>
+                                        {
+                                            arrayDC?.calificaciones?.length > 0 ?
+                                                <span className='flex text-amber-400 mr-2'>
+                                                    {
+
+                                                        [...Array(5)].map((a, as) => (as + 1) <= Math.round(arrayDC?.calificaciones.reduce((a, b) => { return a + b.star }, 0) / arrayDC?.calificaciones.length) ? star_full : "")
+                                                    }
+                                                </span>
+                                                :
+                                                ""
+                                        }
+                                        <span className='text-base text-white my-auto font-semibold'>{arrayDC?.calificaciones?.length} opiniones</span>
                                     </div>
-                                    <span className='text-slate-100 py-5 block'>
+                                    <span className='text-slate-100 py-5 block text-lg'>
                                         {arrayDC.description}
                                     </span>
-                                    <span className='text-sm font-semibold' >Lo que aprenderás:</span>
+                                    <p className='text-sm font-semibold mb-2'>Lo que aprenderás:</p>
                                     {cadena?.map((Array, sec_k) => (
-                                        <div className='py-0 text-xs' key={sec_k}>
+                                        <div className='py-0 text-sm' key={sec_k}>
                                             <div className='py-1'>{check} {Array}</div>
                                         </div>
                                     ))}
@@ -321,8 +332,8 @@ export default function Curso() {
                                                     {_esFavorito == false ?
                                                         <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={addFavorite}>
                                                             <button className="block   mx-auto text-center   w-fit">
-                                                                    {heart}
-                                                                </button>
+                                                                {heart}
+                                                            </button>
                                                         </div>
                                                         :
                                                         <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={removeFavorite}>
@@ -360,153 +371,100 @@ export default function Curso() {
                     : ''
                 }
 
-                <div className="block text-white p-4 w-full mt-8">
+                <div className="block text-white p-4 w-full mt-10">
                     <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2  text-xs" >
                         <div className='py-0'>
-                            <p className='text-xl font-semibold mb-6'>Calificaciones de estudiantes</p>
-                            <div className="flex gap-3 my-2 text-xs">
-                                <div className='py-0 lg:py-6 '>
-                                    <div className='items-start'>
-                                        <div className='text-center'>
-                                            <div className='text-5xl font-bold'>4.6</div>
-                                            <div className='  flex text-amber-400 w-full justify-center'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </div>
-                                            <div className='py-2'>Valoración del curso</div>
+                            <p className='text-xl font-semibold mb-6 lg:mb-3'>Calificaciones de estudiantes</p>
+                            {
+
+                                arrayDC?.calificaciones.length > 0 ?
+                                    <div className="flex flex-col lg:flex-row gap-3 my-2 text-lg">
+                                        <div className='flex items-center mr-5 justify-center'>
+                                            <div className='items-start'>
+                                                <div className='text-center'>
+                                                    <div className='text-5xl font-bold'>
+                                                        {
+                                                            (arrayDC?.calificaciones.reduce((a, b) => { return a + b.star }, 0) / arrayDC?.calificaciones?.length)?.toFixed(1) ?? 0
+                                                        }
+
+                                                    </div>
+                                                    <div className=' flex text-amber-400 w-full justify-center'>{[...Array(5)].map((a, as) => (as + 1) <= Math.round(arrayDC?.calificaciones.reduce((a, b) => { return a + b.star }, 0) / arrayDC?.calificaciones.length) ? star_full2 : star2)}</div>
+                                                    <div className='py-2'>Valoración del curso</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='py-0 lg:py-6'>
+                                            {
+                                                [...Array(5)].map((sa, sak) => sak).sort((a, b) => { return b - a }).map((sk) =>
+                                                    <div key={sk} className="flex items-center gap-2">
+                                                        <div className="bg-gray-200 rounded-full h-3 dark:bg-gray-700 w-52  lg:w-72">
+                                                            <div className="bg-blue-600 h-3 rounded-full" style={{ width: `${(100 * (arrayDC?.calificaciones?.filter(c => c.star == (sk + 1)).length / arrayDC?.calificaciones?.length))}%` }}></div>
+                                                        </div>
+                                                        <div className='flex content-center items-center text-amber-400'>{[...Array(5)].map((a, s) => s <= sk ? star_full2 : "")}<span className='text-slate-300 ml-2'>
+                                                            {100 * (arrayDC?.calificaciones?.filter(c => c.star == (sk + 1)).length / arrayDC?.calificaciones?.length)}%
+                                                        </span></div>
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     </div>
-                                </div>
-                                <div className='py-0 lg:py-6 w-1/3'>
-                                    <div className='py-1'>
-                                        <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                            <div className="bg-blue-600 h-2.5 rounded-full w-4/5" ></div>
-                                        </div>
-                                    </div>
-                                    <div className='py-1'>
-                                        <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                            <div className="bg-blue-600 h-2.5 rounded-full w-1/3" ></div>
-                                        </div>
-                                    </div>
-                                    <div className='py-1'>
-                                        <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                            <div className="bg-blue-600 h-2.5 rounded-full w-1/4" ></div>
-                                        </div>
-                                    </div>
-                                    <div className='py-1'>
-                                        <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                            <div className="bg-blue-600 h-2.5 rounded-full  w-1/5" ></div>
-                                        </div>
-                                    </div>
-                                    <div className='py-1'>
-                                        <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                                            <div className="bg-blue-600 h-2.5 rounded-full w-1/6" ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='py-0 lg:py-6'>
-                                    <div className='flex text-amber-400 '>{star_full2} {star_full2} {star_full2} {star_full2} {star_full2}<span className='text-slate-300'>58%</span></div>
-                                    <div className='flex text-amber-400 '>{star_full2} {star_full2} {star_full2} {star_full2} {star2}<span className='text-slate-300'>30%</span></div>
-                                    <div className='flex text-amber-400 '>{star_full2} {star_full2} {star_full2} {star2} {star2}<span className='text-slate-300'>9%</span></div>
-                                    <div className='flex text-amber-400 '>{star_full2} {star_full2} {star2} {star2} {star2}<span className='text-slate-300'>2%</span></div>
-                                    <div className='flex text-amber-400 '>{star_full2} {star2} {star2} {star2} {star2}<span className='text-slate-300'>1%</span></div>
-                                </div>
-                            </div>
+                                    :
+                                    <p className='text-lg italic text-gray-400'>Sin calificaciones</p>
+                            }
                         </div>
                         <div className='py-0 mt-10 sm:mt-0'>
-                            <p className='text-xl font-semibold mb-6'>Comentarios</p>
-                            <div className='py-2'>
-                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 text-xs" >
-                                    <div className='py-0 lg:py-6 w-14'>
-                                        <div className="w-10 h-10 rounded-full bg-red-400">
-                                            <img
-                                                className='rounded-full h-full '
-                                                src="../images/ejemplo2.JPG"
-                                                alt="Logo"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='py-0 lg:py-6 w-full'>
-                                        <span className='text-sm py-2'>Andres G.</span>
+                            <p className='text-xl font-semibold mb-6 lg:mb-3'>Comentarios</p>
+                            {
+                                arrayDC?.calificaciones?.length > 0 ?
+                                    <>
 
-                                        <div className='flex py-2'>
-                                            <span className='  flex text-amber-400'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </span> <span className='text-sm text-slate-400'> Hace una semana.</span>
-                                        </div>
-                                        <div className='block py-2 text-sm'>
-                                            El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
-                            </div>
-                            <div className='py-2'>
-                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
-                                    <div className='py-0 lg:py-6 w-14'>
-                                        <div className="w-10 h-10 rounded-full bg-red-400">
-                                            <img
-                                                className='rounded-full h-full '
-                                                src="../images/ejemplo2.JPG"
-                                                alt="Logo"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='py-0 lg:py-6 w-full'>
-                                        <span className='text-sm py-2'>Andres G.</span>
+                                        {
+                                            arrayDC?.calificaciones?.map((cal, cal_key) =>
+                                                <div className='pb-2 text-base' key={cal_key}>
+                                                    <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2" >
+                                                        <div className='py-0 lg:py-6 w-14'>
+                                                            <div className="w-10 h-10 rounded-full">
+                                                                {
+                                                                    cal?.user?.image ?
+                                                                        <img
+                                                                            className='rounded-full h-full '
+                                                                            src={cal?.user?.image}
+                                                                            alt="Logo"
+                                                                        />
+                                                                        :
 
-                                        <div className='flex py-2'>
-                                            <span className='  flex text-amber-400'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </span> <span className='text-sm text-slate-400'> Hace una semana.</span>
-                                        </div>
-                                        <div className='block py-2 text-sm'>
-                                            El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
-                            </div>
-                            <div className='py-2'>
-                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
-                                    <div className='py-0 lg:py-6 w-14'>
-                                        <div className="w-10 h-10 rounded-full bg-red-400">
-                                            <img
-                                                className='rounded-full h-full '
-                                                src="../images/ejemplo2.JPG"
-                                                alt="Logo"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='py-0 lg:py-6 w-full'>
-                                        <span className='text-sm py-2'>Andres G.</span>
-
-                                        <div className='flex py-2'>
-                                            <span className='  flex text-amber-400'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </span> <span className='text-sm text-slate-400'> Hace una semana.</span>
-                                        </div>
-                                        <div className='block py-2 text-sm'>
-                                            El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
-                            </div>
-                            <div className='py-2'>
-                                <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2   text-xs" >
-                                    <div className='py-0 lg:py-6 w-14'>
-                                        <div className="w-10 h-10 rounded-full bg-red-400">
-                                            <img
-                                                className='rounded-full h-full '
-                                                src="../images/ejemplo2.JPG"
-                                                alt="Logo"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className='py-0 lg:py-6 w-full'>
-                                        <span className='text-sm py-2'>Andres G.</span>
-
-                                        <div className='flex py-2'>
-                                            <span className='  flex text-amber-400'>{star_full2} {star_full2} {star_full2} {star_full2} {star2} </span> <span className='text-sm text-slate-400'> Hace una semana.</span>
-                                        </div>
-                                        <div className='block py-2 text-sm'>
-                                            El curso va muy bien todo lo nevesario para entender desde los mas básico hasta lo as vomplejo de la programación para el frontend web
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                                        <img
+                                                                            className='rounded-full h-full '
+                                                                            src="../images/ejemplo2.JPG"
+                                                                            alt="Logo"
+                                                                        />
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div className='py-0 lg:py-6 w-full'>
+                                                            <span className='py-2 font-semibold'>{cal?.user?.name ?? cal?.user?.email}</span>
+                                                            <div className='flex py-2 content-center items-center'>
+                                                                <span className='flex text-amber-400'>{[...Array(5)].map((a, s) => (s + 1) <= (cal.star ?? 0) ? star_full2 : "")}</span>
+                                                                <span className='text-slate-400 ml-2'>{moment(cal.registration_date).calendar()}</span>
+                                                            </div>
+                                                            <div className='block py-2'>
+                                                                {cal?.description}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {
+                                                        (cal_key + 1) == arrayDC?.calificaciones.length ?
+                                                            ""
+                                                            :
+                                                            <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
+                                                    }
+                                                </div>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <p className='text-lg italic text-gray-400'>Sin comentarios</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -516,7 +474,3 @@ export default function Curso() {
 
     )
 }
-
-
-
-

@@ -38,18 +38,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  password      String?   @db.Char(128) //sha512
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  favorites     Favorites[]
-  shopingcart   ShopingCart[]
-  shopingHistory    ShoppingHistory[]
-  progresos     Progress[]
+  id                  String    @id @default(cuid())
+  name                String?
+  email               String?   @unique
+  password            String?   @db.Char(128) //sha512
+  emailVerified       DateTime?
+  image               String?
+  accounts            Account[]
+  sessions            Session[]
+  favorites           Favorites[]
+  shopingcart         ShopingCart[]
+  shopingHistory      ShoppingHistory[]
+  progresos           Progress[]
+  calificaciones      Qualification[]
 }
 
 model VerificationToken {
@@ -93,6 +94,7 @@ model Curso {
   shopintHistoryDetail    ShopintHistoryDetail[]
   progress                Progress[]
   lecciones               Leccion[]
+  calificaciones          Qualification[]
 }
 
 model CursoKeyword {
@@ -155,19 +157,20 @@ model Progress {
   advance           Int       @default(0)
   curso             Curso     @relation(fields: [idCurso], references: [id])
   user              User     @relation(fields: [idUsuario], references: [id])
-  qualification     Qualification[]
   lastLeccion       String?
   leccion           Leccion?   @relation(fields: [lastLeccion], references: [id])
 }
 
 model Qualification {
   id                Int       @id @default(autoincrement())
-  idProgres         String
+  idUsuario         String
+  idCurso           Int
   description       String
   star              Int       @default(0)
   registration_date DateTime  @default(now())  
   active            Boolean   @default(true)
-  progress          Progress  @relation(fields: [idProgres], references: [id])
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+  user              User     @relation(fields: [idUsuario], references: [id])
 }
 
 model DiscountCodes {

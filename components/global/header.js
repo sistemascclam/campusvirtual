@@ -7,6 +7,7 @@ import Image from 'next/image'
 import axios from '@util/Api';
 import { useSWRConfig } from 'swr'
 import AppContext from 'components/AppContext'
+import { useRef } from 'react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -173,7 +174,7 @@ export default function NavBar({ bgTransparent }) {
                     </span>
                   </button>
                 </div>
-                <div className="border-t border-t-1 border-slate-800 py-6 px-4 space-y-6">
+                <div className="border-t border-slate-800 py-6 px-4 space-y-6">
                   {
                     session?.status != "loading" && session ?
                       <>
@@ -369,7 +370,27 @@ const SearchButton = () => {
   )
 }
 
+function useOutsideHook(ref,onClickOutside) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClickOutside()
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
+
 function SearchItems({ search, setsearch }) {
+  const searchMenyRef = useRef()
   const router = useRouter()
   const [data, setdata] = useState(null)
 
@@ -394,7 +415,13 @@ function SearchItems({ search, setsearch }) {
     router.push(`/curso/${ruta}`)
   }
 
-  return <div className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
+  const handleClickOutside = () => {
+    setsearch(null)
+  }
+
+  useOutsideHook(searchMenyRef,handleClickOutside);
+
+  return <div ref={searchMenyRef} className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
     {data?.cursos?.map((item) =>
       <div key={item.id} onClick={() => handleSelectedCourse(item.ruta)} className="mb-1 flex flex-col hover:bg-slate-800 rounded-xl p-3 cursor-pointer">
         <span className={`text-xs bg-blue-700 rounded-xl p-1 w-max font-semibold mt-1`}>
@@ -410,13 +437,18 @@ function SearchItems({ search, setsearch }) {
     {
       data?.cursos && data?.cursos?.length > 0 ?
         <button
-          onClick={() =>
-            router.push({
-              pathname: '/busqueda',
-              query: {
-                buscar: search
-              }
-            })}
+          onClick={
+            () =>
+            {
+              handleClickOutside()
+              router.push({
+                pathname: '/busqueda',
+                query: {
+                  buscar: search
+                }
+              });
+            }
+          }
           className='opacity-70 italic text-center w-full h-10 hover:bg-slate-800 rounded-xl mb-1'>Ver todos los resultados</button> : ""
     }
     {

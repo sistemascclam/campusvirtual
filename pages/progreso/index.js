@@ -1,14 +1,8 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import Layout, { siteTitle } from "../../components/global/layout";
-import React, { useState, useEffect, Fragment } from 'react';
-import { useSession, useReadingProgress, getSession, getCsrfToken } from 'next-auth/react';
-import Link from 'next/link'
-import useSWR from 'swr'
-import { Dialog, Transition } from '@headlessui/react'
-
-import { width } from 'tailwindcss/defaultTheme';
-import CursoCardCalificar from 'components/Curso/cursoCardCalificar';
+import React, { useState, useEffect } from 'react';
+import { useSession, getSession, getCsrfToken } from 'next-auth/react';
 import Image from 'next/image';
 
 
@@ -133,7 +127,7 @@ export default function Progress() {
                     <div className={`text-white w-full grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-1 h-full`}>
                         {_data != null ?
                             _data?.map((Array, sec_k) => (
-                                <div className='w-full flex h-40 bg-slate-800 rounded-xl mb-5 shadow-xl cursor-pointer hover:-translate-y-1 transition-all duration-300 ease-in-out' key={sec_k} onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/curso/${Array.curso.ruta}/leccion`);}}>
+                                <div className='w-full flex h-40 bg-slate-900 rounded-xl mb-5 shadow-xl cursor-pointer' key={sec_k} onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/curso/${Array.curso.ruta}/leccion`);}}>
                                     <div className='h-40 md:h-auto w-full md:w-3/12 relative'>
                                         <Image
                                             className='rounded-l-xl h-full w-full'
@@ -151,7 +145,7 @@ export default function Progress() {
                                                     <p className='text-base text-slate-400 leading-tight mt-1'>{Array.curso.name}</p>
                                                 </div>
                                                 <div className=''>
-                                                    <div className='bg-gray-700 rounded-full h-3 mb-1'></div>
+                                                    <div className='bg-gray-800 rounded-full h-3 mb-1'></div>
                                                     <div className='text-gray-400 font-bold'>
                                                         <span className='text-base'>Empezar curso</span>
                                                     </div>
@@ -161,10 +155,10 @@ export default function Progress() {
                                             (Array.advance < 100) ?
                                                 <div className='w-full'>
                                                     <button className='flex group' onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(Array.curso.title, Array.id, Array?.qualification) }}>
-                                                        <div className='flex items-center text-amber-50 group-hover:text-blue-600'>
+                                                        <div className='flex items-center text-amber-50 group-hover:text-blue-600 animation-all duration-300'>
                                                             <StarIndicator q={Array?.qualification} />
                                                         </div>
-                                                        <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600'>
+                                                        <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600 animation-all duration-300'>
                                                             Calificar
                                                         </span>
                                                     </button>
@@ -174,7 +168,7 @@ export default function Progress() {
                                                     </div>
                                                     <div className='text-slate-50 font-bold text-right'>
                                                         <span className='text-sm text-blue-600 mb-1'>{Array.advance}%</span>
-                                                        <div className="bg-gray-200 rounded-full h-3 dark:bg-gray-700">
+                                                        <div className="bg-gray-200 rounded-full h-3 dark:bg-gray-800">
                                                             <div
                                                                 style={{ width: Array.advance + '%' }}
                                                                 className="bg-blue-600 h-3 rounded-full" ></div>
@@ -186,10 +180,10 @@ export default function Progress() {
                                                     <div>
                                                         <div className='flex'>
                                                             <button className='flex group' onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(Array.curso.title, Array.id, Array?.qualification) }}>
-                                                                <div className='flex items-center text-amber-50 group-hover:text-blue-600'>
+                                                                <div className='flex items-center text-amber-50 group-hover:text-blue-600 animation-all duration-300'>
                                                                     <StarIndicator q={Array?.qualification} />
                                                                 </div>
-                                                                <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600'>
+                                                                <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600 animation-all duration-300'>
                                                                     Calificar
                                                                 </span>
                                                             </button>

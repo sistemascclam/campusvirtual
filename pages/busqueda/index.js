@@ -212,11 +212,11 @@ const PrecioInput = ({ min, max, setprecios }) => {
         <div className='w-64'>
             <label className='text-white flex items-center mb-2'>Precio de
                 <div className='flex gap-3 ml-2 items-center'>
-                    <div className='bg-slate-800 rounded px-2 py-1 font-bold'>
+                    <div className='bg-slate-900 rounded px-2 py-1 font-bold'>
                         S/.{value[0]}
                     </div>
                     <span className='text-white'>a</span>
-                    <div className='bg-slate-800 rounded px-2 py-1 font-bold'>
+                    <div className='bg-slate-900 rounded px-2 py-1 font-bold'>
                         S/.{value[1]}
                     </div>
                 </div>

@@ -38,8 +38,8 @@ export default function Layout({ children, widthPadding = true, widthPaddingX=tr
         <div className={ widthPadding ? `max-w-8xl mx-auto ${widthPaddingX ? 'px-6 md:px-10' : ''}` : '' }>
           {children}
         </div>
-        <Footer />
       </main>
+      <Footer />
     </>
   )
 }

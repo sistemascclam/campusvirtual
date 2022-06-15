@@ -50,6 +50,24 @@ export default async function handle(req, res) {
             active: true
           }
         },
+        calificaciones: {
+          take: 10,
+          where: {
+            active: true,
+          },
+          select: {
+            user: {
+              select: {
+                name: true,
+                email: true,
+                image: true
+              }
+            },
+            description: true,
+            star: true,
+            registration_date: true,
+          }
+        }
 
       } 
     })

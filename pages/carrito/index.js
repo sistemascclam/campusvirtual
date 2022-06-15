@@ -137,7 +137,7 @@ export default function Favoritos() {
                         arrayC?.map((Curso, sec_k) => (
                             <div key={`curso_card_${Curso.id}_${sec_k}`} className="mb-6 relative">
                                 <CursoCardLarge Curso={_action == 'BD' ? Curso.curso : Curso.curso[0]} />
-                                <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-2 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-slate-800 text-white hover:bg-slate-800' onClick={() => deleteElement(Curso.id)}>
+                                <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-2 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-slate-900 text-white hover:bg-slate-900' onClick={() => deleteElement(Curso.id)}>
                                     {trash}
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ export default function Favoritos() {
 
                 {arrayC?.length > 0 ?
                     <div className="text-white w-full lg:w-4/12 order-first lg:order-last ">
-                            <div className='border-solid border-2 border-slate-900 md:border-slate-800 rounded-2xl shadow-lg bg-slate-900 md:bg-slate-800'>
+                            <div className='border-solid border-2 border-slate-900 md:border-slate-900 rounded-2xl shadow-lg bg-slate-900 md:bg-slate-900'>
                                 <div className='text-center text-lg py-2'>Total</div>
                                 {
                                     descuento ?

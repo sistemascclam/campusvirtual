@@ -31,13 +31,6 @@ export default async function handle(req, res) {
             ruta: true,
             texto: true,
           }
-        },
-        qualification:{
-          select : {
-            id: true,
-            description: true,
-            star: true,
-          }
         }
       } ,
       orderBy: {
