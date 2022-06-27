@@ -289,7 +289,7 @@ export default function NavBar({ bgTransparent }) {
                           onMouseLeave={() => setOpenMenuWeb(false)}
                           static={true} className="absolute z-2000 top-full max-w-sm inset-x-0 mx-14 text-sm text-gray-400">
                           <div className="absolute inset-0 top-1/2" aria-hidden="true" />
-                          <div className="relative bg-slate-800 mt-3 rounded-xl shadow-xl transition-none">
+                          <div className="relative bg-slate-900 mt-3 rounded-xl shadow-xl transition-none">
                             <div className="mx-auto px-8 py-8 row-start-1 grid grid-cols-1 gap-y-6 gap-x-10 text-sm">
                               <div>
                                 <p id={`especialidades-heading`} className="font-medium text-md cursor-default">

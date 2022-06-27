@@ -139,7 +139,7 @@ export default function CursoCard({ Curso, options = false }) {
                             ''
                     }
                 </div>
-                <div className='h-full p-3 flex flex-col justify-between gap-2'>
+                <div className='h-full px-3 py-5 flex flex-col justify-between gap-2'>
                     <div className=''>
                         <p className='text-md line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
                         <p className='text-sm line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>

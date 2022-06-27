@@ -6,9 +6,20 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link'
 import Layout, { siteTitle } from '@global/layout';
 import axios from '@util/Api';
+import calification from "constants/calification.json"
 import moment from "moment";
 import 'moment/locale/es';
 moment.locale('es')
+
+const habilidades = [
+    "Fotografía",
+    "Fotografía digital",
+    "Compras en grupo",
+    "Creativa",
+    "Programación",
+    "HTML",
+    "Coding",
+]
 
 export default function Curso() {
     const router = useRouter()
@@ -273,20 +284,20 @@ export default function Curso() {
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <div className="  min-h-screen text-white w-full px-2 md:px-10">
+            <div className="  min-h-screen text-white w-full px-2 md:px-10 max-w-7xl mx-auto">
                 {arrayDC != null ?
                     <>
-                        <div className='lg:flex xl:flex'>
-                            <div className="text-white lg:w-1/2 m-4 w-auto relative h-72 xl:h-auto">
+                        <div className='lg:flex xl:flex gap-6'>
+                            <div className="text-white relative w-80 lg:w-5/12">
                                 <Image
                                     className='h-full rounded-2xl'
                                     src={arrayDC.image}
                                     layout="fill"
                                     objectFit='cover'
-                                    objectPosition="top"
+                                    objectPosition="center"
                                 />
                             </div>
-                            <div className="text-white lg:w-1/2 p-4 w-full">
+                            <div className="text-white lg:w-6/12 w-full">
                                 <div className='py-2 px-3 '>
                                     <span className='text-3xl font-extrabold'>{arrayDC.title}</span><br />
                                     <span className='text-lg text-slate-400'>por {arrayDC.name}</span>
@@ -307,7 +318,10 @@ export default function Curso() {
                                     <span className='text-slate-100 py-5 block text-lg'>
                                         {arrayDC.description}
                                     </span>
-                                    <p className='text-sm font-semibold mb-2'>Lo que aprenderás:</p>
+                                    {
+                                        cadena &&
+                                        <p className='text-sm font-semibold mb-2'>Lo que aprenderás:</p>
+                                    }
                                     {cadena?.map((Array, sec_k) => (
                                         <div className='py-0 text-sm' key={sec_k}>
                                             <div className='py-1'>{check} {Array}</div>
@@ -371,101 +385,96 @@ export default function Curso() {
                     : ''
                 }
 
-                <div className="block text-white p-4 w-full mt-10">
-                    <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-2  text-xs" >
-                        <div className='py-0'>
-                            <p className='text-xl font-semibold mb-6 lg:mb-3'>Calificaciones de estudiantes</p>
+                <div className="block text-white py-4 w-full mt-10">
+                    <div className='py-0 mb-8'>
+                        <p className='text-2xl font-semibold mb-6 lg:mb-3'>Habilidades relacionadas</p>
+                        <div className='flex flex-wrap gap-3'>
                             {
+                                habilidades.map((h, k) =>
+                                    <div key={k} className="bg-slate-800 px-3 py-1 rounded">
+                                        {h}
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </div>
+                    <div className='py-0 mt-10 sm:mt-0'>
+                        <p className='text-2xl font-semibold mb-6 lg:mb-3'>Calificaciones de estudiantes</p>
+                        {
 
-                                arrayDC?.calificaciones.length > 0 ?
-                                    <div className="flex flex-col lg:flex-row gap-3 my-2 text-lg">
-                                        <div className='flex items-center mr-5 justify-center'>
-                                            <div className='items-start'>
-                                                <div className='text-center'>
-                                                    <div className='text-5xl font-bold'>
-                                                        {
-                                                            (arrayDC?.calificaciones.reduce((a, b) => { return a + b.star }, 0) / arrayDC?.calificaciones?.length)?.toFixed(1) ?? 0
-                                                        }
-
-                                                    </div>
-                                                    <div className=' flex text-amber-400 w-full justify-center'>{[...Array(5)].map((a, as) => (as + 1) <= Math.round(arrayDC?.calificaciones.reduce((a, b) => { return a + b.star }, 0) / arrayDC?.calificaciones.length) ? star_full2 : star2)}</div>
-                                                    <div className='py-2'>Valoración del curso</div>
-                                                </div>
+                            <div className="gap-3 bg-slate-900 w-max mt-4 mb-6 pt-4 px-4 pb-1 shadow-lg rounded-xl">
+                                <p className='text-center font-medium text-lg'>¿Se cumplieron tus expectativas?</p>
+                                <div className='py-0 lg:py-6'>
+                                    {
+                                        calification.map((ca, sk) => <div key={sk} className="flex items-center gap-4 mb-1">
+                                            <div className='text-right w-28'>
+                                                {ca.name}
+                                            </div>
+                                            <div className="bg-gray-200 rounded-md h-4 dark:bg-gray-700 w-52 lg:w-72">
+                                                <div className="bg-blue-600 h-4 rounded-md" style={{ width: `${arrayDC?.calificaciones.length > 0 ? (100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)) : 0}%` }}></div>
+                                            </div>
+                                            <div className='flex content-center items-center text-white'>
+                                                <span className='text-slate-300 ml-2'>
+                                                    {
+                                                        arrayDC?.calificaciones.length > 0 ?
+                                                            `${100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)}%`
+                                                            :
+                                                            "0%"
+                                                    }
+                                                </span>
                                             </div>
                                         </div>
-                                        <div className='py-0 lg:py-6'>
-                                            {
-                                                [...Array(5)].map((sa, sak) => sak).sort((a, b) => { return b - a }).map((sk) =>
-                                                    <div key={sk} className="flex items-center gap-2">
-                                                        <div className="bg-gray-200 rounded-full h-3 dark:bg-gray-700 w-52  lg:w-72">
-                                                            <div className="bg-blue-600 h-3 rounded-full" style={{ width: `${(100 * (arrayDC?.calificaciones?.filter(c => c.star == (sk + 1)).length / arrayDC?.calificaciones?.length))}%` }}></div>
-                                                        </div>
-                                                        <div className='flex content-center items-center text-amber-400'>{[...Array(5)].map((a, s) => s <= sk ? star_full2 : "")}<span className='text-slate-300 ml-2'>
-                                                            {100 * (arrayDC?.calificaciones?.filter(c => c.star == (sk + 1)).length / arrayDC?.calificaciones?.length)}%
-                                                        </span></div>
-                                                    </div>
-                                                )
-                                            }
-                                        </div>
-                                    </div>
-                                    :
-                                    <p className='text-lg italic text-gray-400'>Sin calificaciones</p>
-                            }
-                        </div>
-                        <div className='py-0 mt-10 sm:mt-0'>
-                            <p className='text-xl font-semibold mb-6 lg:mb-3'>Comentarios</p>
-                            {
-                                arrayDC?.calificaciones?.length > 0 ?
-                                    <>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div className='py-0 mt-10 sm:mt-0'>
+                        <p className='text-2xl font-semibold mb-6 lg:mb-3'>Comentarios</p>
+                        {
+                            arrayDC?.calificaciones?.length > 0 ?
+                                <>
+                                    {
+                                        arrayDC?.calificaciones?.map((cal, cal_key) =>
+                                            <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2 bg-slate-900 mb-4 rounded-xl max-w-4xl p-5" key={cal_key} >
+                                                <div className='w-14'>
+                                                    <div className="w-10 h-10 rounded-full">
+                                                        {
+                                                            cal?.user?.image ?
+                                                                <img
+                                                                    className='rounded-full h-full '
+                                                                    src={cal?.user?.image}
+                                                                    alt="Logo"
+                                                                />
+                                                                :
 
-                                        {
-                                            arrayDC?.calificaciones?.map((cal, cal_key) =>
-                                                <div className='pb-2 text-base' key={cal_key}>
-                                                    <div className="flex grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-2" >
-                                                        <div className='py-0 lg:py-6 w-14'>
-                                                            <div className="w-10 h-10 rounded-full">
-                                                                {
-                                                                    cal?.user?.image ?
-                                                                        <img
-                                                                            className='rounded-full h-full '
-                                                                            src={cal?.user?.image}
-                                                                            alt="Logo"
-                                                                        />
-                                                                        :
-
-                                                                        <img
-                                                                            className='rounded-full h-full '
-                                                                            src="../images/ejemplo2.JPG"
-                                                                            alt="Logo"
-                                                                        />
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                        <div className='py-0 lg:py-6 w-full'>
-                                                            <span className='py-2 font-semibold'>{cal?.user?.name ?? cal?.user?.email}</span>
-                                                            <div className='flex py-2 content-center items-center'>
-                                                                <span className='flex text-amber-400'>{[...Array(5)].map((a, s) => (s + 1) <= (cal.star ?? 0) ? star_full2 : "")}</span>
-                                                                <span className='text-slate-400 ml-2'>{moment(cal.registration_date).calendar()}</span>
-                                                            </div>
-                                                            <div className='block py-2'>
-                                                                {cal?.description}
-                                                            </div>
-                                                        </div>
+                                                                <img
+                                                                    className='rounded-full h-full '
+                                                                    src="../images/ejemplo2.JPG"
+                                                                    alt="Logo"
+                                                                />
+                                                        }
                                                     </div>
-                                                    {
-                                                        (cal_key + 1) == arrayDC?.calificaciones.length ?
-                                                            ""
-                                                            :
-                                                            <div className='block w-full rounded-lg  border-solid border-1 my-4 sm:my-0 border-slate-800'></div>
-                                                    }
                                                 </div>
-                                            )
-                                        }
-                                    </>
-                                    :
-                                    <p className='text-lg italic text-gray-400'>Sin comentarios</p>
-                            }
-                        </div>
+                                                <div className='w-full'>
+                                                    <div className='flex flex-col'>
+                                                        <p className='pb-2 font-semibold'>{cal?.user?.name ?? cal?.user?.email}</p>
+                                                        <p className=' text-gray-300 text-lg'>Este curso <span className='font-black'>{calification.find(c => c.id === cal.star).description}</span> mis expectativas.</p>
+                                                        <div className='h-0.5 w-full bg-gray-700 my-4 rounded-full'></div>
+                                                        <p>{cal?.description}</p>
+                                                    </div>
+                                                    <div className='block py-2 text-slate-400 text-right text-sm'>
+                                                        {moment(cal.registration_date).calendar()}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                </>
+                                :
+                                <p className='text-lg italic text-gray-400'>Sin comentarios</p>
+                        }
                     </div>
                 </div>
             </div>

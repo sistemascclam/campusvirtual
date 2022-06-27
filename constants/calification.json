@@ -1,0 +1,22 @@
+[
+    {
+        "id": 4,
+        "name": "¡Excedieron!",
+        "description":"superó"
+    },
+    {
+        "id": 3,
+        "name": "Sí",
+        "description":"cumplió"
+    },
+    {
+        "id": 2,
+        "name": "Algo",
+        "description":"cumplió algo"
+    },
+    {
+        "id": 1,
+        "name": "No realmente",
+        "description":"no superó"
+    }
+]
