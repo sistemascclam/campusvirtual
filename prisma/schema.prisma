@@ -51,6 +51,7 @@ model User {
   shopingHistory      ShoppingHistory[]
   progresos           Progress[]
   calificaciones      Qualification[]
+  requestedVouchers   RequestedVoucher[]
 }
 
 model VerificationToken {
@@ -86,7 +87,7 @@ model Curso {
   active                  Boolean        @default(true)
   category                Category       @relation(fields: [categoryId], references: [id])
   categoryId              Int
-  cursoKeyword            CursoKeyword[] @relation(references: [id])
+  cursoKeyword            CursoKeyword[]
   ruta                    String?        @unique
   texto                   String?
   favorites               Favorites[]
@@ -95,12 +96,13 @@ model Curso {
   progress                Progress[]
   lecciones               Leccion[]
   calificaciones          Qualification[]
+  requestedVoucherDetail  RequestedVoucherDetail[]
 }
 
 model CursoKeyword {
   id    Int     @id @default(autoincrement())
   name  String?
-  curso Curso[] @relation(references: [id])
+  cursos Curso[]
 }
 
 model ShopingCart {
@@ -111,7 +113,6 @@ model ShopingCart {
   active            Boolean   @default(true)
   usuario           User     @relation(fields: [idUsuario], references: [id])
   curso             Curso     @relation(fields: [idCurso], references: [id])
-
 }
 
 model Favorites {
@@ -174,12 +175,13 @@ model Qualification {
 }
 
 model DiscountCodes {
-  id                Int       @id @default(autoincrement())
-  code              String
-  monto             Decimal?  @db.Decimal(10, 2)
-  description       String?
-  registration_date DateTime  @default(now())  
-  active            Boolean   @default(true)
+  id                     Int       @id @default(autoincrement())
+  code                   String
+  monto                  Decimal?  @db.Decimal(10, 2)
+  description            String?
+  registration_date      DateTime  @default(now())  
+  active                 Boolean   @default(true)
+  requestedVoucher       RequestedVoucher[]
 }
 
 model ShoppingHistory {
@@ -202,4 +204,32 @@ model ShopintHistoryDetail{
   monto             Decimal?  @db.Decimal(10, 2)
   active            Boolean   @default(true)
   registration_date DateTime  @default(now())  
+}
+
+model RequestedVoucher {
+  id                       String    @id @default(cuid())
+  file                     String?
+  aproved                  Boolean   @default(false)
+  amount                   Float?
+  amountDiscount           Float?
+  idDescuento              Int?
+  idUsuario                String
+  registration_date        DateTime  @default(now())     
+  aproved_date             DateTime?     
+  denied_date              DateTime?     
+  active                   Boolean   @default(true)
+  usuario                  User     @relation(fields: [idUsuario], references: [id])
+  requestedVoucherDetails  RequestedVoucherDetail[]
+  descuento                DiscountCodes? @relation(fields: [idDescuento], references: [id])
+}
+
+model RequestedVoucherDetail {
+  id                Int       @id @default(autoincrement())
+  idRequestedVoucher  String
+  registration_date DateTime  @default(now())     
+  active            Boolean   @default(true)
+  idCurso           Int
+  price             Float?
+  curso             Curso     @relation(fields: [idCurso], references: [id])
+  requestedVoucher  RequestedVoucher     @relation(fields: [idRequestedVoucher], references: [id])
 }

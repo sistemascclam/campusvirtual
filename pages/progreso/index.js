@@ -127,7 +127,7 @@ export default function Progress() {
                     <div className={`text-white w-full grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-1 h-full`}>
                         {_data != null ?
                             _data?.map((Array, sec_k) => (
-                                <div className='w-full flex h-40 bg-slate-900 rounded-xl mb-5 shadow-xl cursor-pointer' key={sec_k} onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/curso/${Array.curso.ruta}/leccion`);}}>
+                                <div className='w-full flex h-40 bg-cardblue rounded-xl mb-5 shadow-xl cursor-pointer' key={sec_k} onClick={(e) => { e.preventDefault(); e.stopPropagation(); router.push(`/curso/${Array.curso.ruta}/leccion`);}}>
                                     <div className='h-40 md:h-auto w-full md:w-3/12 relative'>
                                         <Image
                                             className='rounded-l-xl h-full w-full'
@@ -145,7 +145,7 @@ export default function Progress() {
                                                     <p className='text-base text-slate-400 leading-tight mt-1'>{Array.curso.name}</p>
                                                 </div>
                                                 <div className=''>
-                                                    <div className='bg-gray-800 rounded-full h-3 mb-1'></div>
+                                                    <div className='bg-gray-500 rounded-full h-3 mb-1'></div>
                                                     <div className='text-gray-400 font-bold'>
                                                         <span className='text-base'>Empezar curso</span>
                                                     </div>
@@ -155,9 +155,6 @@ export default function Progress() {
                                             (Array.advance < 100) ?
                                                 <div className='w-full'>
                                                     <button className='flex group' onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(Array.curso.title, Array.id, Array?.qualification) }}>
-                                                        <div className='flex items-center text-amber-50 group-hover:text-blue-600 animation-all duration-300'>
-                                                            <StarIndicator q={Array?.qualification} />
-                                                        </div>
                                                         <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600 animation-all duration-300'>
                                                             Calificar
                                                         </span>
@@ -180,9 +177,6 @@ export default function Progress() {
                                                     <div>
                                                         <div className='flex'>
                                                             <button className='flex group' onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(Array.curso.title, Array.id, Array?.qualification) }}>
-                                                                <div className='flex items-center text-amber-50 group-hover:text-blue-600 animation-all duration-300'>
-                                                                    <StarIndicator q={Array?.qualification} />
-                                                                </div>
                                                                 <span className='ml-1 text-sm text-slate-200 group-hover:text-blue-600 animation-all duration-300'>
                                                                     Calificar
                                                                 </span>

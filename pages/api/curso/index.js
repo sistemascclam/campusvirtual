@@ -16,7 +16,6 @@ export default async function handle(req, res) {
       priceWODiscount: true,
       registration_date: true,
       ruta: true,
-      texto: true,
     } 
   })
   res.json(curso)

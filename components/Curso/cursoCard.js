@@ -5,6 +5,7 @@ import { useSWRConfig } from 'swr'
 import axios from '@util/Api';
 import { useSession } from 'next-auth/react';
 import AppContext from 'components/AppContext';
+import moment from 'moment';
 
 export default function CursoCard({ Curso, options = false }) {
     const { cache, mutate } = useSWRConfig()
@@ -19,7 +20,7 @@ export default function CursoCard({ Curso, options = false }) {
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
     </svg>;
 
-    
+
     const value = useContext(AppContext);
     let { setlocalStorageData } = value
     let { localStorageData } = value.state;
@@ -70,8 +71,8 @@ export default function CursoCard({ Curso, options = false }) {
     }
 
     return (
-        <div className="box-border rounded-2xl bg-slate-900 shadow-lg h-full text-white cursor-pointer" onClick={handleCourseRoute}>
-            <div className='h-full flex flex-col'>
+        <div className="box-border rounded-2xl bg-cardblue shadow-xl h-full text-white cursor-pointer" onClick={handleCourseRoute}>
+            <div className='h-full flex flex-col relative'>
                 <div className='px-0 relative group'>
                     <Image
                         className='rounded-t-xl'
@@ -82,6 +83,10 @@ export default function CursoCard({ Curso, options = false }) {
                         objectFit={"cover"}
                         layout="responsive"
                     />
+                    {
+                        moment({ hours: 0 }).diff(Curso.registration_date, 'days') < 30 &&
+                        <span className='absolute top-0 right-0 bg-blue-600 px-3 py-1 rounded-md font-bold'>Nuevo</span>
+                    }
                     {
                         options && Curso.price ?
                             <div className='transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 absolute inset-0 rounded-t-xl flex justify-center items-center gap-4'>
@@ -139,19 +144,13 @@ export default function CursoCard({ Curso, options = false }) {
                             ''
                     }
                 </div>
-                <div className='h-full px-3 py-5 flex flex-col justify-between gap-2'>
+                <div className='px-3 pt-5 pb-3  flex flex-col justify-between gap-2 h-[9.5rem]'>
                     <div className=''>
                         <p className='text-md line-clamp-2 leading-tight max-h-10'>{Curso.title}</p>
                         <p className='text-sm line-clamp-1 text-slate-400 leading-tight mt-1'>{Curso.name}</p>
                     </div>
-                    <div className='flex items-center justify-between'>
-                        <div className='flex items-center'>
-                            <span className='text-xs flex text-amber-400 items-center'>
-                                {[...Array(5).keys()].map((a, i) => i < Curso.valuation ? <span key={`star_full_key_${Curso.id}_${i}`}>{star_full}</span> : <span key={`star_key_${Curso.id}_${i}`}>{star}</span>)}
-                            </span>
-                            <span className='text-sm text-slate-400 ml-1'>({Curso.valuation})</span>
-                        </div>
-                        <div className='flex flex-col text-right'>
+                    <div className='flex items-end justify-start'>
+                        <div className='flex flex-col mt-1'>
                             <span className='text-md line-through text-gray-400'>{Curso.priceWODiscount ? `S/.${Curso.priceWODiscount?.toFixed(2)}` : ''}</span>
                             <span className='text-lg'>{Curso.price ? `S/.${Curso.price?.toFixed(2)}` : 'Gratis'}</span>
                         </div>
