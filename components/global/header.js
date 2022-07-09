@@ -359,7 +359,7 @@ const SearchButton = () => {
           onChange={(e) => setsearch(e.target.value)}
           value={search ? search : ""}
           placeholder={"Buscar en campus CCLAM"}
-          className={`bg-slate-900 bg-opacity-95 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-sm rounded-xl border-slate-900 border-2 focus:border-gray-900'} ring-0 focus:text-base text-gray-400`}
+          className={`bg-darkblue bg-opacity-50 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-base rounded-xl border-darkblue border-1 focus:border-darkblue'} ring-0 focus:text-base text-white`}
         />
         {
           search && search.length >= 2 ?
@@ -370,7 +370,7 @@ const SearchButton = () => {
   )
 }
 
-function useOutsideHook(ref,onClickOutside) {
+function useOutsideHook(ref, onClickOutside) {
   useEffect(() => {
     /**
      * Alert if clicked on outside of element
@@ -419,7 +419,7 @@ function SearchItems({ search, setsearch }) {
     setsearch(null)
   }
 
-  useOutsideHook(searchMenyRef,handleClickOutside);
+  useOutsideHook(searchMenyRef, handleClickOutside);
 
   return <div ref={searchMenyRef} className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
     {data?.cursos?.map((item) =>
@@ -438,8 +438,7 @@ function SearchItems({ search, setsearch }) {
       data?.cursos && data?.cursos?.length > 0 ?
         <button
           onClick={
-            () =>
-            {
+            () => {
               handleClickOutside()
               router.push({
                 pathname: '/busqueda',
@@ -462,7 +461,7 @@ const OpcionesAuth = () => {
   const { data: session } = useSession()
   const { cache } = useSWRConfig()
   const shopingcartList = cache.get("/api/shopingcart")
-  
+
   const value = useContext(AppContext);
   let { localStorageData } = value.state;
   return (<>
@@ -522,7 +521,7 @@ const OpcionesSiAuth = ({ carrito }) => <>
   </Link>
 </>
 
-const OpcionesNoAuth = ({carrito}) => <>
+const OpcionesNoAuth = ({ carrito }) => <>
   <Link href="/carrito">
     <button
       type="button"
@@ -619,6 +618,17 @@ const OpcionesUsuarioSiAuth = () => {
                   className={'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b-1'}
                 >
                   Mi Perfil
+                </a>
+              </Link>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <Link href="/mis-pedidos">
+                <a
+                  className={'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b-1'}
+                >
+                  Mis pedidos
                 </a>
               </Link>
             )}

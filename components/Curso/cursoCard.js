@@ -84,8 +84,13 @@ export default function CursoCard({ Curso, options = false }) {
                         layout="responsive"
                     />
                     {
-                        moment({ hours: 0 }).diff(Curso.registration_date, 'days') < 30 &&
-                        <span className='absolute top-0 right-0 bg-blue-600 px-3 py-1 rounded-md font-bold'>Nuevo</span>
+                        options &&
+                        <>
+                        {
+                            moment({hours: 0 }).diff(Curso.registration_date, 'days') < 30 &&
+                            <span className='absolute top-0 right-0 bg-blue-600 px-3 py-1 m-1 rounded-md font-bold'>Nuevo</span>
+                        }
+                        </>
                     }
                     {
                         options && Curso.price ?

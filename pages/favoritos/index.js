@@ -4,7 +4,7 @@ import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
 import Curso from 'components/Curso/curso'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react';
+import { getCsrfToken, getSession, useSession } from 'next-auth/react';
 
 export default function Favoritos() {
     const [aux_Data, setaux_Data] = useState(false)
@@ -133,3 +133,23 @@ export default function Favoritos() {
         </Layout>
     )
 }   
+
+//No acceder a la ruta si el usuario está logeado
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+    return {
+      props: {
+        csrfToken: await getCsrfToken(context),
+      },
+    };
+  }
+  

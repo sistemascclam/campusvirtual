@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 //PARA NEXT AUTH CON PRISMA
@@ -207,29 +208,29 @@ model ShopintHistoryDetail{
 }
 
 model RequestedVoucher {
-  id                       String    @id @default(cuid())
+  id                       String                     @id @default(cuid())
   file                     String?
-  aproved                  Boolean   @default(false)
+  status                   Int    @default(0)//0:pending, 1:aproved, 2:denied
   amount                   Float?
   amountDiscount           Float?
   idDescuento              Int?
   idUsuario                String
-  registration_date        DateTime  @default(now())     
+  registration_date        DateTime                   @default(now())     
   aproved_date             DateTime?     
   denied_date              DateTime?     
-  active                   Boolean   @default(true)
-  usuario                  User     @relation(fields: [idUsuario], references: [id])
+  active                   Boolean                    @default(true)
+  usuario                  User                       @relation(fields: [idUsuario], references: [id])
   requestedVoucherDetails  RequestedVoucherDetail[]
-  descuento                DiscountCodes? @relation(fields: [idDescuento], references: [id])
+  descuento                DiscountCodes?             @relation(fields: [idDescuento], references: [id])
 }
 
 model RequestedVoucherDetail {
-  id                Int       @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement())
   idRequestedVoucher  String
-  registration_date DateTime  @default(now())     
-  active            Boolean   @default(true)
-  idCurso           Int
-  price             Float?
-  curso             Curso     @relation(fields: [idCurso], references: [id])
-  requestedVoucher  RequestedVoucher     @relation(fields: [idRequestedVoucher], references: [id])
+  registration_date   DateTime          @default(now())     
+  active              Boolean           @default(true)
+  idCurso             Int
+  price               Float?
+  curso               Curso             @relation(fields: [idCurso], references: [id])
+  requestedVoucher    RequestedVoucher  @relation(fields: [idRequestedVoucher], references: [id])
 }

@@ -4,7 +4,7 @@ import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useSession } from 'next-auth/react';
+import { getCsrfToken, getSession, useSession } from 'next-auth/react';
 import CursoCardLarge from 'components/Curso/cursoCardLarge';
 import axios from '@util/Api';
 import { toMoney } from '@util/helper';
@@ -137,7 +137,7 @@ export default function Favoritos() {
                         arrayC?.map((Curso, sec_k) => (
                             <div key={`curso_card_${Curso.id}_${sec_k}`} className="mb-6 relative">
                                 <CursoCardLarge Curso={_action == 'BD' ? Curso.curso : Curso.curso[0]} />
-                                <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-2 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-slate-900 text-white hover:bg-slate-900' onClick={() => deleteElement(Curso.id)}>
+                                <div className='absolute inset-x-0 ml-auto rounded-full z-10 right-2 top-2 cursor-pointer inset-0 w-8 h-8 flex justify-center items-center bg-cardblue text-white hover:bg-cardblue' onClick={() => deleteElement(Curso.id)}>
                                     {trash}
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ export default function Favoritos() {
 
                 {arrayC?.length > 0 ?
                     <div className="text-white w-full lg:w-4/12 order-first lg:order-last ">
-                            <div className='border-solid border-2 border-slate-900 md:border-slate-900 rounded-2xl shadow-lg bg-slate-900 md:bg-slate-900'>
+                            <div className='border-solid border-2 border-cardblue md:border-cardblue rounded-2xl shadow-lg bg-cardblue md:bg-cardblue'>
                                 <div className='text-center text-lg py-2'>Total</div>
                                 {
                                     descuento ?
@@ -190,3 +190,23 @@ export default function Favoritos() {
         </Layout>
     )
 }   
+
+//No acceder a la ruta si el usuario está logeado
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      };
+    }
+    return {
+      props: {
+        csrfToken: await getCsrfToken(context),
+      },
+    };
+  }
+  

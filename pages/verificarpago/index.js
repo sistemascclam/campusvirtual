@@ -403,7 +403,7 @@ export default function Checkout() {
     const [file, setFile] = useState(null);
     const [fileSend, setfileSend] = useState(null);
     const hiddenFileInput = React.useRef(null);
-    const [voucherSent, setvoucherSent] = useState(false)
+    const [voucherSent, setvoucherSent] = useState(null)
 
     const handleOpenFileSearch = event => {
         hiddenFileInput.current.click();
@@ -423,12 +423,13 @@ export default function Checkout() {
     const uploadToServer = async (event) => {
         const body = new FormData();
         body.append("file", fileSend);
+        body.append("code", codigodescuento);
         const response = await fetch("/api/verificarpago/uploadevidence", {
             method: "POST",
             body
         });
 
-        setvoucherSent(response.status=="200")
+        setvoucherSent(response.status == "200")
     };
 
     if (voucherSent) {
@@ -454,7 +455,6 @@ export default function Checkout() {
             </Layout>
         )
     }
-
 
     return (
         <Layout>
@@ -572,34 +572,45 @@ export default function Checkout() {
                                 </button>
                                 {
                                     file &&
-                                    <div className="mt-12 flex justify-center w-8/12 mx-auto">
+                                    <button
+                                        onClick={handleClearFile}
+                                        className='mx-auto text-white flex gap-1 justify-center items-center border-b-2 border-transparent hover:border-white transition-all ease-in-out mt-10'>
+                                        Cancelar
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                        </svg>
+                                    </button>
+                                }
+                                {
+                                    file &&
+                                    <div className="mt-6 flex justify-center w-8/12 mx-auto">
                                         <img
                                             alt="..."
                                             src={file}
                                         />
                                     </div>
                                 }
-
                                 {
                                     file &&
-                                    <div className='flex justify-between'>
-                                        <button
-                                            onClick={handleClearFile}
-                                            className='text-white flex gap-1 justify-center items-center border-b-2 border-transparent hover:border-white transition-all ease-in-out mt-10'>
-                                            Cancelar
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                            </svg>
-                                        </button>
+                                    <div className='flex justify-center mt-10'>
+
                                         <button
                                             onClick={uploadToServer}
-                                            className='bg-blue-600 hover:bg-blue-700 mt-5 text-lg px-5 py-2 rounded-full flex items-center gap-2'>
+                                            className='bg-blue-600 hover:bg-blue-700 text-lg px-5 py-2 rounded-full flex items-center gap-2'>
                                             Registrar
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                             </svg>
                                         </button>
                                     </div>
+                                }
+                                {
+                                    voucherSent === false &&
+                                    <p className='text-red-400 flex gap-1 items-center justify-center mt-6'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                        </svg>
+                                        Error al registrar pedido, por favor póngase en contacto con el administrador</p>
                                 }
                             </div>
                         </div>
@@ -611,36 +622,36 @@ export default function Checkout() {
 }
 
 const VoucherSend = () => {
- return(
-    <div className='bg-white rounded-3xl shadow-md pt-6 pb-10 my-10 w-11/12 md:w-4/12 mx-auto'>
-        <div className="text-center">
-            <div className="mx-auto lg:px-10 max-w-sm lg:max-w-lg">
-                <div className="animate-successcard w-28 h-28 mx-auto">
-                    <Lottie
-                        loop={false}
-                        autoplay={true}
-                        animationData={lottieJson}
-                        rendererSettings={{
-                            preserveAspectRatio: "xMidYMid slice"
-                        }}
-                    />
-                </div>
-                <p className="font-bold text-3xl text-blue-600">{`¡Solicitud de compra enviada!`}</p>
-                <p className='font-medium mb-3'>{moment().format('lll')}</p>
-                <div className="flex flex-wrap justify-center mx-auto">
-                    <Link href="/progreso">
-                        <a className="bg-blue-600 text-white px-5 py-2 rounded-full flex justify-center items-center font-medium gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                            </svg>
-                            Ir a mis cursos
-                        </a>
-                    </Link>
+    return (
+        <div className='bg-white rounded-3xl shadow-md pt-6 pb-10 my-10 w-11/12 md:w-4/12 mx-auto'>
+            <div className="text-center">
+                <div className="mx-auto lg:px-10 max-w-sm lg:max-w-lg">
+                    <div className="animate-successcard w-28 h-28 mx-auto">
+                        <Lottie
+                            loop={false}
+                            autoplay={true}
+                            animationData={lottieJson}
+                            rendererSettings={{
+                                preserveAspectRatio: "xMidYMid slice"
+                            }}
+                        />
+                    </div>
+                    <p className="font-bold text-3xl text-blue-600">{`¡Solicitud de compra enviada!`}</p>
+                    <p className='font-medium mb-3'>{moment().format('lll')}</p>
+                    <div className="flex flex-wrap justify-center mx-auto">
+                        <Link href="/progreso">
+                            <a className="bg-blue-600 text-white px-5 py-2 rounded-full flex justify-center items-center font-medium gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                                </svg>
+                                Ir a mis pedidos
+                            </a>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
- )   
+    )
 }
 
 const DoneCard = ({ paiddata }) => {
@@ -668,7 +679,7 @@ const DoneCard = ({ paiddata }) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
                                 </svg>
-                                Ir a mis cursos
+                                Ir a mis pedidos
                             </a>
                         </Link>
                     </div>
