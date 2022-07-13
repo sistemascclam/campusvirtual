@@ -17,6 +17,7 @@ export default async function handler(req, res) {
                 id: true,
                 file: true,
                 status: true,
+                motivo: true,
                 amount: true,
                 amountDiscount: true,
                 registration_date: true,
@@ -37,7 +38,10 @@ export default async function handler(req, res) {
                     }
                 }
                 
-            }
+            },
+            orderBy: {
+                registration_date: 'desc',
+            },
         })
 
         res.json(shopingHistory)
