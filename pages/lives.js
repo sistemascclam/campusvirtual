@@ -33,30 +33,31 @@ export default function Lives() {
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <div className='w-full'>
-                <div className='text-2xl font-serif font-bold font-mono text-slate-50 '>
-                    <div className='w-max pb-2 border-b-2 border-transparent pl-1 pr-2 border-blue-600'>
-                        Lives
+            <section className='min-h-screen'>
+                <div className='w-full'>
+                    <div className='text-2xl font-serif font-bold font-mono text-slate-50 '>
+                        <div className='w-max pb-2 border-b-2 border-transparent pl-1 pr-2 border-blue-600'>
+                            Lives
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4 mt-6 pb-20">
-                <VideoLive principal={true}
-                    src={vids[0].src}
-                />
-                <div className='col-span-1 grid grid-cols-1 '>
-                    <p className='w-max pb-2 text-slate-50 text-xl'>
-                        Recurda otros lives
-                    </p>
-                    {
-                        vids?.filter((v, vi) => vi > 0 && vi <= 2).map((v, vi) =>
-                            <VideoLive key={vi} src={v.src} />
-                        )
-                    }
-                    <button className='bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl py-2 text-white hover:from-blue-800 shadow-xl'>Ver más</button>
+                <div className="grid grid-cols-4 gap-4 mt-6 pb-20 ">
+                    <VideoLive principal={true}
+                        src={vids[0].src}
+                    />
+                    <div className='col-span-1 grid grid-cols-1 '>
+                        <p className='w-max pb-2 text-slate-50 text-xl'>
+                            Recurda otros lives
+                        </p>
+                        {
+                            vids?.filter((v, vi) => vi > 0 && vi <= 2).map((v, vi) =>
+                                <VideoLive key={vi} src={v.src} />
+                            )
+                        }
+                        <button className='bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl py-2 text-white hover:from-blue-800 shadow-xl'>Ver más</button>
+                    </div>
                 </div>
-            </div>
-
+            </section>
         </Layout>
     )
 }
