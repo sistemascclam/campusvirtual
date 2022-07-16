@@ -10,8 +10,8 @@ module.exports = {
       }),
       colors:{
         dashboardcard:'#101d3b',
-        cardblue:'#0f1b3a',
-        darkblue:'#101d3b',
+        cardblue:'#27293d',
+        darkblue:'#1e1e2b',
         purple:'#702CDD',
         "purple-light":'#a67ee8',
         celeste:'#009BDA',

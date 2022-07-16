@@ -157,7 +157,8 @@ CREATE TABLE `Progress` (
 -- CreateTable
 CREATE TABLE `Qualification` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `idProgres` VARCHAR(191) NOT NULL,
+    `idUsuario` VARCHAR(191) NOT NULL,
+    `idCurso` INTEGER NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `star` INTEGER NOT NULL DEFAULT 0,
     `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -174,6 +175,59 @@ CREATE TABLE `DiscountCodes` (
     `description` VARCHAR(191) NULL,
     `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `active` BOOLEAN NOT NULL DEFAULT true,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ShoppingHistory` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `idUsuario` VARCHAR(191) NOT NULL,
+    `monto` DECIMAL(10, 2) NULL,
+    `metadata` TEXT NULL,
+    `active` BOOLEAN NOT NULL DEFAULT true,
+    `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ShopintHistoryDetail` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `idShopingHistory` INTEGER NOT NULL,
+    `idCurso` INTEGER NOT NULL,
+    `monto` DECIMAL(10, 2) NULL,
+    `active` BOOLEAN NOT NULL DEFAULT true,
+    `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `RequestedVoucher` (
+    `id` VARCHAR(191) NOT NULL,
+    `file` VARCHAR(191) NULL,
+    `status` INTEGER NOT NULL DEFAULT 0,
+    `amount` DOUBLE NULL,
+    `amountDiscount` DOUBLE NULL,
+    `idDescuento` INTEGER NULL,
+    `idUsuario` VARCHAR(191) NOT NULL,
+    `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `aproved_date` DATETIME(3) NULL,
+    `denied_date` DATETIME(3) NULL,
+    `active` BOOLEAN NOT NULL DEFAULT true,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `RequestedVoucherDetail` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `idRequestedVoucher` VARCHAR(191) NOT NULL,
+    `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `active` BOOLEAN NOT NULL DEFAULT true,
+    `idCurso` INTEGER NOT NULL,
+    `price` DOUBLE NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -224,7 +278,31 @@ ALTER TABLE `Progress` ADD CONSTRAINT `Progress_idCurso_fkey` FOREIGN KEY (`idCu
 ALTER TABLE `Progress` ADD CONSTRAINT `Progress_lastLeccion_fkey` FOREIGN KEY (`lastLeccion`) REFERENCES `Leccion`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Qualification` ADD CONSTRAINT `Qualification_idProgres_fkey` FOREIGN KEY (`idProgres`) REFERENCES `Progress`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Qualification` ADD CONSTRAINT `Qualification_idUsuario_fkey` FOREIGN KEY (`idUsuario`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Qualification` ADD CONSTRAINT `Qualification_idCurso_fkey` FOREIGN KEY (`idCurso`) REFERENCES `Curso`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShoppingHistory` ADD CONSTRAINT `ShoppingHistory_idUsuario_fkey` FOREIGN KEY (`idUsuario`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShopintHistoryDetail` ADD CONSTRAINT `ShopintHistoryDetail_idCurso_fkey` FOREIGN KEY (`idCurso`) REFERENCES `Curso`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ShopintHistoryDetail` ADD CONSTRAINT `ShopintHistoryDetail_idShopingHistory_fkey` FOREIGN KEY (`idShopingHistory`) REFERENCES `ShoppingHistory`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RequestedVoucher` ADD CONSTRAINT `RequestedVoucher_idUsuario_fkey` FOREIGN KEY (`idUsuario`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RequestedVoucher` ADD CONSTRAINT `RequestedVoucher_idDescuento_fkey` FOREIGN KEY (`idDescuento`) REFERENCES `DiscountCodes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RequestedVoucherDetail` ADD CONSTRAINT `RequestedVoucherDetail_idCurso_fkey` FOREIGN KEY (`idCurso`) REFERENCES `Curso`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `RequestedVoucherDetail` ADD CONSTRAINT `RequestedVoucherDetail_idRequestedVoucher_fkey` FOREIGN KEY (`idRequestedVoucher`) REFERENCES `RequestedVoucher`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_CursoToCursoKeyword` ADD FOREIGN KEY (`A`) REFERENCES `Curso`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
