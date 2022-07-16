@@ -215,6 +215,7 @@ CREATE TABLE `RequestedVoucher` (
     `registration_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `aproved_date` DATETIME(3) NULL,
     `denied_date` DATETIME(3) NULL,
+    `motivo` VARCHAR(191) NULL,
     `active` BOOLEAN NOT NULL DEFAULT true,
 
     PRIMARY KEY (`id`)

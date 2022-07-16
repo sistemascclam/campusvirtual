@@ -2,6 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
+            "@cursoCards/*":["components/Curso/*"],
             "@global/*":["components/global/*"],
             "@util/*":["util/*"],
             "@animations/*":["public/animations/*"],

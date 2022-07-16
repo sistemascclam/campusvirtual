@@ -12,7 +12,7 @@ import { getCsrfToken, getSession } from 'next-auth/react'
 
 const DoneCard = ({ handleClick, curso }) => {
     return (
-        <div className='bg-blue-800 w-max h-max max-w-lg rounded-3xl shadow-md mx-auto py-7 md:py-10 px-3 md:px-10 mt-0 md:mt-16'>
+        <div className='bg-blue-800 w-max h-max max-w-lg rounded-3xl shadow-md mx-auto py-4 md:py-10 px-3 md:px-10 mt-0 md:mt-4'>
             <p className='font-black text-center text-2xl md:text-3xl mb-3'>CURSO TERMINADO</p>
             <p className='text-center text-lg md:text-xl opacity-80 mb-1 md:mb-2 leading-tight'>Felicitaciones por completar el curso de</p>
             <p className='text-center mb-0 md:mb-1 text-xl md:text-3xl font-bold'>{curso?.title}</p>
@@ -26,7 +26,7 @@ const DoneCard = ({ handleClick, curso }) => {
                     }}
                 />
             </div>
-            <button onClick={handleClick} className='mt-10 bg-white hover:-translate-y-1 text-blue-800 font-bold text-center mx-auto p-3 rounded-lg flex justify-center items-center gap-1 shadow-xl ml-auto transition-all ease-in-out duration-500'>Ver curso nuevamente</button>
+            <button onClick={handleClick} className='mt-10 bg-white hover:-translate-y-1 text-blue-800 font-bold text-center mx-auto p-3 rounded-full flex justify-center items-center gap-1 shadow-xl ml-auto transition-all ease-in-out duration-500'>Ver curso nuevamente</button>
         </div>
     )
 }
@@ -119,7 +119,7 @@ export default function Leccion() {
 
                                         leccionData?.curso?.lecciones.some(l => l.orden < leccionData?.leccion?.orden) ?
                                             <Link href={`/curso/${keyword}/leccion?identificador=${leccionData?.curso?.lecciones?.find(l => l?.orden == (leccionData?.leccion?.orden - 1))?.id}`}>
-                                                <a className='md:text-base bg-blue-600 hover:bg-blue-800 w-34 md:w-40 px-3 py-2 md:p-3 rounded-lg flex justify-center items-center gap-1 shadow-xl mr-auto'>
+                                                <a className='md:text-base bg-blue-600 hover:bg-blue-800 w-34 md:w-40 px-3 py-2 md:p-3 rounded-full flex justify-center items-center gap-1 shadow-xl mr-auto'>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
                                                     </svg>
@@ -131,7 +131,7 @@ export default function Leccion() {
                                         <button
                                             onClick={handleAllowNext}
                                             className={`${allowNext || leccionData?.progress?.advance == 100 || leccionData?.leccion?.orden < leccionData?.progress?.leccion?.orden ? 'hover:bg-blue-800' : 'opacity-40 cursor-not-allowed'} 
-                                                md:text-base bg-blue-600 w-34 md:w-40 px-3 py-2 md:p-3 rounded-lg flex justify-center items-center gap-1 shadow-xl ml-auto transition-all ease-in-out duration-300`}>
+                                                md:text-base bg-blue-600 w-34 md:w-40 px-3 py-2 md:p-3 rounded-full flex justify-center items-center gap-1 shadow-xl ml-auto transition-all ease-in-out duration-300`}>
                                             {
 
                                                 leccionData?.curso?.lecciones.some(l => l.orden > leccionData?.leccion?.orden) ?
@@ -153,7 +153,7 @@ export default function Leccion() {
                                 <Disclosure>
                                     {({ open }) => (
                                         <>
-                                            <Disclosure.Button className="bg-slate-900 focus:outline-none flex items-center w-full justify-between rounded-2xl shadow-lg bg-purple-100 px-3 py-2 text-left text-lg font-medium text-purple-900 hover:bg-purple-200 focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                            <Disclosure.Button className="bg-cardblue focus:outline-none flex items-center w-full justify-between rounded-2xl shadow-lg bg-purple-100 px-3 py-2 text-left text-lg font-medium text-purple-900 hover:bg-purple-200 focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                                                 <p className='flex items-center gap-2'>
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
@@ -167,7 +167,7 @@ export default function Leccion() {
                                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                                 </svg>
                                             </Disclosure.Button>
-                                            <Disclosure.Panel className="mt-2 p-4 text-base text-gray-200 bg-slate-900 rounded-2xl shadow-lg">
+                                            <Disclosure.Panel className="mt-2 p-4 text-base text-gray-200 bg-cardblue rounded-2xl shadow-lg">
                                                 {
                                                     leccionData?.leccion?.helpers?.length == 0 ? <p className='italic text-sm text-center'>No hay extras</p> : ""
                                                 }

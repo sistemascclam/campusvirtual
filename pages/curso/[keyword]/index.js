@@ -80,7 +80,7 @@ export default function Curso() {
 
     useEffect(() => {
         if (arrayDC != null) {
-            if ((arrayDC.favorites.length) != 0) {
+            if ((arrayDC?.favorites?.length) != 0) {
                 _setauxidFavorite(arrayDC.favorites[0].id)
                 _setesFavorito(arrayDC.favorites[0].active)
             }
@@ -268,14 +268,31 @@ export default function Curso() {
     }
 
     return (
-        <Layout widthPaddingX={false}>
+        <Layout widthPadding={false}>
             <Head>
                 <title>{siteTitle}</title>
             </Head>
-            <div className="  min-h-screen text-white w-full px-2 md:px-10 max-w-7xl mx-auto">
-                {arrayDC != null ?
+            {arrayDC ?
+                <div className="absolute inset-x-0 h-[550px] z-0">
+                    <div className="relative w-full h-full">
+                        <Image
+                            className='h-full w-full opacity-20'
+                            src={arrayDC.image}
+                            alt={"header-curso"}
+                            objectFit={"cover"}
+                            layout="fill"
+                            objectPosition={"center"}
+                        />
+                        <div className='h-36 inset-x-0 absolute top-0 shadow-inner bg-gradient-to-t from-transparent to-[#101122]'></div>
+                        <div className='h-96 inset-x-0 absolute bottom-0 shadow-inner bg-gradient-to-b from-transparent to-[#101122]'></div>
+                    </div>
+                </div>
+                : ""
+            }
+            <div className="min-h-screen text-white w-full px-2 md:px-10 max-w-7xl mx-auto pt-28 relative">
+                {arrayDC ?
                     <>
-                        <div className='lg:flex xl:flex gap-6'>
+                        <div className='lg:flex xl:flex gap-6 relative'>
                             <div className="text-white relative w-80 lg:w-5/12">
                                 <Image
                                     className='h-full rounded-2xl'
@@ -412,12 +429,12 @@ export default function Curso() {
                                                 {ca.name}
                                             </div>
                                             <div className="rounded-md h-4 bg-gray-700 w-52 lg:w-72">
-                                                <div className="bg-blue-600 h-4 rounded-md" style={{ width: `${arrayDC?.calificaciones.length > 0 ? (100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)) : 0}%` }}></div>
+                                                <div className="bg-blue-600 h-4 rounded-md" style={{ width: `${arrayDC?.calificaciones?.length > 0 ? (100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)) : 0}%` }}></div>
                                             </div>
                                             <div className='flex content-center items-center text-white'>
                                                 <span className='text-slate-300 ml-2'>
                                                     {
-                                                        arrayDC?.calificaciones.length > 0 ?
+                                                        arrayDC?.calificaciones?.length > 0 ?
                                                             `${100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)}%`
                                                             :
                                                             "0%"

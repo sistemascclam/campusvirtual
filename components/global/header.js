@@ -363,7 +363,7 @@ const SearchButton = () => {
           onChange={(e) => setsearch(e.target.value)}
           value={search ? search : ""}
           placeholder={"Buscar en campus CCLAM"}
-          className={`bg-darkblue bg-opacity-50 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-base rounded-xl border-darkblue border-1 focus:border-darkblue'} ring-0 focus:text-base text-white`}
+          className={`bg-gray-800 bg-opacity-60 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-base rounded-xl border-0'} ring-0 focus:text-base text-white`}
         />
         {
           search && search.length >= 2 ?
@@ -526,7 +526,7 @@ const OpcionesSiAuth = ({ carrito }) => <>
 </>
 
 const OpcionesNoAuth = ({ carrito }) => <>
-  <Link href="/carrito">
+  <Link href="/registro">
     <button
       type="button"
       title="Carrito de compras"
@@ -546,7 +546,7 @@ const OpcionesNoAuth = ({ carrito }) => <>
     </button>
   </Link>
 
-  <Link href="/favoritos">
+  <Link href="/registro">
     <button
       type="button"
       title="Lista de deseos"

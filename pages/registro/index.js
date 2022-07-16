@@ -55,9 +55,16 @@ export default function Login({ csrfToken }) {
                         <p className='text-center text-slate-100 mb-4'><b>Únete y comienza a potenciar tu carrera</b></p>
                         <div className="w-full max-w-xs mx-auto">
                             <div className="text-red-400 text-md text-center rounded p-2 my-3">
-                                { (errorAuth ? getAuthError(router.query.error) : '') || (error ? getAuthError(router.query.error) : '')}
+                                {(errorAuth ? getAuthError(router.query.error) : '') || (error ? getAuthError(router.query.error) : '')}
                             </div>
                             <form onSubmit={handleSubmit}>
+                                <button type="button" onClick={handleRegisterWGoogle} className="w-full text-center text-white bg-blue-700 hover:bg-blue-700/90 focus:ring-4 focus:ring-blue-700/50 font-bold rounded text-sm px-5 py-2.5 inline-flex justify-center items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
+                                    <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
+                                    Inicia con Google
+                                </button>
+
+                                <p className="my-2 text-center">o continúa con</p>
+
                                 <input
                                     name="csrfToken"
                                     type="hidden"
@@ -72,11 +79,6 @@ export default function Login({ csrfToken }) {
                                 <div className="flex flex-col items-center justify-between mt-6">
                                     <button type="submit" className="bg-blue-700 hover:bg-blue-600 font-bold text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         Crear mi cuenta
-                                    </button>
-                                    <p className="my-4">o continúa con</p>
-                                    <button type="button" onClick={handleRegisterWGoogle} className="w-full text-center text-white bg-blue-700 hover:bg-blue-700/90 focus:ring-4 focus:ring-blue-700/50 font-bold rounded text-sm px-5 py-2.5 inline-flex justify-center items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
-                                        <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-                                        Google
                                     </button>
                                 </div>
                             </form>
@@ -105,12 +107,12 @@ export default function Login({ csrfToken }) {
 //No acceder a la ruta si el usuario está logeado
 export async function getServerSideProps(context) {
     const session = await getSession(context)
-    
-    if(session){
+
+    if (session) {
         return {
             redirect: {
-                destination:'/',
-                permanent:false
+                destination: '/',
+                permanent: false
             }
         }
     }

@@ -8,7 +8,7 @@ export default async function handle(req, res) {
       auxId = session.user.id
     }
     const  {keyword}  = req.query
-    //const curso = await prisma.curso.findUnique({
+    
     const curso = await prisma.curso.findUnique({
       where: {
         ruta: keyword,
