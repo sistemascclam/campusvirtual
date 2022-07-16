@@ -218,6 +218,7 @@ model RequestedVoucher {
   registration_date        DateTime                   @default(now())     
   aproved_date             DateTime?     
   denied_date              DateTime?     
+  motivo                   String?
   active                   Boolean                    @default(true)
   usuario                  User                       @relation(fields: [idUsuario], references: [id])
   requestedVoucherDetails  RequestedVoucherDetail[]

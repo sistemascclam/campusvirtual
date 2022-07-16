@@ -165,14 +165,16 @@ export default function NavBar({ bgTransparent }) {
                   </div>
                 </div>
                 <div className="pb-6 px-4 space-y-6">
-                  <button className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white ">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                    </svg>
-                    <span>
-                      Lives
-                    </span>
-                  </button>
+                  <Link href={"/lives"}>
+                    <a className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white ">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                      </svg>
+                      <span>
+                        Lives
+                      </span>
+                    </a>
+                  </Link>
                 </div>
                 <div className="border-t border-slate-800 py-6 px-4 space-y-6">
                   {
@@ -314,14 +316,16 @@ export default function NavBar({ bgTransparent }) {
                                   ))}
                                 </ul>
                               </div>
-                              <button className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white mt-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
-                                  <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                                </svg>
-                                <span>
-                                  Lives
-                                </span>
-                              </button>
+                              <Link href={"/lives"}>
+                                <a className="flex text-lg bg-red-700 w-max py-1 px-3 rounded-xl text-white mt-4">
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                  </svg>
+                                  <span>
+                                    Lives
+                                  </span>
+                                </a>
+                              </Link>
                             </div>
                           </div>
                         </Popover.Panel>
