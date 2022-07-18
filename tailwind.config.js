@@ -9,9 +9,9 @@ module.exports = {
         'collage-courses': `url('/images/bg-collage-cursos.png')`,
       }),
       colors:{
-        dashboardcard:'#101d3b',
-        cardblue:'#27293d',
-        darkblue:'#1e1e2b',
+        dashboardcard:'#1e2747',
+        cardblue:'#141a32',
+        darkblue:'#080f28',
         purple:'#702CDD',
         "purple-light":'#a67ee8',
         celeste:'#009BDA',

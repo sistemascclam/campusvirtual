@@ -6,7 +6,8 @@ import React, { useState } from 'react'
 import { signIn, getCsrfToken, getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { getAuthError } from 'util/helper'
- 
+import Image from 'next/image'
+
 export default function Login({ csrfToken }) {
     const router = useRouter();
     const { error } = router.query
@@ -30,7 +31,7 @@ export default function Login({ csrfToken }) {
             password: event.target.password.value,
             callbackUrl: `${window.location.origin}`,
         });
-        
+
         if (res?.error) {
             setErrorAuth(res.error);
         } else {
@@ -67,47 +68,54 @@ export default function Login({ csrfToken }) {
                         <div className="w-full max-w-xs mx-auto py-20">
                             <p className='text-center text-4xl mb-3 text-slate-100 font-extrabold'>¡Bienvenido!</p>
                             <p className='text-center text-slate-100 mb-4'><b>Ingresa a tu Campus CCLAM</b></p>
-                            <div className="text-red-400 text-md text-center rounded p-2 my-3">
-                                { (errorAuth ? getAuthError(errorAuth) : '') || (error ? getAuthError(router.query.error) : '')}
+                            <div className="text-red-400 text-md text-center rounded p-2 mt-3">
+                                {(errorAuth ? getAuthError(errorAuth) : '') || (error ? getAuthError(router.query.error) : '')}
                             </div>
                             <form onSubmit={handleSubmit}>
-                                    <button onClick={handleLoginWGoogle} type="button" className="w-full text-center text-white bg-blue-700 hover:bg-blue-700/90 focus:ring-4 focus:ring-blue-700/50 font-bold rounded text-sm px-5 py-2.5 inline-flex justify-center items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2">
-                                        <svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-                                        Inicia con Google
-                                    </button>
-                                    <p className="my-2 text-center">o continúa con</p>
+                                <button onClick={handleLoginWGoogle} type="button" className="flex text-center text-gray-900 font-semibold bg-gray-200 hover:bg-gray-300 px-4 py-2 text-base rounded w-full">
+                                    <Image
+                                        src="/images/theme/google.png"
+                                        alt="googlelogo"
+                                        width={20}
+                                        height={20}
+                                    />
+                                    <span className='w-full text-center'>
+                                        Iniciar con Google
+                                    </span>
+                                </button>
+                                <p className="my-4 text-center">o continúa con</p>
                                 <input
                                     name="csrfToken"
                                     type="hidden"
                                     defaultValue={csrfToken}
                                 />
                                 <div className="mb-4">
-                                    <label className="block text-slate-300 text-sm mb-2" >
+                                    <label className="block text-slate-300 text-base mb-2" >
                                         Correo electrónico
                                     </label>
-                                    <input required type="email" id="email" placeholder="email@domain.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-sm py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
+                                    <input required type="email" id="email" placeholder="email@domain.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-base py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
                                 <div className="mb-6">
                                     <div className='py-1'>
-                                        <span className="text-slate-300 text-sm ">Contraseña</span>
+                                        <span className="text-slate-300 text-base ">Contraseña</span>
                                     </div>
                                     <label className="relative block">
                                         <span className="absolute inset-y-0 right-3 flex items-center pl-2" onClick={() => setTipo(tipo == 'password' ? 'text' : 'password')}>
                                             {tipo == 'password' ? eye : eyes_off}
                                         </span>
-                                        <input required type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-sm border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-sm" />
+                                        <input required type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-base border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-base" />
                                     </label>
                                 </div>
                                 <div className="flex flex-col items-center justify-between">
-                                    <button type="submit" className="font-bold bg-blue-700 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
+                                    <button type="submit" className="font-bold bg-blue-700 hover:bg-blue-600 text-white text-base py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
                                         Iniciar Sesión
                                     </button>
                                 </div>
-                                <div className='text-center my-6 py-4 w-5/6 mx-auto' >
-                                    <div className='py-3 text-sm rounded-lg border-solid border-2 border-slate-600'>
+                                <div className='text-center my-6 py-4 w-full mx-auto' >
+                                    <div className='py-3 text-base rounded-lg border-solid border-2 border-slate-600'>
                                         <span>¿No tienes cuenta?</span>
                                         <Link href="/registro">
-                                            <a> <span className='text-sky-500 font-extrabold'>Regístrate aquí</span></a>
+                                            <a> <span className='text-sky-500 font-extrabold ml-1'>Regístrate aquí</span></a>
                                         </Link>
                                     </div>
                                 </div>
@@ -125,13 +133,13 @@ export default function Login({ csrfToken }) {
 //No acceder a la ruta si el usuario está logeado
 export async function getServerSideProps(context) {
     const session = await getSession(context)
-    
 
-    if(session){
+
+    if (session) {
         return {
             redirect: {
-                destination:'/',
-                permanent:false
+                destination: '/',
+                permanent: false
             }
         }
     }

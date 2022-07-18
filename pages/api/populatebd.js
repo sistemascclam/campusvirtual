@@ -13,6 +13,12 @@ export default async function handle(req, res) {
             { id: 6, name: 'Legal', slug: 'legal' }
         ],
     })
+    const discountCodes = await prisma.DiscountCodes.createMany({
+        skipDuplicates: true,
+        data: [
+            { id: 1, code: 'CCLAM2022', monto: 30 }
+        ],
+    })
     await prisma.ShopingCart.deleteMany({})
     await prisma.Favorites.deleteMany({})
     await prisma.Leccion.deleteMany({})

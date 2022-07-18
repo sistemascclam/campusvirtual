@@ -283,8 +283,8 @@ export default function Curso() {
                             layout="fill"
                             objectPosition={"center"}
                         />
-                        <div className='h-36 inset-x-0 absolute top-0 shadow-inner bg-gradient-to-t from-transparent to-[#101122]'></div>
-                        <div className='h-96 inset-x-0 absolute bottom-0 shadow-inner bg-gradient-to-b from-transparent to-[#101122]'></div>
+                        <div className='h-36 inset-x-0 absolute top-0 shadow-inner bg-gradient-to-t from-transparent to-[#04081f]'></div>
+                        <div className='h-96 inset-x-0 absolute bottom-0 shadow-inner bg-gradient-to-b from-transparent to-[#04081f]'></div>
                     </div>
                 </div>
                 : ""
@@ -428,7 +428,7 @@ export default function Curso() {
                                             <div className='text-right w-28'>
                                                 {ca.name}
                                             </div>
-                                            <div className="rounded-md h-4 bg-gray-700 w-52 lg:w-72">
+                                            <div className="rounded-md h-4 bg-gray-700 w-36 lg:w-72">
                                                 <div className="bg-blue-600 h-4 rounded-md" style={{ width: `${arrayDC?.calificaciones?.length > 0 ? (100 * (arrayDC?.calificaciones?.filter(c => c.star == ca.id).length / arrayDC?.calificaciones?.length)) : 0}%` }}></div>
                                             </div>
                                             <div className='flex content-center items-center text-white'>

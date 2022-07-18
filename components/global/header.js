@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { signOut, useSession } from "next-auth/react"
+import { signIn, signOut, useSession } from "next-auth/react"
 import { Dialog, Disclosure, Menu, Transition, Popover } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -363,7 +363,7 @@ const SearchButton = () => {
           onChange={(e) => setsearch(e.target.value)}
           value={search ? search : ""}
           placeholder={"Buscar en campus CCLAM"}
-          className={`bg-gray-800 bg-opacity-60 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-base rounded-xl border-0'} ring-0 focus:text-base text-white`}
+          className={`bg-cardblue bg-opacity-60 pl-12 w-full mx-auto py-2 ${search ? 'text-base rounded-t-xl focus:ring-0 border-b-0 border-x-1 border-t-1 border-blue-700' : 'text-base rounded-xl border-0'} ring-0 focus:text-base text-white`}
         />
         {
           search && search.length >= 2 ?
@@ -669,6 +669,18 @@ const OpcionesUsuarioNoAuth = ({ closeMenu }) => {
     // router.push("/registro")
   }
 
+  const handleLoginWGoogle = async (event) => {
+    event.preventDefault();
+    const res = await signIn('google', {
+      redirect: false,
+      callbackUrl: `${window.location.origin}`
+    });
+
+    if (res?.url) {
+      router.push(res.url);
+    }
+  }
+
   return (
     <Menu as="div" className="ml-3 relative">
       {({ open }) => (
@@ -693,21 +705,29 @@ const OpcionesUsuarioNoAuth = ({ closeMenu }) => {
           >
             <Menu.Items static className={`text-center origin-top-right absolute right-0 mt-4 w-64 rounded-md py-1 bg-slate-800 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none`}>
               <div className=" px-6 my-4">
-                <p className="text-gray-200 font-medium text-sm leading-tight">Bienvenido a tu Campus CCLAM</p>
-                <div className="flex text-gray-200 text-sm justify-between text-center mt-3">
+                <p className="text-gray-200 font-medium text-base leading-tight">Bienvenido a tu Campus CCLAM</p>
+                <div className='w-full mt-3'>
+                  <Menu.Item>
+                      <button onClick={handleLoginWGoogle} className="flex text-center text-gray-900 font-semibold bg-gray-200 hover:bg-gray-300 px-4 py-2 text-sm rounded-3xl w-full">
+                        <Image
+                          src="/images/theme/google.png"
+                          alt="googlelogo"
+                          width={20}
+                          height={20}
+                        />
+                        <span className='w-full text-center'>
+                          Continuar con Google
+                        </span>
+                      </button>
+                  </Menu.Item>
+                </div>
+                <p className='text-white my-1'>o</p>
+                <div className="flex text-gray-200 justify-between text-center gap-2">
                   <Menu.Item>
                     <Link
                       href="/registro">
-                      <a className="bg-blue-600 text-white px-4 py-2 text-xs rounded-3xl">
-                        Regístrate
-                      </a>
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <Link
-                      href="/inicio-sesion">
-                      <a className="text-blue-600 bg-gray-200 font-medium px-4 py-2 text-xs rounded-3xl">
-                        Inicia Sesión
+                      <a className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm rounded-3xl w-full font-semibold">
+                        Iniciar sesión
                       </a>
                     </Link>
                   </Menu.Item>

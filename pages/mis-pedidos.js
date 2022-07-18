@@ -31,7 +31,14 @@ export default function MisPedidos() {
                 </div>
             </div>
             <div className="flex min-h-screen w-full py-6">
-                <Table dataT={misPedidos} />
+                {
+                    misPedidos && misPedidos.length>0 ?
+                    <Table dataT={misPedidos} /> 
+                    :
+                    <div className="   text-center w-full  py-14 border-inherit ">
+                        <p className='text-slate-100 text-2xl '>No tienes pedidos pendientes</p>
+                    </div>
+                }
             </div>
 
         </Layout>

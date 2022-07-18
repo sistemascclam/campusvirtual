@@ -32,11 +32,10 @@ export default function Layout({ home, children, widthPadding = true, widthPaddi
       </Head>
       {
         home &&
-        <div className="relative w-full h-[500px]">
+        <div className="relative w-full h-[500px] hidden md:block">
           <Image
             className='h-full w-full'
             src={"/images/header/header.png"}
-            // src={"/images/header/tamp.jpg"}
             alt={"header"}
             objectFit={"cover"}
             layout="fill"
@@ -46,7 +45,7 @@ export default function Layout({ home, children, widthPadding = true, widthPaddi
           <div className='h-96 inset-x-0 absolute bottom-0 shadow-inner bg-gradient-to-b from-transparent to-darkblue'></div>
         </div>
       }
-      <main className={`bg-themeWhite font-poppins relative bg-gradient-to-b from-darkblue to-footer ${widthPadding ? `${home ? 'pt-14' : 'pt-28'} ${widthPaddingX ? 'lg:px-6' : ''}` : ''}`}>
+      <main className={`font-poppins relative bg-gradient-to-b from-darkblue to-footer ${widthPadding ? `${home ? 'pt-14' : 'pt-28'} ${widthPaddingX ? 'lg:px-6' : ''}` : ''}`}>
         <Header bgTransparent={!widthPadding} />
         <div className={widthPadding ? `max-w-8xl mx-auto ${widthPaddingX ? 'px-6 md:px-10' : ''}` : ''}>
           {children}
