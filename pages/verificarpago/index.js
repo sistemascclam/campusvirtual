@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import axios from '@util/Api';
-import KRGlue from "@lyracom/embedded-form-glue"
 import Layout, { siteTitle } from '@global/layout';
 import Head from 'next/head';
 import { toMoney, withLeftZeros } from '@util/helper';
@@ -13,291 +12,22 @@ import Link from 'next/link';
 import { Transition } from '@headlessui/react';
 import { getCsrfToken, getSession } from 'next-auth/react';
 import Image from 'next/image';
+import MercadoPagoButton from 'components/MercadoPagoButton';
 moment.locale('es')
-
-const answer = {
-    "shopId": "89289758",
-    "orderCycle": "CLOSED",
-    "orderStatus": "PAID",
-    "serverDate": "2022-05-14T02:17:51+00:00",
-    "orderDetails": {
-        "orderTotalAmount": 20136,
-        "orderEffectiveAmount": 20136,
-        "orderCurrency": "PEN",
-        "mode": "TEST",
-        "orderId": 1,
-        "metadata": null,
-        "_type": "V4/OrderDetails"
-    },
-    "customer": {
-        "billingDetails": {
-            "address": null,
-            "category": null,
-            "cellPhoneNumber": null,
-            "city": null,
-            "country": null,
-            "district": null,
-            "firstName": null,
-            "identityCode": null,
-            "language": "ES",
-            "lastName": null,
-            "phoneNumber": null,
-            "state": null,
-            "streetNumber": null,
-            "title": null,
-            "zipCode": null,
-            "legalName": null,
-            "_type": "V4/Customer/BillingDetails"
-        },
-        "email": "sistemas@cclam.org.pe",
-        "reference": null,
-        "shippingDetails": {
-            "address": null,
-            "address2": null,
-            "category": null,
-            "city": null,
-            "country": null,
-            "deliveryCompanyName": null,
-            "district": null,
-            "firstName": null,
-            "identityCode": null,
-            "lastName": null,
-            "legalName": null,
-            "phoneNumber": null,
-            "shippingMethod": null,
-            "shippingSpeed": null,
-            "state": null,
-            "streetNumber": null,
-            "zipCode": null,
-            "_type": "V4/Customer/ShippingDetails"
-        },
-        "extraDetails": {
-            "browserAccept": null,
-            "fingerPrintId": null,
-            "ipAddress": "179.6.47.115",
-            "browserUserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36",
-            "_type": "V4/Customer/ExtraDetails"
-        },
-        "shoppingCart": {
-            "insuranceAmount": null,
-            "shippingAmount": null,
-            "taxAmount": null,
-            "cartItemInfo": [
-                {
-                    "productRef": 4,
-                    "productLabel": "Administración Aduanera",
-                    "productType": "SERVICE_FOR_BUSINESS",
-                    "productAmount": "3505.00",
-                    "productQty": 1
-                },
-                {
-                    "productRef": 6,
-                    "productLabel": "Mercadeo",
-                    "productType": "SERVICE_FOR_BUSINESS",
-                    "productAmount": "19631.00",
-                    "productQty": 1
-                }
-            ],
-            "_type": "V4/Customer/ShoppingCart"
-        },
-        "_type": "V4/Customer/Customer"
-    },
-    "transactions": [
-        {
-            "shopId": "89289758",
-            "uuid": "1acea34f4d784af297c108290ed1e082",
-            "amount": 20136,
-            "currency": "PEN",
-            "paymentMethodType": "CARD",
-            "paymentMethodToken": null,
-            "status": "PAID",
-            "detailedStatus": "AUTHORISED",
-            "operationType": "DEBIT",
-            "effectiveStrongAuthentication": "DISABLED",
-            "creationDate": "2022-05-14T02:17:49+00:00",
-            "errorCode": null,
-            "errorMessage": null,
-            "detailedErrorCode": null,
-            "detailedErrorMessage": null,
-            "metadata": null,
-            "transactionDetails": {
-                "liabilityShift": "NO",
-                "effectiveAmount": 20136,
-                "effectiveCurrency": "PEN",
-                "creationContext": "CHARGE",
-                "cardDetails": {
-                    "paymentSource": "EC",
-                    "manualValidation": "NO",
-                    "expectedCaptureDate": "2022-05-14T02:17:49+00:00",
-                    "effectiveBrand": "VISA",
-                    "pan": "497010XXXXXX0055",
-                    "expiryMonth": 12,
-                    "expiryYear": 2025,
-                    "country": "PE",
-                    "issuerCode": null,
-                    "issuerName": null,
-                    "effectiveProductCode": "F",
-                    "legacyTransId": "948678",
-                    "legacyTransDate": "2022-05-14T02:17:49+00:00",
-                    "paymentMethodSource": "NEW",
-                    "authorizationResponse": {
-                        "amount": 20136,
-                        "currency": "PEN",
-                        "authorizationDate": "2022-05-14T02:17:50+00:00",
-                        "authorizationNumber": "3fe903",
-                        "authorizationResult": "0",
-                        "authorizationMode": "FULL",
-                        "_type": "V4/PaymentMethod/Details/Cards/CardAuthorizationResponse"
-                    },
-                    "captureResponse": {
-                        "refundAmount": null,
-                        "refundCurrency": null,
-                        "captureDate": null,
-                        "captureFileNumber": null,
-                        "effectiveRefundAmount": null,
-                        "effectiveRefundCurrency": null,
-                        "_type": "V4/PaymentMethod/Details/Cards/CardCaptureResponse"
-                    },
-                    "threeDSResponse": {
-                        "authenticationResultData": {
-                            "transactionCondition": null,
-                            "enrolled": null,
-                            "status": null,
-                            "eci": null,
-                            "xid": null,
-                            "cavvAlgorithm": null,
-                            "cavv": null,
-                            "signValid": null,
-                            "brand": null,
-                            "_type": "V4/PaymentMethod/Details/Cards/CardAuthenticationResponse"
-                        },
-                        "_type": "V4/PaymentMethod/Details/Cards/ThreeDSResponse"
-                    },
-                    "authenticationResponse": null,
-                    "installmentNumber": 0,
-                    "installmentCode": "0",
-                    "markAuthorizationResponse": {
-                        "amount": null,
-                        "currency": null,
-                        "authorizationDate": null,
-                        "authorizationNumber": null,
-                        "authorizationResult": null,
-                        "_type": "V4/PaymentMethod/Details/Cards/MarkAuthorizationResponse"
-                    },
-                    "cardHolderName": null,
-                    "identityDocumentNumber": null,
-                    "identityDocumentType": null,
-                    "initialIssuerTransactionIdentifier": null,
-                    "_type": "V4/PaymentMethod/Details/CardDetails"
-                },
-                "paymentMethodDetails": {
-                    "id": "497010XXXXXX0055",
-                    "paymentSource": "EC",
-                    "manualValidation": "NO",
-                    "expectedCaptureDate": "2022-05-14T02:17:49+00:00",
-                    "effectiveBrand": "VISA",
-                    "expiryMonth": 12,
-                    "expiryYear": 2025,
-                    "country": "PE",
-                    "issuerCode": null,
-                    "issuerName": null,
-                    "effectiveProductCode": "F",
-                    "legacyTransId": "948678",
-                    "legacyTransDate": "2022-05-14T02:17:49+00:00",
-                    "paymentMethodSource": "NEW",
-                    "authorizationResponse": {
-                        "amount": 20136,
-                        "currency": "PEN",
-                        "authorizationDate": "2022-05-14T02:17:50+00:00",
-                        "authorizationNumber": "3fe903",
-                        "authorizationResult": "0",
-                        "authorizationMode": "FULL",
-                        "_type": "V4/PaymentMethod/Details/Cards/CardAuthorizationResponse"
-                    },
-                    "captureResponse": {
-                        "refundAmount": null,
-                        "refundCurrency": null,
-                        "captureDate": null,
-                        "captureFileNumber": null,
-                        "effectiveRefundAmount": null,
-                        "effectiveRefundCurrency": null,
-                        "_type": "V4/PaymentMethod/Details/Cards/CardCaptureResponse"
-                    },
-                    "authenticationResponse": null,
-                    "installmentNumber": 0,
-                    "installmentCode": "0",
-                    "markAuthorizationResponse": {
-                        "amount": null,
-                        "currency": null,
-                        "authorizationDate": null,
-                        "authorizationNumber": null,
-                        "authorizationResult": null,
-                        "_type": "V4/PaymentMethod/Details/Cards/MarkAuthorizationResponse"
-                    },
-                    "cardHolderName": null,
-                    "identityDocumentNumber": null,
-                    "identityDocumentType": null,
-                    "initialIssuerTransactionIdentifier": null,
-                    "_type": "V4/PaymentMethod/Details/PaymentMethodDetails"
-                },
-                "acquirerDetails": null,
-                "fraudManagement": {
-                    "_type": "V4/PaymentMethod/Details/FraudManagement"
-                },
-                "subscriptionDetails": {
-                    "subscriptionId": null,
-                    "_type": "V4/PaymentMethod/Details/SubscriptionDetails"
-                },
-                "parentTransactionUuid": null,
-                "mid": "1234556",
-                "sequenceNumber": 1,
-                "taxAmount": null,
-                "preTaxAmount": null,
-                "taxRate": null,
-                "externalTransactionId": "685140",
-                "nsu": null,
-                "tid": null,
-                "acquirerNetwork": "PROCESOS_ISO",
-                "taxRefundAmount": null,
-                "userInfo": "JS Client",
-                "paymentMethodTokenPreviouslyRegistered": null,
-                "occurrenceType": "UNITAIRE",
-                "_type": "V4/TransactionDetails"
-            },
-            "_type": "V4/PaymentTransaction"
-        }
-    ],
-    "subMerchantDetails": null,
-    "_type": "V4/Payment"
-}
 
 export default function Checkout() {
     const { query, isReady } = useRouter()
     const { codigodescuento } = query
-    const [payFormLoaded, setpayFormLoaded] = useState(false)
     const [paiddata, setpaiddata] = useState(null)
     const [error, seterror] = useState(null)
     const [details, setdetails] = useState(null)
     const [discount, setdiscount] = useState(null)
-    const [krref, setkrref] = useState(null)
 
-    const [formDataIzi, setformDataIzi] = useState(null)
 
     const loadCarrito = async () => {
         const axiosReq = await axios.get('/api/public/getCarrito/');
         const { data } = axiosReq;
         setdetails(data);
-    }
-
-    const loadIziForm = async () => {
-        const axiosReq = await axios.post('/api/verificarpago', { code: codigodescuento });
-        const { data } = axiosReq;
-        if (data.status == 'SUCCESS') {
-            setformDataIzi(data.answer.formToken)
-        } else {
-            setpayFormLoaded(true)
-            seterror(data.answer.detailedErrorMessage)
-        }
     }
 
     const loaddiscount = async () => {
@@ -308,73 +38,11 @@ export default function Checkout() {
 
 
     useEffect(() => {
-        return () => {
-            console.log("cleaned up", krref);
-            if (krref) {
-                console.log("krref", krref);
-                setpaiddata(null)
-                krref.removeForms()
-            }
-        };
-    }, [krref]);
-
-    useEffect(() => {
         if (isReady) {
             loaddiscount()
             loadCarrito()
         }
     }, [isReady])
-
-    // useEffect(() => {
-    //     if (details && !formDataIzi) {
-    //         loadIziForm()
-    //     }
-    // }, [details])
-
-
-    // useEffect(() => {
-    //     if (formDataIzi) {
-    //         let endpoint = "https://api.micuentaweb.pe";
-    //         let publicKey = process.env.publicIziKey;
-    //         let formToken = formDataIzi;
-    //         KRGlue.loadLibrary(endpoint, publicKey)
-    //             .then(({ KR }) =>
-    //                 KR.setFormConfig({
-    //                     formToken: formToken,
-    //                     "kr-language": "es-ES"
-    //                 })
-    //             )
-    //             .then(({ KR }) => {
-    //                 setpayFormLoaded(true)
-    //                 setkrref(KR)
-    //                 return KR.addForm("#myPaymentForm")
-    //             })
-    //             .then(({ KR, result }) => {
-    //                 KR.showForm(result.formId)
-    //                 KR.onSubmit((res) => {
-    //                     console.log("res",res.clientAnswer)
-    //                     if (res.clientAnswer.orderStatus === 'PAID' || res.clientAnswer.orderStatus === 'PARTIALLY_PAID' || res.clientAnswer.orderStatus === 'RUNNING') {
-    //                         setpaiddata(res.clientAnswer);
-    //                         handleEndForm(payMethod.id)
-    //                     } else {
-    //                         seterror("No se pudo completar la transacción.");
-    //                     }
-    //                 })
-    //             })
-    //             .catch(e => {
-    //                 console.log("error");
-    //                 seterror("Error en la transacción")
-    //             });
-    //     }
-    // }, [formDataIzi])
-
-    const handleDumbPay = async () => {
-        console.log(answer);
-        setpaiddata(answer);
-        const axiosReq = await axios.post('/api/verificarpago/processpay', { data: answer });
-        const { data } = axiosReq;
-        console.log(data);
-    }
 
     if (paiddata) {
         return (
@@ -462,18 +130,18 @@ export default function Checkout() {
                 <title>{siteTitle}</title>
             </Head>
             <div className='text-2xl font-serif font-bold font-mono text-slate-50'>
-                <div className='w-max pb-2 pl-1 pr-2 border-b-2 border-transparent border-blue-600' onClick={() => console.log(krref)}>
+                <div className='w-max pb-2 pl-1 pr-2 border-b-2 border-transparent border-blue-600'>
                     Pagar
                 </div>
             </div>
             <div className="flex flex-col md:flex-row min-h-screen py-5 gap-6">
-                <div className='border-solid border-2 border-slate-900 rounded-2xl bg-slate-900 text-white shadow-lg py-5 w-full md:w-4/12 h-full'>
+                <div className='w-full md:w-8/12 border-solid border-2 border-slate-900 rounded-2xl bg-slate-900 text-white shadow-lg pt-5 h-full'>
                     <p className='font-bold text-2xl mx-6 mb-5'>Resumen</p>
                     <hr className='my-3 border-slate-700 border-1' />
-                    <p className='font-semibold text-lg mx-6 mt-6 mb-3 text-slate-300'>Detalles:</p>
+                    <p className='font-semibold text-xl mx-6 mt-6 mb-3 text-slate-300'>Detalles:</p>
                     {
                         details?.map((d, di) =>
-                            <div key={di} className="flex justify-between mx-6 font-semibold">
+                            <div key={di} className="flex justify-between mx-6 font-semibold text-lg">
                                 <p>{d?.curso?.title}</p>
                                 <p>S/. {toMoney(d?.curso?.price)}</p>
                             </div>
@@ -498,44 +166,11 @@ export default function Checkout() {
                         <p>Total</p>
                         <p>S/. {toMoney(details?.reduce((a, b) => { return a + (b.curso.price ?? 0) }, 0) - (discount?.monto ?? 0))}</p>
                     </div>
+                    <MercadoPagoButton />
                 </div>
-                <div className='w-full md:w-8/12 h-max'>
-                    {/* <div className='border-solid border-2 border-slate-900 rounded-2xl p-6 bg-slate-900 text-white shadow-lg py-5 h-full mb-6'>
-                        <p className='font-bold text-2xl mb-0'>Información de facturación</p>
-                        <div>
-                            {payFormLoaded ?
-                                <svg className="animate-spin  h-16 w-16 text-blue-600 mx-auto text-center my-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                :
-                                <div className='grid grid-cols-2 grid-rows-2 gap-4 mt-6'>
-                                    <input
-                                        type="text"
-                                        className="p-6 bg-slate-900 border-slate-700 rounded-xl text-white col-span-2"
-                                        autoFocus={true}
-                                        placeholder="Número de tarjeta"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="p-6 bg-slate-900 border-slate-700 rounded-xl text-white col-span-2 md:col-span-1"
-                                        autoFocus={true}
-                                        placeholder="MM/AA"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="p-6 bg-slate-900 border-slate-700 rounded-xl text-white col-span-2 md:col-span-1"
-                                        autoFocus={true}
-                                        placeholder="CVV"
-                                    />
-                                    <button className='bg-blue-600 w-full col-span-2 rounded-2xl py-3' onClick={handleDumbPay}>PAGAR</button>
-                                </div>
-                            }
-                            <div id="myPaymentForm" className="w-full"></div>
-                            <div className="text-center">{error}</div>
-                        </div>
-                    </div> */}
+                <div className='w-full md:w-4/12 h-max'>
                     <div className='border-solid border-2 border-slate-900 rounded-2xl p-6 bg-slate-900 text-white shadow-lg py-5 h-full'>
+                        {/* <div class="cho-container"><button type="submit" class="mercadopago-button" formmethod="post">Pagar</button></div> */}
                         <p className='font-bold text-2xl mb-0'>O realizar pago con QR</p>
                         <div className='text-center py-6'>
                             <div className='relative border-8 border-white rounded-xl w-max mx-auto'>
@@ -563,7 +198,7 @@ export default function Checkout() {
                                 />
                                 <button
                                     onClick={handleOpenFileSearch}
-                                    className='bg-white text-blue-500 hover:bg-gray-100 mt-5 text-lg px-5 py-2 rounded-full flex mx-auto content-center items-center gap-2'>
+                                    className='bg-white text-blue-500 hover:bg-gray-100 mt-5 text-lg px-5 py-2 rounded-2xl flex mx-auto content-center items-center gap-2'>
                                     Adjuntar comprobante
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
@@ -596,7 +231,7 @@ export default function Checkout() {
 
                                         <button
                                             onClick={uploadToServer}
-                                            className='bg-blue-600 hover:bg-blue-700 text-lg px-5 py-2 rounded-full flex items-center gap-2'>
+                                            className='bg-blue-600 hover:bg-blue-700 text-lg px-5 py-2 rounded-2xl flex items-center gap-2'>
                                             Registrar
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -708,38 +343,3 @@ export async function getServerSideProps(context) {
         },
     };
 }
-
-/*
-<div>
-                        {!payFormLoaded ?
-                        <svg className="animate-spin  h-16 w-16 text-blue-600 mx-auto text-center my-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                            :
-                            <div className='grid grid-cols-2 grid-rows-2 gap-4 mt-6'>
-                                <input
-                                    type="text"
-                                    className="p-6 bg-slate-900 border-slate-900 rounded-xl text-white col-span-2"
-                                    autoFocus={true}
-                                    placeholder="Número de tarjeta"
-                                />
-                                <input
-                                    type="text"
-                                    className="p-6 bg-slate-900 border-slate-900 rounded-xl text-white col-span-2 md:col-span-1"
-                                    autoFocus={true}
-                                    placeholder="MM/AA"
-                                />
-                                <input
-                                    type="text"
-                                    className="p-6 bg-slate-900 border-slate-900 rounded-xl text-white col-span-2 md:col-span-1"
-                                    autoFocus={true}
-                                    placeholder="CVV"
-                                />
-                            </div>
-                        }
-
-                        <div id="myPaymentForm" className="w-full"></div>
-                        <div className="text-center text-red-500">{error}</div>
-                    </div>
-*/

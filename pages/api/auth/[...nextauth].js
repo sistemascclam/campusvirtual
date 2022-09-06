@@ -1,10 +1,10 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+import EmailProvider from "next-auth/providers/email"
+import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from 'lib/prisma'
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import nodemailer from "nodemailer";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import nodemailer from "nodemailer"
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -133,32 +133,23 @@ function html({ url, host, email }) {
 
   // Your email template here
   return `
-      <body style="color:black">
-
-    <button style="background-color:#1d4ed8;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
-  
-      <img  style="width:4rem; height:3rem;position:absolute;left:45%; top:15%" src="https://cclam.org.pe/publico/logotipodark.png"/>
-
-   </button>
-        <h1 > Hola: </h1>
-         <h3 style="color: gray">Gracias por registrarte en el campus CCLAM. Estamos muy contentos <br>
-           de tenerte con nosotros</h3>
-           <p>
-         <h3  style="color: gray">En adelante, este sera tu nombre de usuario para poder iniciar sesion:
-          <br><a href="${url}" style="color:blue">${escapedEmail}</a>
+    <body style="color:black">
+        <button style="background-color:#1d4ed8;width:50%; height:4rem; border-radius:9999px; border-color: transparent;">
+            <img  style="width:4rem; height:3rem;position:absolute;left:45%; top:15%" src="https://cclam.org.pe/publico/logotipodark.png"/>
+        </button>
+        <h1> Hola: </h1>
+        <h3>
+          Este es un correo que solicitaste para ingresar a 
+          <a href="${url}">Campus CCLAM</a>.
         </h3>
-
-        <p>
-
-        <div style="color: gray">Gracias</div>
-          <div style="color: gray">CAMARA DE COMERCIO Y PRODUCCION DE LAMBAYEQUE</div>
-               <p>
-             <a href="${url}">Verifica tu email y completa tus datos para que empieces a aprender.<br>
-               ${escapedHost}</a> 
-           
-   </body>
+        <h3>
+          <a href="${url}">Ingresar a ${escapedHost}</a> 
+        </h3>
+        <div>Si no solicitaste este correo, ignóralo.</div>
+        <br />
+        <div style="color: gray">CAMARA DE COMERCIO Y PRODUCCION DE LAMBAYEQUE</div>
       <div style="text-align: center; color: gray">@2022. All rigthtd reserved <hr style="width:100%"></div>
-
+   </body>
   `
 
 }

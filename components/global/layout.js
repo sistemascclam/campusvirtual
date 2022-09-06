@@ -7,6 +7,7 @@ export const keywords = 'campus virtual, campus, virtual, cursos, cclam, chiclay
 import Header from '@global/header';
 import Footer from './footer'
 import Image from 'next/image'
+import { Toaster } from 'react-hot-toast'
 
 export default function Layout({ home, children, widthPadding = true, widthPaddingX = true }) {
 
@@ -48,6 +49,7 @@ export default function Layout({ home, children, widthPadding = true, widthPaddi
       <main className={`font-poppins relative bg-gradient-to-b from-darkblue to-footer ${widthPadding ? `${home ? 'pt-14' : 'pt-28'} ${widthPaddingX ? 'lg:px-6' : ''}` : ''}`}>
         <Header bgTransparent={!widthPadding} />
         <div className={widthPadding ? `max-w-8xl mx-auto ${widthPaddingX ? 'px-6 md:px-10' : ''}` : ''}>
+          <Toaster />
           {children}
         </div>
       </main>

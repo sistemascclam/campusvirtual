@@ -11,6 +11,7 @@ export default async function handle(req, res) {
 
     if (req.method == "POST") {
         if (auxId) {
+            let message='Registro exitoso'
             if (action == "add") {
                 const addCurso = await prisma.favorites.create({
                     data: {
@@ -18,6 +19,7 @@ export default async function handle(req, res) {
                         'idCurso': parseInt(idCurso),
                     },
                 })
+                message = 'Agregado a favoritos'
             }
             if (action == "remove") {
                 const deleteCurso = await prisma.favorites.deleteMany({
@@ -26,7 +28,9 @@ export default async function handle(req, res) {
                         'idCurso': parseInt(idCurso),
                     },
                 })
+                message = 'Eliminado de favoritos'
             }
+            res.json({message:message,idCurso})
         }
     }
 

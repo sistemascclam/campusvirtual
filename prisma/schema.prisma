@@ -1,10 +1,12 @@
 datasource db {
-  provider = "mysql"
+  // provider = "mysql"
+  // url      = env("DATABASE_URL")
   url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["interactiveTransactions"]
 }
 
@@ -39,20 +41,21 @@ model Session {
 }
 
 model User {
-  id                  String    @id @default(cuid())
-  name                String?
-  email               String?   @unique
-  password            String?   @db.Char(128) //sha512
-  emailVerified       DateTime?
-  image               String?
-  accounts            Account[]
-  sessions            Session[]
-  favorites           Favorites[]
-  shopingcart         ShopingCart[]
-  shopingHistory      ShoppingHistory[]
-  progresos           Progress[]
-  calificaciones      Qualification[]
-  requestedVouchers   RequestedVoucher[]
+  id                String             @id @default(cuid())
+  name              String?
+  email             String?            @unique
+  deletedEmail      String?            
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  favorites         Favorites[]
+  shopingcart       ShopingCart[]
+  shopingHistory    ShoppingHistory[]
+  progresos         Progress[]
+  calificaciones    Qualification[]
+  requestedVouchers RequestedVoucher[]
+  profile Profile?
 }
 
 model VerificationToken {
@@ -65,173 +68,207 @@ model VerificationToken {
 
 //PARA NEXT AUTH CON PRISMA
 
+model Profile{
+  id     Int  @id @default(autoincrement())
+  userId String?  @unique
+  user   User? @relation(fields: [userId], references: [id])
+  tipoDoc Int?
+  documento String?
+  nombres String?
+  paterno String?
+  materno String?
+  profesion String?
+  direccion String?
+}
+
 model Category {
   id          Int     @id @default(autoincrement())
   name        String
-  slug     String  @unique
+  slug        String  @unique
   description String?
   active      Boolean @default(true)
-  cursos       Curso[]
+  cursos      Curso[]
 }
 
 // NUEVAS TABLAS
 model Curso {
-  id                      Int            @id @default(autoincrement())
-  title                   String
-  description             String?
-  name                    String
-  valuation               Float?
-  image                   String?
-  price                   Float?
-  priceWODiscount         Float?
-  registration_date       DateTime       @default(now())
-  active                  Boolean        @default(true)
-  category                Category       @relation(fields: [categoryId], references: [id])
-  categoryId              Int
-  cursoKeyword            CursoKeyword[]
-  ruta                    String?        @unique
-  texto                   String?
-  favorites               Favorites[]
-  shopingCarts            ShopingCart[]
-  shopintHistoryDetail    ShopintHistoryDetail[]
-  progress                Progress[]
-  lecciones               Leccion[]
-  calificaciones          Qualification[]
-  requestedVoucherDetail  RequestedVoucherDetail[]
+  id                     Int                      @id @default(autoincrement())
+  title                  String
+  description            String?
+  name                   String
+  valuation              Float?
+  image                  String?
+  price                  Float?
+  priceWODiscount        Float?
+  registration_date      DateTime                 @default(now())
+  active                 Boolean                  @default(true)
+  category               Category                 @relation(fields: [categoryId], references: [id])
+  categoryId             Int
+  cursoKeyword           CursoKeyword[]
+  ruta                   String?                  @unique
+  texto                  String?
+  favorites              Favorites[]
+  shopingCarts           ShopingCart[]
+  shopintHistoryDetail   ShopintHistoryDetail[]
+  progress               Progress[]
+  lecciones              Leccion[]
+  calificaciones         Qualification[]
+  requestedVoucherDetail RequestedVoucherDetail[]
 }
 
 model CursoKeyword {
-  id    Int     @id @default(autoincrement())
-  name  String?
+  id     Int     @id @default(autoincrement())
+  name   String?
   cursos Curso[]
 }
 
 model ShopingCart {
-  id                Int       @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   idUsuario         String
   idCurso           Int
-  registration_date DateTime  @default(now())     
-  active            Boolean   @default(true)
+  registration_date DateTime @default(now())
+  active            Boolean  @default(true)
   usuario           User     @relation(fields: [idUsuario], references: [id])
-  curso             Curso     @relation(fields: [idCurso], references: [id])
+  curso             Curso    @relation(fields: [idCurso], references: [id])
 }
 
 model Favorites {
-  id                Int       @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   idUsuario         String
   idCurso           Int
-  registration_date DateTime  @default(now())  
-  active            Boolean   @default(true)
+  registration_date DateTime @default(now())
+  active            Boolean  @default(true)
   usuario           User     @relation(fields: [idUsuario], references: [id])
-  curso             Curso     @relation(fields: [idCurso], references: [id])
+  curso             Curso    @relation(fields: [idCurso], references: [id])
 }
 
 model Leccion {
-  id                String    @id @default(cuid())
-  title             String
-  description       String?
-  cuerpo            String?       @db.Text
-  url               String?       @db.Text
-  orden             Int?          @default(1)
-  duracion          Float?        
-  idCurso           Int
-  curso             Curso     @relation(fields: [idCurso], references: [id])
-  helpers           HelperLeccion[]
-  progresos         Progress[]
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  cuerpo      String?         @db.Text
+  url         String?         @db.Text
+  orden       Int?            @default(1)
+  duracion    Float?
+  idCurso     Int
+  curso       Curso           @relation(fields: [idCurso], references: [id])
+  helpers     HelperLeccion[]
+  progresos   Progress[]
 }
 
 model HelperLeccion {
-  id                Int            @id @default(autoincrement())
-  title             String
-  description       String?
-  url               String?
-  orden             Int?          @default(1)
-  leccionId         String
-  lecciones         Leccion       @relation(fields: [leccionId], references: [id])
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+  url         String?
+  orden       Int?    @default(1)
+  leccionId   String
+  lecciones   Leccion @relation(fields: [leccionId], references: [id])
 }
 
 model Progress {
-  id                String    @id @default(cuid())
+  id                String   @id @default(cuid())
   idUsuario         String
   idCurso           Int
-  registration_date DateTime  @default(now())  
-  active            Boolean   @default(true)
-  advance           Int       @default(0)
-  curso             Curso     @relation(fields: [idCurso], references: [id])
+  registration_date DateTime @default(now())
+  active            Boolean  @default(true)
+  advance           Int      @default(0)
+  curso             Curso    @relation(fields: [idCurso], references: [id])
   user              User     @relation(fields: [idUsuario], references: [id])
   lastLeccion       String?
-  leccion           Leccion?   @relation(fields: [lastLeccion], references: [id])
+  leccion           Leccion? @relation(fields: [lastLeccion], references: [id])
 }
 
 model Qualification {
-  id                Int       @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   idUsuario         String
   idCurso           Int
   description       String
-  star              Int       @default(0)
-  registration_date DateTime  @default(now())  
-  active            Boolean   @default(true)
-  curso             Curso     @relation(fields: [idCurso], references: [id])
+  star              Int      @default(0)
+  registration_date DateTime @default(now())
+  active            Boolean  @default(true)
+  curso             Curso    @relation(fields: [idCurso], references: [id])
   user              User     @relation(fields: [idUsuario], references: [id])
 }
 
 model DiscountCodes {
-  id                     Int       @id @default(autoincrement())
-  code                   String
-  monto                  Decimal?  @db.Decimal(10, 2)
-  description            String?
-  registration_date      DateTime  @default(now())  
-  active                 Boolean   @default(true)
-  requestedVoucher       RequestedVoucher[]
+  id                Int                @id @default(autoincrement())
+  code              String
+  monto             Decimal?           @db.Decimal(10, 2)
+  description       String?
+  registration_date DateTime           @default(now())
+  active            Boolean            @default(true)
+  requestedVoucher  RequestedVoucher[]
 }
 
 model ShoppingHistory {
-  id                      Int       @id @default(autoincrement())
-  idUsuario               String
-  usuario                 User     @relation(fields: [idUsuario], references: [id])
-  monto                   Decimal?  @db.Decimal(10, 2)
-  metadata                String?   @db.Text
-  active                  Boolean   @default(true)
-  registration_date       DateTime  @default(now())  
-  shopintHistoryDetail    ShopintHistoryDetail[]
+  id                   Int                    @id @default(autoincrement())
+  idUsuario            String
+  usuario              User                   @relation(fields: [idUsuario], references: [id])
+  monto                Decimal?               @db.Decimal(10, 2)
+  metadata             String?                @db.Text
+  active               Boolean                @default(true)
+  registration_date    DateTime               @default(now())
+  shopintHistoryDetail ShopintHistoryDetail[]
 }
 
-model ShopintHistoryDetail{
-  id                Int       @id @default(autoincrement())
+model ShopintHistoryDetail {
+  id                Int             @id @default(autoincrement())
   idShopingHistory  Int
-  shoppingHistory   ShoppingHistory     @relation(fields: [idShopingHistory], references: [id])
+  shoppingHistory   ShoppingHistory @relation(fields: [idShopingHistory], references: [id])
   idCurso           Int
-  curso             Curso     @relation(fields: [idCurso], references: [id])
-  monto             Decimal?  @db.Decimal(10, 2)
-  active            Boolean   @default(true)
-  registration_date DateTime  @default(now())  
+  curso             Curso           @relation(fields: [idCurso], references: [id])
+  monto             Decimal?        @db.Decimal(10, 2)
+  active            Boolean         @default(true)
+  registration_date DateTime        @default(now())
 }
 
 model RequestedVoucher {
-  id                       String                     @id @default(cuid())
-  file                     String?
-  status                   Int    @default(0)//0:pending, 1:aproved, 2:denied
-  amount                   Float?
-  amountDiscount           Float?
-  idDescuento              Int?
-  idUsuario                String
-  registration_date        DateTime                   @default(now())     
-  aproved_date             DateTime?     
-  denied_date              DateTime?     
-  motivo                   String?
-  active                   Boolean                    @default(true)
-  usuario                  User                       @relation(fields: [idUsuario], references: [id])
-  requestedVoucherDetails  RequestedVoucherDetail[]
-  descuento                DiscountCodes?             @relation(fields: [idDescuento], references: [id])
+  id                      String                   @id @default(cuid())
+  file                    String?
+  status                  Int                      @default(0) //0:pending, 1:aproved, 2:denied
+  amount                  Float?
+  amountDiscount          Float?
+  idDescuento             Int?
+  idUsuario               String
+  registration_date       DateTime                 @default(now())
+  aproved_date            DateTime?
+  denied_date             DateTime?
+  motivo                  String?
+  active                  Boolean                  @default(true)
+  usuario                 User                     @relation(fields: [idUsuario], references: [id])
+  requestedVoucherDetails RequestedVoucherDetail[]
+  descuento               DiscountCodes?           @relation(fields: [idDescuento], references: [id])
 }
 
 model RequestedVoucherDetail {
-  id                  Int               @id @default(autoincrement())
-  idRequestedVoucher  String
-  registration_date   DateTime          @default(now())     
-  active              Boolean           @default(true)
-  idCurso             Int
-  price               Float?
-  curso               Curso             @relation(fields: [idCurso], references: [id])
-  requestedVoucher    RequestedVoucher  @relation(fields: [idRequestedVoucher], references: [id])
+  id                 Int              @id @default(autoincrement())
+  idRequestedVoucher String
+  registration_date  DateTime         @default(now())
+  active             Boolean          @default(true)
+  idCurso            Int
+  price              Float?
+  curso              Curso            @relation(fields: [idCurso], references: [id])
+  requestedVoucher   RequestedVoucher @relation(fields: [idRequestedVoucher], references: [id])
+}
+
+model ClaimBook {
+  id        Int    @id @default(autoincrement())
+  tipoDoc   String
+  documento String
+  nombres   String
+  apellidos String
+  correo    String
+  telefono  String?
+  servicio  String @db.Text
+  reclamo   String @db.Text
+  solicitud String @db.Text
+}
+
+
+
+model ipn {
+  id        Int    @id @default(autoincrement())
+  response  String? @db.Text
+  registration_date DateTime        @default(now())
 }

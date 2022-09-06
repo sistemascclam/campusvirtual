@@ -9,6 +9,10 @@ import axios from '@util/Api';
 import calification from "constants/calification.json"
 import moment from "moment";
 import 'moment/locale/es';
+import { actionFavorites, actionShopingCart } from '@cursoCards/actionCurso';
+import { useContext } from 'react';
+import AppContext from 'components/AppContext';
+import { promiseToast } from '@util/helper';
 moment.locale('es')
 
 const habilidades = [
@@ -23,16 +27,10 @@ const habilidades = [
 
 export default function Curso() {
     const router = useRouter()
-    const { keyword } = router.query
+    const {query,isReady} = router
+    const { keyword } = query
     const [arrayDC, setarrayDC] = useState(null)
-    const session = useSession()
-    const [auxIdUsuario, setauxIdUsuario] = useState(0)
-    const [_enCarrito, _setenCarrito] = useState(false)
-    const [_esFavorito, _setesFavorito] = useState(false)
-    const [_auxidFavorite, _setauxidFavorite] = useState(0)
-    const [_auxactiveFavorite, _setauxactiveFavorite] = useState(false)
-    const [_auxidCart, _setauxidCart] = useState(0)
-    const [_auxactiveCart, _setauxactiveCart] = useState(false)
+    const { data: session, status } = useSession()
     const [btnInscription, _setBtnInscription] = useState('Inscribirse ahora')
 
     const loadCurso = async () => {
@@ -42,229 +40,55 @@ export default function Curso() {
     }
 
     useEffect(() => {
-        if (keyword) {
+        if (isReady && keyword) {
             loadCurso()
         }
-    }, [keyword])
-
-    var auxIdCurso = 0
-    if (arrayDC != null) {
-        auxIdCurso = arrayDC.id
-    }
-    const _auxIdCurso = auxIdCurso
-
-    const localFavorito = async (event) => {
-        var arrayDataFav = localStorage.getItem("arrayDataFav")
-        if (arrayDataFav != null && arrayDataFav != '') {
-            arrayDataFav = JSON.parse(arrayDataFav)
-            for (let i = 0; i < arrayDataFav.length; i++) {
-                if (arrayDataFav[i]['idCurso'] == _auxIdCurso && arrayDataFav[i]['active'] == true) {
-                    _setesFavorito(true)
-                    break;
-                }
-            }
-        }
-    }
-    const localCart = async (event) => {
-        var arrayDataCart = localStorage.getItem("arrayDataCart")
-        if (arrayDataCart != null && arrayDataCart != '') {
-            arrayDataCart = JSON.parse(arrayDataCart)
-            for (let i = 0; i < arrayDataCart.length; i++) {
-                if (arrayDataCart[i]['idCurso'] == _auxIdCurso && arrayDataCart[i]['active'] == true) {
-                    _setenCarrito(true)
-                    break;
-                }
-            }
-        }
-    }
-
-    useEffect(() => {
-        if (arrayDC != null) {
-            if ((arrayDC?.favorites?.length) != 0) {
-                _setauxidFavorite(arrayDC.favorites[0].id)
-                _setesFavorito(arrayDC.favorites[0].active)
-            }
-            if ((arrayDC.shopingCarts.length) != 0) {
-                _setauxidCart(arrayDC.shopingCarts[0].id)
-                _setenCarrito(arrayDC.shopingCarts[0].active)
-            }
-            if (arrayDC?.progress?.length > 0) {
-                _setBtnInscription("Ir al curso")
-            }
-        }
-
-        if (session.data != null) { //BD
-            setauxIdUsuario(session.data.user.id)
-        } else { //localStorage
-            localFavorito()
-            localCart()
-        }
-    }, [session, arrayDC])
-
-    const addFavorite = async (event) => {
-        event.preventDefault();
-        if (auxIdUsuario != 0) { //se a iniciado sesión
-            //verificar si ya se ha registrado en la BD
-            if (_auxidFavorite != '') { //ya se a registrado en la BD
-                var resp = fetch(`/api/public/actionFavorites/activ--` + _auxidFavorite, (...args) => fetch(...args).then(res => res.json()))
-            } else {
-                var resp = fetch(`/api/public/addFavorites/${_auxIdCurso}`, (...args) => fetch(...args).then(res => res.json()))
-                const response = fetch(`/api/public/listCurso/${_auxIdCurso}`)
-                    .then(res => res.json())
-                    .then(data => localStorage.setItem("arrayFavCar", JSON.stringify(data)));
-            }
-        } else {
-            var arrayDataFav = localStorage.getItem("arrayDataFav")
-            if (arrayDataFav != null && arrayDataFav != '') {
-                arrayDataFav = JSON.parse(arrayDataFav)
-                var encontrado = false
-                for (let i = 0; i < arrayDataFav.length; i++) {
-                    if (arrayDataFav[i]['idCurso'] == _auxIdCurso) {
-                        arrayDataFav[i]['active'] = true
-                        encontrado = true
-                        break;
-                    }
-                }
-                if (!encontrado) {
-                    arrayDataFav.push({ idCurso: _auxIdCurso, active: true })
-                }
-                localStorage.setItem("arrayDataFav", JSON.stringify(arrayDataFav))
-            } else {
-                var auxArray = []
-                auxArray.push({ idCurso: _auxIdCurso, active: true })
-                localStorage.setItem("arrayDataFav", JSON.stringify(auxArray))
-            }
-        }
-    }
-
-    const addShoping = async (event) => {
-        event.preventDefault();
-        if (auxIdUsuario != 0) { //se a iniciado sesión || registrar en la
-            if (_auxidCart != '') { //ya se a registrado en la BD
-                var resp = fetch(`/api/public/actionShoping/activ--` + _auxidCart, (...args) => fetch(...args).then(res => res.json()))
-            } else {
-                var resp = fetch(`/api/public/addShoping/${_auxIdCurso}`, (...args) => fetch(...args).then(res => res.json()))
-                const response = fetch(`/api/public/listCurso/${_auxIdCurso}`)
-                    .then(res => res.json())
-                    .then(data => localStorage.setItem("arrayFavCar", JSON.stringify(data)));
-            }
-        } else {
-            var arrayDataCart = localStorage.getItem("arrayDataCart")
-            if (arrayDataCart != null && arrayDataCart != '') {
-                arrayDataCart = JSON.parse(arrayDataCart)
-                var encontrado = false
-                for (let i = 0; i < arrayDataCart.length; i++) {
-                    if (arrayDataCart[i]['idCurso'] == _auxIdCurso) {
-                        arrayDataCart[i]['active'] = true
-                        encontrado = true
-                        break;
-                    }
-                }
-                if (!encontrado) {
-                    arrayDataCart.push({ idCurso: _auxIdCurso, active: true })
-                }
-                localStorage.setItem("arrayDataCart", JSON.stringify(arrayDataCart))
-            } else {
-                var auxArray = []
-                auxArray.push({ idCurso: _auxIdCurso, active: true })
-                localStorage.setItem("arrayDataCart", JSON.stringify(auxArray))
-            }
-        }
-    }
-
-    const removeFavorite = async (event) => {
-        event.preventDefault();
-        if (auxIdUsuario != 0) {
-            //verificar si existe en la tabla Favorites
-            var _auxId = 0
-            var arrayFavCar = localStorage.getItem("arrayFavCar")
-            if (arrayFavCar != null && arrayFavCar != '') {
-                arrayFavCar = JSON.parse(arrayFavCar)
-                if ((arrayFavCar[1].cursoFav[0]) != null) {
-                    _auxId = arrayFavCar[1].cursoFav[0].id
-                }
-            }
-            if (_auxidFavorite != '') { //ya se a registrado en la BD
-                var resp = fetch(`/api/public/actionFavorites/remov--` + _auxidFavorite, (...args) => fetch(...args).then(res => res.json()))
-            } else {
-                _auxidFavorite = _auxId
-                var resp = fetch(`/api/public/actionFavorites/remov--` + _auxId, (...args) => fetch(...args).then(res => res.json()))
-            }
-        } else {
-            var arrayDataFav = localStorage.getItem("arrayDataFav")
-            if (arrayDataFav != null && arrayDataFav != '') {
-                var arrayDataFav = localStorage.getItem("arrayDataFav")
-                if (arrayDataFav != null && arrayDataFav != '') {
-                    arrayDataFav = JSON.parse(arrayDataFav)
-                    for (let i = 0; i < arrayDataFav.length; i++) {
-                        if (arrayDataFav[i]['idCurso'] == _auxIdCurso && arrayDataFav[i]['active'] == true) {
-                            arrayDataFav[i]['active'] = false
-                            break;
-                        }
-                    }
-                }
-                localStorage.setItem("arrayDataFav", JSON.stringify(arrayDataFav))
-            }
-        }
-    }
-
-    const removeShoping = async (event) => {
-        event.preventDefault();
-        if (auxIdUsuario != 0) { //se a iniciado sesión || registrar en la
-            var _auxId = 0
-            var arrayFavCar = localStorage.getItem("arrayFavCar")
-            if (arrayFavCar != null && arrayFavCar != '') {
-                arrayFavCar = JSON.parse(arrayFavCar)
-                if ((arrayFavCar[0].cursoCart[0]) != null) {
-                    _auxId = arrayFavCar[0].cursoCart[0].id
-                }
-            }
-            if (_auxidCart != '') { //ya se a registrado en la BD
-                var resp = fetch(`/api/public/actionShoping/remov--` + _auxidCart, (...args) => fetch(...args).then(res => res.json()))
-            } else {
-                _auxidCart = _auxId
-                var resp = fetch(`/api/public/actionShoping/remov--` + _auxId, (...args) => fetch(...args).then(res => res.json()))
-            }
-        } else {
-            var arrayDataCart = localStorage.getItem("arrayDataCart")
-            if (arrayDataCart != null && arrayDataCart != '') {
-                var arrayDataCart = localStorage.getItem("arrayDataCart")
-                if (arrayDataCart != null && arrayDataCart != '') {
-                    arrayDataCart = JSON.parse(arrayDataCart)
-                    for (let i = 0; i < arrayDataCart.length; i++) {
-                        if (arrayDataCart[i]['idCurso'] == _auxIdCurso && arrayDataCart[i]['active'] == true) {
-                            arrayDataCart[i]['active'] = false
-                            break;
-                        }
-                    }
-                }
-                localStorage.setItem("arrayDataCart", JSON.stringify(arrayDataCart))
-            }
-        }
-    }
+    }, [isReady,keyword])
 
     const changeStatus = () => {
-        if (btnInscription == 'Inscribirse ahora') {
-            var resp = fetch(`/api/public/addProgress/` + _auxIdCurso, (...args) => fetch(...args).then(res => res.json()))
-            _setBtnInscription('Ir al curso');
-        } else {
+        if(arrayDC.progress.length==0){
+            promiseToast(axios.post(`/api/public/addProgress/` + arrayDC.id), () => loadCurso(),null,'¡Te inscribiste con éxito!')
+        }else{
             router.push(`/curso/${keyword}/leccion`)
         }
     }
 
-    var heart = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-    </svg>;
-    var heart_full = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-    </svg>;
-    var check = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-    </svg>;
-
     var cadena = '';
     if (arrayDC != null) {
         var cadena = arrayDC.texto?.split('|,|')
+    }
+
+    const value = useContext(AppContext);
+    let { setlocalStorageData } = value
+    let { localStorageData } = value.state;
+
+    const handleActionFavorites = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        let add = arrayDC.favorites.length==0
+        actionFavorites(
+            arrayDC.id,
+            add,
+            session, status,
+            () => loadCurso(),
+            localStorageData,
+            setlocalStorageData
+        )
+    }
+
+    const handleActionShopingCart = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        let add = arrayDC.shopingCarts.length==0
+
+        actionShopingCart(
+            arrayDC.id,
+            add,
+            session, status,
+            () => loadCurso(),
+            localStorageData,
+            setlocalStorageData
+        )
     }
 
     return (
@@ -325,28 +149,18 @@ export default function Curso() {
                                     {arrayDC.price != 0 && arrayDC.price != null ?
                                         <>
                                             <div className="flex items-center justify-between py-5">
-                                                <div className='w-full' onClick={() => _setenCarrito(!_enCarrito)}>
-                                                    {_enCarrito == false ?
-                                                        <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={addShoping}>
-                                                            Añadir a la cesta
-                                                        </button>
-                                                        :
-                                                        <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={removeShoping}>
-                                                            Quitar de la cesta
+                                                <div className='w-full'>
+                                                    {
+                                                        <button type="button" className="bg-blue-600 hover:bg-blue-600 text-white text-sm py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline" onClick={handleActionShopingCart}>
+                                                            {arrayDC.shopingCarts.length > 0 && arrayDC.shopingCarts.every(c => c.active == true) ? 'Quitar de la cesta' : 'Añadir a la cesta'}
                                                         </button>
                                                     }
                                                 </div>
-                                                <div className='w-1/6  px-1 ' onClick={() => _setesFavorito(!_esFavorito)}>
-                                                    {_esFavorito == false ?
-                                                        <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={addFavorite}>
+                                                <div className='w-1/6  px-1 '>
+                                                    {
+                                                        <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={handleActionFavorites}>
                                                             <button className="block   mx-auto text-center   w-fit">
-                                                                {heart}
-                                                            </button>
-                                                        </div>
-                                                        :
-                                                        <div className='  border-solid border-2 border-slate-600 py-2 rounded-lg' onClick={removeFavorite}>
-                                                            <button className="block   mx-auto text-center   w-fit">
-                                                                {heart_full}
+                                                                {arrayDC.favorites.length > 0 && arrayDC.favorites.every(c => c.active == true) ? heart_full : heart}
                                                             </button>
                                                         </div>
                                                     }
@@ -358,10 +172,10 @@ export default function Curso() {
                                         </> :
                                         <>
                                             <div className='py-4'>
-                                                {auxIdUsuario != 0 ?
+                                                {(session && status != 'loading')?
                                                     <button type="button" className=" font-extrabold text-xl bg-blue-600 hover:bg-blue-700 text-white   py-3 px-4 w-full rounded-lg  focus:outline-none focus:shadow-outline"
                                                         onClick={changeStatus}>
-                                                        {btnInscription}
+                                                            {arrayDC.progress.length==0 ? 'Inscribirse ahora' : 'Ir al curso'}
                                                     </button> :
                                                     <Link href="/registro">
                                                         <a className="flex justify-center font-extrabold text-xl bg-blue-600 hover:bg-blue-700 text-white   py-3 px-4 rounded-lg  focus:outline-none focus:shadow-outline" >
@@ -501,3 +315,13 @@ export default function Curso() {
 
     )
 }
+
+var heart = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+</svg>;
+var heart_full = <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+</svg>;
+var check = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+</svg>;

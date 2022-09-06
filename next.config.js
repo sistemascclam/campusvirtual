@@ -4,6 +4,9 @@ module.exports = {
   },
   reactStrictMode: true,
   env: {
-    publicIziKey: process.env.IZI_PUBLIC_KEY
+    accessTokenMP: process.env.MP_ACCESS_TOKEN,
+    publicKeyMP: process.env.MP_PUBLIC_KEY
   },
 }
+
+

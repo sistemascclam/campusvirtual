@@ -160,7 +160,7 @@ const Paginado = ({ totalPages, current }) => {
     const router = useRouter()
     const { pagina = 1 } = router.query
     return (
-        <div className={`flex gap-3 py-2 text-white w-max my-6 mx-auto`}>
+        <div className={`flex gap-3 py-2 text-white w-max mt-6 mx-auto`}>
             {
                 pagina > 1 ?
                     <button

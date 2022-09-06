@@ -1,9 +1,12 @@
-import axios from '@util/Api';
 import { getSession } from 'next-auth/react';
+const mercadopago = require("mercadopago");
+
+mercadopago.configure({
+    access_token: process.env.MP_ACCESS_TOKEN,
+});
 
 export default async function handler(req, res) {
     const session = await getSession({ req })
-    // const { code } = req.query
     const { code } = req.body
     var auxId = null
     if (session?.user != null) {
@@ -39,6 +42,7 @@ export default async function handler(req, res) {
                         id: true,
                         title: true,
                         price: true,
+                        image: true
                     }
                 },
             }
@@ -46,39 +50,50 @@ export default async function handler(req, res) {
 
         let total = (cursos?.reduce((a, b) => { return a + b.curso.price }, 0) - discount).toFixed(2) * 100
 
-        let cartItemInfo = cursos?.map(p => { return { productRef: p.curso.id, productLabel: p.curso.title, productType: "SERVICE_FOR_BUSINESS", productAmount: (p.curso.price * 100).toFixed(2), productQty: 1 } })
+        let cartItemInfo = cursos?.map(p => {
+            return {
+                id: p.curso.id, 
+                title: p.curso.title,
+                picture_url: p.curso.image,
+                unit_price: Number((p.curso.price).toFixed(2)),
+                quantity: 1,
+                currency_id: 'PEN'
+            }
+        })
 
         const shopingHistory = await prisma.ShoppingHistory.create({
             data: {
                 'idUsuario': auxId,
-                'monto': total/100,
+                'monto': total / 100,
                 'active': false
             },
         })
 
-        const axiosReq = await axios
-            .post('https://api.micuentaweb.pe/api-payment/V4/Charge/CreatePayment',
-                {
-                    // "ipnTargetUrl": "https://www.cclam.org.pe/recursos.base/public/api/ipn",
-                    "amount": total,
-                    "currency": "PEN",
-                    "orderId": shopingHistory?.id,
-                    "customer": {
-                        "email": session?.user?.email,
-                        "shoppingCart": {
-                            "cartItemInfo": cartItemInfo
-                        }
-                    }
-                },
-                {
-                    headers: {
-                        'Authorization': `Basic ${process.env.IZI_KEY}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-        const { data } = axiosReq
-        res.json(data)
+        let preference =
+        {
+            payer: {
+                email: session?.user?.email,
+            },
+            items: cartItemInfo,
+            notification_url:'https://www.cclam.org.pe/recursos.base/public/api/ipnmp',
+            back_urls: {
+                "success": "http://localhost:3000/verificarpago/feedback",
+                "failure": "http://localhost:3000/verificarpago/feedback",
+                "pending": "http://localhost:3000/verificarpago"
+            },
+            auto_return: "approved",
+        }
+
+
+        mercadopago.preferences.create(preference)
+            .then(function (response) {
+                res.json({
+                    id: response.body.id,
+                    extra:response.body
+                });
+            }).catch(function (error) {
+                console.log(error);
+            });
     } else {
         res.status(401).json("Unauthorized")
     }

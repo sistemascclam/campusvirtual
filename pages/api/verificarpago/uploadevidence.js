@@ -56,7 +56,7 @@ const checkCart = async ({ file, code, session }) => {
                             monto: true
                         }
                     })
-console.log(code);
+
                     requestVoucherSaveData.idDescuento = dcc.id
                     requestVoucherSaveData.amountDiscount = parseFloat(dcc.monto)
                 }

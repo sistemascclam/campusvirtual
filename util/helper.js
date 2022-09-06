@@ -1,4 +1,5 @@
 import errorsAuth from "constants/errorsAuth.json"
+import toast from 'react-hot-toast';
 
 export function stringToSlug(str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trim
@@ -54,3 +55,30 @@ export const rgbDataURL = (r, g, b) =>
     }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
     
 //PONER COLOR COMO PLACEHOLDER EN IMAGENES
+
+export const promiseToast = (promise,callback,icon=null,successMessage='¡Registro guardado!',errorMessage='Oops. No se pudo registrar.') => {
+    let extraConfigToast = {}
+
+    if(icon){
+        extraConfigToast={
+            success:{
+                icon: icon
+            }
+        }
+    }
+    
+    toast.promise(
+        promise,
+        {
+            loading: 'Guardando...',
+            success: (res) => {
+                if(typeof callback == 'function'){
+                    callback()
+                }
+                return <b>{ res.data.message || successMessage}</b>
+            },
+            error: <b>{errorMessage}</b>,
+        },
+        extraConfigToast
+    )
+}

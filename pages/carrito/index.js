@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Layout, { siteTitle } from "../../components/global/layout";
 import useSWR from 'swr'
-import Image from 'next/image'
-import Link from 'next/link'
 import { getCsrfToken, getSession, useSession } from 'next-auth/react';
 import CursoCardLarge from 'components/Curso/cursoCardLarge';
 import axios from '@util/Api';
@@ -98,9 +96,8 @@ export default function Favoritos() {
 
     const handleSubmitPay = (e) => {
         e.preventDefault();
-        let codigo = document.getElementById("codigo").value
-        router.push(`/verificarpago/${codigo ? `?codigodescuento=${codigo}` : ''}`)
-
+        // let codigo = document.getElementById("codigo").value
+        router.push(`/verificarpago`)
     }
 
     var trash = <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -148,7 +145,7 @@ export default function Favoritos() {
 
                 {arrayC?.length > 0 ?
                     <div className="text-white w-full lg:w-4/12 order-first lg:order-last ">
-                            <div className='border-solid border-2 border-cardblue md:border-cardblue rounded-2xl shadow-lg bg-cardblue md:bg-cardblue'>
+                            <div className='border-solid px-3 pb-3 border-cardblue md:border-cardblue rounded-2xl shadow-lg bg-cardblue md:bg-cardblue'>
                                 <div className='text-center text-lg py-2'>Total</div>
                                 {
                                     descuento ?
@@ -161,7 +158,7 @@ export default function Favoritos() {
                                 <div className='text-center text-4xl font-bold py-2'>S/. {toMoney(_total - (descuento?.monto ?? 0))}</div>
 
 
-                                <form className='py-2 px-8' onSubmit={handleSearchCod}>
+                                {/* <form className='py-2 px-8' onSubmit={handleSearchCod}>
                                     <label className="relative block">
                                         <button type="submit" className="absolute right-0 inset-y-0 h-full bg-blue-600 rounded-full w-9 flex items-center justify-center" >
                                             {
@@ -175,9 +172,9 @@ export default function Favoritos() {
                                         errordescuento ?
                                             <p className='text-center mt-1 italic'>No se encontró el descuento</p> : ""
                                     }
-                                </form>
-                                <div className='mb-8 mt-6'>
-                                    <button onClick={handleSubmitPay} type='button' className='w-32 mx-auto block py-1 px-0 bg-blue-600 text-center border-solid border-2 border-blue-600 rounded-full'>
+                                </form> */}
+                                <div className='mt-3'>
+                                    <button onClick={handleSubmitPay} type='button' className='w-full mx-auto block py-2 px-0 bg-blue-600 hover:bg-blue-700 hover:border-blue-700 text-center border-solid border-2 border-blue-600 rounded-2xl'>
                                         Pagar
                                     </button>
                                 </div>

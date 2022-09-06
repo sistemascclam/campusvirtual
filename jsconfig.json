@@ -5,6 +5,7 @@
             "@cursoCards/*":["components/Curso/*"],
             "@global/*":["components/global/*"],
             "@util/*":["util/*"],
+            "@hooks/*":["hooks/*"],
             "@animations/*":["public/animations/*"],
         }
     }

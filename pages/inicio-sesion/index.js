@@ -23,22 +23,38 @@ export default function Login({ csrfToken }) {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
     </svg>;
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const res = await signIn('credentials', {
-            redirect: false,
-            email: event.target.email.value,
-            password: event.target.password.value,
-            callbackUrl: `${window.location.origin}`,
-        });
 
-        if (res?.error) {
-            setErrorAuth(res.error);
-        } else {
-            setErrorAuth(null);
-        }
-        if (res?.url) router.push(res.url);
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    const res = await signIn('email', {
+        redirect: false,
+        email: event.target.email.value,
+        callbackUrl: `${window.location.origin}`,
+    });
+    if (res?.error) {
+        setErrorAuth(res.error);
+    } else {
+        setErrorAuth(null);
     }
+    if (res?.url) router.push(res.url);
+}
+
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     const res = await signIn('credentials', {
+    //         redirect: false,
+    //         email: event.target.email.value,
+    //         password: event.target.password.value,
+    //         callbackUrl: `${window.location.origin}`,
+    //     });
+
+    //     if (res?.error) {
+    //         setErrorAuth(res.error);
+    //     } else {
+    //         setErrorAuth(null);
+    //     }
+    //     if (res?.url) router.push(res.url);
+    // }
 
     const handleLoginWGoogle = async (event) => {
         event.preventDefault();
@@ -95,20 +111,9 @@ export default function Login({ csrfToken }) {
                                     </label>
                                     <input required type="email" id="email" placeholder="email@domain.com" className="shadow bg-gray-900 hover:bg-darkblue appearance-none border rounded w-full text-base py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline" />
                                 </div>
-                                <div className="mb-6">
-                                    <div className='py-1'>
-                                        <span className="text-slate-300 text-base ">Contraseña</span>
-                                    </div>
-                                    <label className="relative block">
-                                        <span className="absolute inset-y-0 right-3 flex items-center pl-2" onClick={() => setTipo(tipo == 'password' ? 'text' : 'password')}>
-                                            {tipo == 'password' ? eye : eyes_off}
-                                        </span>
-                                        <input required type={tipo} placeholder="******************" name="password" id="password" className="bg-gray-900 rounded text-base border placeholder:italic placeholder:text-slate-400 block w-full  shadow-sm focus:outline-none  focus:ring-sky-500 focus:ring-1 sm:text-base" />
-                                    </label>
-                                </div>
                                 <div className="flex flex-col items-center justify-between">
                                     <button type="submit" className="font-bold bg-blue-700 hover:bg-blue-600 text-white text-base py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline">
-                                        Iniciar Sesión
+                                        Enviar correo de acceso
                                     </button>
                                 </div>
                                 <div className='text-center my-6 py-4 w-full mx-auto' >

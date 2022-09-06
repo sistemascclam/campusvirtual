@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { useSWRConfig } from 'swr'
-import axios from '@util/Api';
 import { useSession } from 'next-auth/react';
 import AppContext from 'components/AppContext';
 import moment from 'moment';
+import { actionFavorites, actionShopingCart } from './actionCurso';
 
 export default function CursoCard({ Curso, options = false }) {
     const { cache, mutate } = useSWRConfig()
@@ -31,43 +31,13 @@ export default function CursoCard({ Curso, options = false }) {
     }
 
     const handleActionFavorites = async (idCurso, add) => {
-        if (session && status != 'loading') {
-            await axios.post(`/api/favorites/${idCurso}?action=${add ? 'add' : 'remove'}`);
-            mutate("/api/favorites")
-        } else {
-            let list = localStorageData?.fav ?? [],
-                tmpnewlist = [];
-            if (list?.some(lc => lc.idCurso == idCurso)) {
-                tmpnewlist = list.filter(lc => lc.idCurso != idCurso)
-            } else {
-                tmpnewlist = list.concat({ idCurso: idCurso, active: true })
-            }
-            setlocalStorageData({
-                ...localStorageData,
-                fav: tmpnewlist
-            })
-            localStorage.setItem("arrayDataFav", JSON.stringify(tmpnewlist))
-        }
+        actionFavorites(idCurso, add, session, status,
+            ()=>mutate("/api/favorites"),localStorageData,setlocalStorageData)
     }
 
     const handleActionShopingCart = async (idCurso, add) => {
-        if (session && status != 'loading') {
-            await axios.post(`/api/shopingcart/${idCurso}?action=${add ? 'add' : 'remove'}`);
-            mutate("/api/shopingcart")
-        } else {
-            let list = localStorageData?.cart ?? [],
-                tmpnewlist = [];
-            if (list?.some(lc => lc.idCurso == idCurso)) {
-                tmpnewlist = list.filter(lc => lc.idCurso != idCurso)
-            } else {
-                tmpnewlist = list.concat({ idCurso: idCurso, active: true })
-            }
-            setlocalStorageData({
-                ...localStorageData,
-                cart: tmpnewlist
-            })
-            localStorage.setItem("arrayDataCart", JSON.stringify(tmpnewlist))
-        }
+        actionShopingCart(idCurso, add, session, status,
+            ()=>mutate("/api/shopingcart"),localStorageData,setlocalStorageData)
     }
 
     return (
@@ -86,10 +56,10 @@ export default function CursoCard({ Curso, options = false }) {
                     {
                         options &&
                         <>
-                        {
-                            moment({hours: 0 }).diff(Curso.registration_date, 'days') < 30 &&
-                            <span className='absolute top-0 right-0 bg-blue-600 px-3 py-1 m-1 rounded-md font-bold'>Nuevo</span>
-                        }
+                            {
+                                moment({ hours: 0 }).diff(Curso.registration_date, 'days') < 30 &&
+                                <span className='absolute top-0 right-0 bg-blue-600 px-3 py-1 m-1 rounded-md font-bold'>Nuevo</span>
+                            }
                         </>
                     }
                     {

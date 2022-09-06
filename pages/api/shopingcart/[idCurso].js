@@ -11,6 +11,7 @@ export default async function handle(req, res) {
 
     if (req.method == "POST") {
         if (auxId) {
+            let message='Registro exitoso'
             if (action == "add") {
                 const addCurso = await prisma.ShopingCart.create({
                     data: {
@@ -18,6 +19,7 @@ export default async function handle(req, res) {
                         'idCurso': parseInt(idCurso),
                     },
                 })
+                message = 'Agregado a carrito'
             }
             if (action == "remove") {
                 const deleteCurso = await prisma.ShopingCart.deleteMany({
@@ -26,8 +28,9 @@ export default async function handle(req, res) {
                         'idCurso': parseInt(idCurso),
                     },
                 })
+                message = 'Eliminado de carrito'
             }
-            res.json(idCurso)
+            res.json({message:message,idCurso})
         } else {
             res.status(401).json("Unauthorized")
         }
