@@ -77,9 +77,9 @@ export default async function handler(req, res) {
             items: cartItemInfo,
             notification_url:'https://www.cclam.org.pe/recursos.base/public/api/ipnmp',
             back_urls: {
-                "success": "http://localhost:3000/verificarpago/feedback",
-                "failure": "http://localhost:3000/verificarpago/feedback",
-                "pending": "http://localhost:3000/verificarpago"
+                "success": `${process.env.NEXT_PUBLIC_URL_DOMAIN}verificarpago/feedback`,
+                "failure": `${process.env.NEXT_PUBLIC_URL_DOMAIN}verificarpago/feedback`,
+                "pending": `${process.env.NEXT_PUBLIC_URL_DOMAIN}verificarpago`
             },
             auto_return: "approved",
         }
