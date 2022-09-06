@@ -75,7 +75,7 @@ export default async function handler(req, res) {
                 email: session?.user?.email,
             },
             items: cartItemInfo,
-            notification_url:'https://www.cclam.org.pe/recursos.base/public/api/ipnmp',
+            notification_url:`${process.env.NEXT_PUBLIC_URL_DOMAIN}api/ipn`,
             back_urls: {
                 "success": `${process.env.NEXT_PUBLIC_URL_DOMAIN}verificarpago/feedback`,
                 "failure": `${process.env.NEXT_PUBLIC_URL_DOMAIN}verificarpago/feedback`,
