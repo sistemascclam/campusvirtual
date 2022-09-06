@@ -22,7 +22,10 @@ export default function Checkout() {
     const [error, seterror] = useState(null)
     const [details, setdetails] = useState(null)
     const [discount, setdiscount] = useState(null)
-
+    const [file, setFile] = useState(null);
+    const [fileSend, setfileSend] = useState(null);
+    const hiddenFileInput = React.useRef(null);
+    const [voucherSent, setvoucherSent] = useState(null)
 
     const loadCarrito = async () => {
         const axiosReq = await axios.get('/api/public/getCarrito/');
@@ -67,11 +70,6 @@ export default function Checkout() {
             </Layout>
         )
     }
-
-    const [file, setFile] = useState(null);
-    const [fileSend, setfileSend] = useState(null);
-    const hiddenFileInput = React.useRef(null);
-    const [voucherSent, setvoucherSent] = useState(null)
 
     const handleOpenFileSearch = event => {
         hiddenFileInput.current.click();

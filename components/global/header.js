@@ -410,10 +410,6 @@ function SearchItems({ search, setsearch }) {
     }
   }, [search])
 
-  if (!search) {
-    return null
-  }
-
   const handleSelectedCourse = (ruta) => {
     setsearch(null)
     router.push(`/curso/${ruta}`)
@@ -424,6 +420,10 @@ function SearchItems({ search, setsearch }) {
   }
 
   useOutsideHook(searchMenyRef, handleClickOutside);
+
+  if (!search) {
+    return null
+  }
 
   return <div ref={searchMenyRef} className='absolute top-10 inset-x-0 rounded-b-xl bg-slate-900 text-white border-x-1 border-b-1 border-blue-700 px-3 py-1 max-h-screen	 overflow-y-auto'>
     {data?.cursos?.map((item) =>

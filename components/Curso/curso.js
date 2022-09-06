@@ -4,7 +4,7 @@ import Image from 'next/image'
 import "react-multi-carousel/lib/styles.css";
 import CursoCard from './cursoCard';
 
-export default function curso({ arrayData }) {
+export default function Curso({ arrayData }) {
     const [arrayC, setarrayC] = useState(null)
     const [_action, _setAction] = useState('')
 
